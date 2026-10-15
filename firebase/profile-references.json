@@ -1,0 +1,10 @@
+{
+  "carreras/ingenieria-sistemas": {
+    "nombre": "Ingeniería de Sistemas"
+  },
+  "planes_estudio/sistemas-rm-615-2016": {
+    "id_carrera": "ingenieria-sistemas",
+    "resolucion": "615/2016",
+    "fuente": "Malla curricular UTEPSA: ing.-de-sistemas-mallas-pensum-2.pdf, RM N.º 615/2016"
+  }
+}

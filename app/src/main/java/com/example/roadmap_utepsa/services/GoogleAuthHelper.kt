@@ -1,5 +1,6 @@
 package com.example.roadmap_utepsa.services
 
+import kotlinx.coroutines.CancellationException
 import android.content.Context
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -8,16 +9,12 @@ import com.example.roadmap_utepsa.R
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.coroutines.tasks.await
 
 class GoogleAuthHelper(private val context: Context) {
-    private val auth = FirebaseAuth.getInstance()
 
     private val credentialManager = CredentialManager.create(context)
 
-    suspend fun signInWithGoogle(): Result<String> {
+    suspend fun getGoogleIdToken(): Result<String> {
 
         return try {
 
@@ -57,24 +54,7 @@ class GoogleAuthHelper(private val context: Context) {
                 val idToken =
                     googleIdTokenCredential.idToken
 
-                // 6. Convertimos el token de Google
-                //    en una credencial de Firebase
-                val firebaseCredential =
-                    GoogleAuthProvider.getCredential(
-                        idToken,
-                        null
-                    )
-
-                // 7. Iniciamos sesión en Firebase
-                val authResult =
-                    auth.signInWithCredential(firebaseCredential).await()
-
-                val user = authResult.user
-
-                Result.success(
-                    user?.displayName
-                        ?: "Usuario autenticado"
-                )
+                Result.success(idToken)
 
             } else {
 
@@ -85,6 +65,8 @@ class GoogleAuthHelper(private val context: Context) {
                 )
             }
 
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: GoogleIdTokenParsingException) {
 
             Result.failure(e)

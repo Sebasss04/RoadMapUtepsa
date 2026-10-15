@@ -1,0 +1,72 @@
+rules_version = '2';
+// Perfil v1:
+// usuarios/{uid}: fecha_creacion (timestamp del servidor, inmutable).
+// personas/{uid}: nombres y apellidos (string, 1..80, no blancos/control).
+// estudiantes/{uid}: id_plan (string fijo, referencia existente e inmutable).
+// Los IDs solo viven en las rutas; no hay correo, contraseña ni roles.
+// carreras y planes_estudio: referencias compartidas, sin escritura del cliente.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+    function validName(value) {
+      return value is string && value.size() >= 1 && value.size() <= 80
+        && value.matches('.*[^\\s\\p{Z}].*')
+        && !value.matches('.*[\\p{Cc}\\p{Zl}\\p{Zp}].*');
+    }
+    function validUser(data) {
+      return data.keys().hasAll(['fecha_creacion'])
+        && data.keys().hasOnly(['fecha_creacion'])
+        && data.fecha_creacion is timestamp;
+    }
+    function validPerson(data) {
+      return data.keys().hasAll(['nombres', 'apellidos'])
+        && data.keys().hasOnly(['nombres', 'apellidos'])
+        && validName(data.nombres) && validName(data.apellidos);
+    }
+    function validStudent(data) {
+      return data.keys().hasAll(['id_plan']) && data.keys().hasOnly(['id_plan'])
+        && data.id_plan is string && data.id_plan == 'sistemas-rm-615-2016'
+        && exists(/databases/$(database)/documents/planes_estudio/sistemas-rm-615-2016)
+        && get(/databases/$(database)/documents/planes_estudio/sistemas-rm-615-2016).data.id_carrera == 'ingenieria-sistemas'
+        && exists(/databases/$(database)/documents/carreras/ingenieria-sistemas);
+    }
+    function completeRegistration(uid) {
+      // Comprueba el estado FINAL del lote, no solo el documento que se escribe.
+      return validUser(getAfter(/databases/$(database)/documents/usuarios/$(uid)).data)
+        && validPerson(getAfter(/databases/$(database)/documents/personas/$(uid)).data)
+        && validStudent(getAfter(/databases/$(database)/documents/estudiantes/$(uid)).data);
+    }
+    match /usuarios/{uid} {
+      allow get: if isOwner(uid);
+      allow create: if isOwner(uid) && validUser(request.resource.data)
+        && request.resource.data.fecha_creacion == request.time && completeRegistration(uid);
+      allow update: if isOwner(uid) && validUser(request.resource.data)
+        && request.resource.data.fecha_creacion == resource.data.fecha_creacion
+        && completeRegistration(uid);
+    }
+    match /personas/{uid} {
+      allow get: if isOwner(uid);
+      allow create, update: if isOwner(uid) && validPerson(request.resource.data)
+        && completeRegistration(uid);
+    }
+    match /estudiantes/{uid} {
+      allow get: if isOwner(uid);
+      allow create: if isOwner(uid) && validStudent(request.resource.data) && completeRegistration(uid);
+      allow update: if isOwner(uid) && validStudent(request.resource.data)
+        && (!('id_plan' in resource.data) || request.resource.data.id_plan == resource.data.id_plan)
+        && completeRegistration(uid);
+    }
+    match /carreras/{id} {
+      allow get: if request.auth != null && id == 'ingenieria-sistemas';
+    }
+    match /planes_estudio/{id} {
+      allow get: if request.auth != null && id == 'sistemas-rm-615-2016';
+    }
+    // Sin listas privadas, borrados, escrituras de catálogo ni subcolecciones en esta entrega.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
