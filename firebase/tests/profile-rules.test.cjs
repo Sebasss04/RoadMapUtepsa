@@ -106,7 +106,7 @@ async function references() {
     await expect(`student cannot delete reference ${path}`, commit('alice', [{ delete: `${root}/${path}` }]), 403);
   }
   await expect('student cannot create catalog reference', commit('alice', [write('carreras/otra', { nombre: 'Otra' })]), 403);
-  await expect('unimplemented academic subcollection denied', commit('alice', [write('estudiantes/alice/estados/m001', { estado: 'APROBADA' })]), 403);
+  await expect('state for nonexistent catalog subject denied', commit('alice', [write('estudiantes/alice/estados/m001', { estado: 'APROBADA' })]), 403);
   await expect('unknown collection denied', commit('alice', [write('otra/alice', { dato: 'valor' })]), 403);
   await expect('atomic batch with invalid person fails', commit('invalid-batch', registration('invalid-batch', '')), 403);
   await expect('invalid batch created no user', get('invalid-batch', 'usuarios/invalid-batch'), 404);

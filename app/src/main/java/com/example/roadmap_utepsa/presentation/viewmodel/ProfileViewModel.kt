@@ -3,9 +3,9 @@ package com.example.roadmap_utepsa.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.roadmap_utepsa.data.ProfileData
+import com.example.roadmap_utepsa.domain.model.ProfileData
 import com.example.roadmap_utepsa.data.ProfileRepository
-import com.example.roadmap_utepsa.data.validProfileName
+import com.example.roadmap_utepsa.domain.profile.validProfileName
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

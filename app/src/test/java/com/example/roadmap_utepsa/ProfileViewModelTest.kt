@@ -1,6 +1,8 @@
 package com.example.roadmap_utepsa
 
 import com.example.roadmap_utepsa.data.*
+import com.example.roadmap_utepsa.domain.model.*
+import com.example.roadmap_utepsa.domain.profile.validProfileName
 import com.example.roadmap_utepsa.presentation.viewmodel.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers

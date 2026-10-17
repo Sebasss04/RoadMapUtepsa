@@ -34,6 +34,8 @@ android {
     buildFeatures {
         compose = true
     }
+    // Solo la APK de pruebas incluye el catálogo como fixture; producción lee Firestore.
+    sourceSets.getByName("androidTest").assets.srcDir("../firebase/catalogo")
 }
 
 dependencies {
@@ -49,6 +51,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
     implementation(libs.kotlinx.coroutines.play.services)
     // Google Sign In
     implementation(libs.androidx.credentials)

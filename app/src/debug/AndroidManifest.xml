@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- La excepción de red se limita a las pruebas contra emuladores locales.
+         vmSafeMode no evitó los cierres nativos del AVD y forzaba interpretación. -->
+    <application android:networkSecurityConfig="@xml/history_sdk_network_security" />
+</manifest>

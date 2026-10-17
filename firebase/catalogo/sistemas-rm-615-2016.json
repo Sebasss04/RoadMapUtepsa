@@ -1,0 +1,625 @@
+{
+  "version_formato": 2,
+  "id_plan": "sistemas-rm-615-2016",
+  "fuente": {
+    "archivo_pdf": "Pensum Ingenieria de Sistemas.pdf",
+    "sha256_pdf": "57c6dd5b886515be1066a164cb8dc90c8bf8e771e73a95174cf15888d2352b42",
+    "resolucion": "615/2016"
+  },
+  "materias": [
+    {
+      "id": "fb1dab22-2348-551f-bc70-352b22c2ce2d",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "BMS-300",
+      "nombre": "Introducción a las Matemáticas",
+      "semestre": 1,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    },
+    {
+      "id": "d53b90f1-f469-5f3e-a3ae-c248f011f483",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "BFG-300",
+      "nombre": "Física I",
+      "semestre": 1,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "316362c6-79fa-5021-ae3e-f6e65cf4101e",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "TRBA-330",
+      "nombre": "Introducción a la Vida Universitaria TEC",
+      "semestre": 1,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "3c61c8a7-263c-5c5a-8ebc-af022cf63574",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SAL-304",
+      "nombre": "Matemáticas Discretas",
+      "semestre": 1,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "7f9cd4ef-7d44-535f-85da-822e18ddfe88",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SCC-300",
+      "nombre": "Ciencias de la Computación",
+      "semestre": 1,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    },
+    {
+      "id": "8a5dca99-c7af-543a-a205-3a3acc392466",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "BMS-301",
+      "nombre": "Cálculo I",
+      "semestre": 2,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "35aed79d-8fcf-5544-86fb-c2297a89348c",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "BMA-302",
+      "nombre": "Álgebra Lineal",
+      "semestre": 2,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "39de8258-5666-5535-b4cc-f490ecc9ae56",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "TRBA-333",
+      "nombre": "Expresión Oral y Escrita TEC",
+      "semestre": 2,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "68b64723-78a8-5d79-89e5-82938bf73036",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "BMA-303",
+      "nombre": "Probabilidad y Estadística",
+      "semestre": 2,
+      "area": "COMPLEMENTARIA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "81fd3088-3596-55da-a2f7-a0f639d77a3a",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SOI-301",
+      "nombre": "Organización y Arquitectura de Computadoras",
+      "semestre": 2,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "14f7e1d4-f314-571b-8202-3842d76b4092",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SAL-301",
+      "nombre": "Algoritmos y Programación",
+      "semestre": 2,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    },
+    {
+      "id": "75b80182-a5ce-5593-a64d-46cfa1639931",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "BMS-302",
+      "nombre": "Cálculo II",
+      "semestre": 3,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "7e71fe1f-e423-519a-9cb1-0431235a80a1",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "TDCO-301",
+      "nombre": "Constitución y Ciudadanía TEC",
+      "semestre": 3,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "22e35e36-a80b-5b1d-ba24-450cd2ef76fb",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "BMA-304",
+      "nombre": "Investigación Operativa",
+      "semestre": 3,
+      "area": "COMPLEMENTARIA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "15cf174e-3fa1-5e93-837b-6c23314ecf3c",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SDA-301",
+      "nombre": "Fundamentos del Diseño Interactivo",
+      "semestre": 3,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "cb49b20d-fffb-5101-8fa7-3a006de4bce7",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SOI-302",
+      "nombre": "Sistemas Operativos",
+      "semestre": 3,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "7cea96d9-7707-5220-b218-28a85fe4fa55",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SIS-301",
+      "nombre": "Base de Datos",
+      "semestre": 3,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "b37ea8d5-fd45-53e8-90d5-bc6f9b6a2e07",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SAL-302",
+      "nombre": "Algoritmos y Estructura de Datos",
+      "semestre": 3,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "75649722-0bc9-5376-913c-e5547ce0853f",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SDA-302",
+      "nombre": "Desarrollo de Videojuegos",
+      "semestre": 4,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "07919ad2-0848-52b0-ab9d-deea107fcf5d",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SRF-301",
+      "nombre": "Redes I",
+      "semestre": 4,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    },
+    {
+      "id": "73916614-ee2e-55bb-99a6-98b303044467",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SIS-302",
+      "nombre": "Administración y Programación de Base de Datos",
+      "semestre": 4,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    },
+    {
+      "id": "52ef8872-be50-5ae6-8fd3-666a17e7bdfe",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SAL-303",
+      "nombre": "Algoritmos y Complejidad",
+      "semestre": 4,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "f75d0bf8-a6fe-58b2-887b-3bf1101d6050",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "TRBA-337",
+      "nombre": "Metodología de Investigación Tecnológica",
+      "semestre": 5,
+      "area": "BASICA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "914f1e8f-fabb-554a-8883-f375a8ab42fa",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SRA-304",
+      "nombre": "Redes Inalámbricas",
+      "semestre": 5,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "dd101cb6-f7ec-5c52-ac3d-8341467559c0",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SOI-303",
+      "nombre": "Computación Paralela y Distribuida",
+      "semestre": 5,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "bc3b890d-71d2-5748-a046-7301819f821f",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SIS-303",
+      "nombre": "Análisis y Modelado de Sistemas",
+      "semestre": 5,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    },
+    {
+      "id": "7400ab4e-4575-5954-a22f-de2d6e91bb36",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SDA-303",
+      "nombre": "Desarrollo de Aplicaciones Web",
+      "semestre": 5,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "a2bc5848-c781-5b6d-81d8-2bb5dc27a24d",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SAL-306",
+      "nombre": "Programación Lógica y Funcional",
+      "semestre": 5,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "369ca5b9-b57f-5b01-91fe-4964b74fcf32",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "TPMA-301",
+      "nombre": "Medio Ambiente TEC",
+      "semestre": 6,
+      "area": "COMPLEMENTARIA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "516724b0-e561-5d2c-8058-f7735f72598f",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SOI-304",
+      "nombre": "Administración de Sistemas Operativos",
+      "semestre": 6,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "9a5192f7-0155-5615-8e4c-2b776b3c3af2",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SOI-305",
+      "nombre": "Sistema de Información Geográfica",
+      "semestre": 6,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "2b13f519-e145-59c0-9d37-7d8344f2e961",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SIS-304",
+      "nombre": "Ingeniería de Software",
+      "semestre": 6,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    },
+    {
+      "id": "37661802-7a9d-54c8-b702-822791b84ab5",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SCC-302",
+      "nombre": "Lenguajes Formales y Autómatas",
+      "semestre": 6,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "224cbffa-b34f-5c8b-b47b-c54d922f7375",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SCC-304",
+      "nombre": "Inteligencia Artificial",
+      "semestre": 6,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "d801219c-e55b-5c04-9039-38bd1504a11b",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "RIG-360",
+      "nombre": "Inglés Técnico I",
+      "semestre": 7,
+      "area": "COMPLEMENTARIA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "26f25e52-a808-5059-ba91-02248ad8704b",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "TDCO-312",
+      "nombre": "Legislación para Ingenieros TEC",
+      "semestre": 7,
+      "area": "COMPLEMENTARIA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "2f696856-c88d-56d5-b58c-31aa7406f91f",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SES-301",
+      "nombre": "Electiva I (Sistemas)",
+      "semestre": 7,
+      "area": "ELECTIVA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "95afd49b-4581-5424-b9d1-baf8d7e61e7a",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SRF-304",
+      "nombre": "Seguridad de la Información",
+      "semestre": 7,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "6ff4f553-8f54-5f53-9bfd-570fc75b4524",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SIS-305",
+      "nombre": "Calidad y Prueba de Software",
+      "semestre": 7,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "b09a9ca1-585a-5903-9128-be27be9199c5",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SDA-304",
+      "nombre": "Proyecto de Aplicaciones Móviles",
+      "semestre": 7,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    },
+    {
+      "id": "23c9d223-e89a-50bf-8602-d56b44eabea5",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "RIG-362",
+      "nombre": "Inglés Técnico II",
+      "semestre": 8,
+      "area": "COMPLEMENTARIA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "9ba7d046-8c4a-52f2-bf80-7bf786e61e8d",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "TPPY-301",
+      "nombre": "Desarrollo Empresarial Tecnológico",
+      "semestre": 8,
+      "area": "COMPLEMENTARIA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "9b6fce0a-f957-5a6b-880f-06e3a73cdd88",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SES-302",
+      "nombre": "Electiva II (Sistemas)",
+      "semestre": 8,
+      "area": "ELECTIVA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "ae0af14b-3066-5581-b8b8-b5ba02703eed",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SOI-306",
+      "nombre": "Infraestructura de TI y Tecnologías Emergentes",
+      "semestre": 8,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "b7bc3be4-dabb-5766-b8a4-b49035db8f48",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SOI-307",
+      "nombre": "Gestión de Servicios de TI",
+      "semestre": 8,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "bf453970-36b5-5fa7-8d8a-68a88dacbb1e",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SCC-303",
+      "nombre": "Diseño de Compiladores",
+      "semestre": 8,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "5f65c1fa-2c7d-59e7-8355-633fac532a10",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SCC-305",
+      "nombre": "Análisis de Datos",
+      "semestre": 8,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "8af7e095-4108-5538-b453-498ca54eafb4",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SES-303",
+      "nombre": "Electiva III (Sistemas)",
+      "semestre": 9,
+      "area": "ELECTIVA",
+      "min_aprobadas": 0,
+      "horas_totales": 85
+    },
+    {
+      "id": "a157d3e5-55cd-5d3e-8dd2-e46862e154ca",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "STS-300",
+      "nombre": "Taller de Graduación (Sistemas)",
+      "semestre": 9,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 45,
+      "horas_totales": 400
+    },
+    {
+      "id": "97d17109-daf4-58eb-9304-b49a48df44e2",
+      "id_plan": "sistemas-rm-615-2016",
+      "codigo": "SIS-306",
+      "nombre": "Proyecto Integrador de Desarrollo de Soluciones Empresariales",
+      "semestre": 9,
+      "area": "ESPECIALIDAD",
+      "min_aprobadas": 0,
+      "horas_totales": 170
+    }
+  ],
+  "prerrequisitos": [
+    {
+      "id_objetivo": "8a5dca99-c7af-543a-a205-3a3acc392466",
+      "id_requisito": "fb1dab22-2348-551f-bc70-352b22c2ce2d"
+    },
+    {
+      "id_objetivo": "35aed79d-8fcf-5544-86fb-c2297a89348c",
+      "id_requisito": "fb1dab22-2348-551f-bc70-352b22c2ce2d"
+    },
+    {
+      "id_objetivo": "14f7e1d4-f314-571b-8202-3842d76b4092",
+      "id_requisito": "7f9cd4ef-7d44-535f-85da-822e18ddfe88"
+    },
+    {
+      "id_objetivo": "75b80182-a5ce-5593-a64d-46cfa1639931",
+      "id_requisito": "8a5dca99-c7af-543a-a205-3a3acc392466"
+    },
+    {
+      "id_objetivo": "15cf174e-3fa1-5e93-837b-6c23314ecf3c",
+      "id_requisito": "7f9cd4ef-7d44-535f-85da-822e18ddfe88"
+    },
+    {
+      "id_objetivo": "cb49b20d-fffb-5101-8fa7-3a006de4bce7",
+      "id_requisito": "81fd3088-3596-55da-a2f7-a0f639d77a3a"
+    },
+    {
+      "id_objetivo": "7cea96d9-7707-5220-b218-28a85fe4fa55",
+      "id_requisito": "14f7e1d4-f314-571b-8202-3842d76b4092"
+    },
+    {
+      "id_objetivo": "b37ea8d5-fd45-53e8-90d5-bc6f9b6a2e07",
+      "id_requisito": "14f7e1d4-f314-571b-8202-3842d76b4092"
+    },
+    {
+      "id_objetivo": "75649722-0bc9-5376-913c-e5547ce0853f",
+      "id_requisito": "15cf174e-3fa1-5e93-837b-6c23314ecf3c"
+    },
+    {
+      "id_objetivo": "73916614-ee2e-55bb-99a6-98b303044467",
+      "id_requisito": "7cea96d9-7707-5220-b218-28a85fe4fa55"
+    },
+    {
+      "id_objetivo": "52ef8872-be50-5ae6-8fd3-666a17e7bdfe",
+      "id_requisito": "b37ea8d5-fd45-53e8-90d5-bc6f9b6a2e07"
+    },
+    {
+      "id_objetivo": "dd101cb6-f7ec-5c52-ac3d-8341467559c0",
+      "id_requisito": "07919ad2-0848-52b0-ab9d-deea107fcf5d"
+    },
+    {
+      "id_objetivo": "bc3b890d-71d2-5748-a046-7301819f821f",
+      "id_requisito": "7cea96d9-7707-5220-b218-28a85fe4fa55"
+    },
+    {
+      "id_objetivo": "a2bc5848-c781-5b6d-81d8-2bb5dc27a24d",
+      "id_requisito": "52ef8872-be50-5ae6-8fd3-666a17e7bdfe"
+    },
+    {
+      "id_objetivo": "9a5192f7-0155-5615-8e4c-2b776b3c3af2",
+      "id_requisito": "7cea96d9-7707-5220-b218-28a85fe4fa55"
+    },
+    {
+      "id_objetivo": "2b13f519-e145-59c0-9d37-7d8344f2e961",
+      "id_requisito": "bc3b890d-71d2-5748-a046-7301819f821f"
+    },
+    {
+      "id_objetivo": "37661802-7a9d-54c8-b702-822791b84ab5",
+      "id_requisito": "52ef8872-be50-5ae6-8fd3-666a17e7bdfe"
+    },
+    {
+      "id_objetivo": "224cbffa-b34f-5c8b-b47b-c54d922f7375",
+      "id_requisito": "a2bc5848-c781-5b6d-81d8-2bb5dc27a24d"
+    },
+    {
+      "id_objetivo": "6ff4f553-8f54-5f53-9bfd-570fc75b4524",
+      "id_requisito": "2b13f519-e145-59c0-9d37-7d8344f2e961"
+    },
+    {
+      "id_objetivo": "b09a9ca1-585a-5903-9128-be27be9199c5",
+      "id_requisito": "7400ab4e-4575-5954-a22f-de2d6e91bb36"
+    },
+    {
+      "id_objetivo": "23c9d223-e89a-50bf-8602-d56b44eabea5",
+      "id_requisito": "d801219c-e55b-5c04-9039-38bd1504a11b"
+    },
+    {
+      "id_objetivo": "ae0af14b-3066-5581-b8b8-b5ba02703eed",
+      "id_requisito": "516724b0-e561-5d2c-8058-f7735f72598f"
+    },
+    {
+      "id_objetivo": "bf453970-36b5-5fa7-8d8a-68a88dacbb1e",
+      "id_requisito": "37661802-7a9d-54c8-b702-822791b84ab5"
+    },
+    {
+      "id_objetivo": "5f65c1fa-2c7d-59e7-8355-633fac532a10",
+      "id_requisito": "224cbffa-b34f-5c8b-b47b-c54d922f7375"
+    },
+    {
+      "id_objetivo": "97d17109-daf4-58eb-9304-b49a48df44e2",
+      "id_requisito": "5f65c1fa-2c7d-59e7-8355-633fac532a10"
+    },
+    {
+      "id_objetivo": "97d17109-daf4-58eb-9304-b49a48df44e2",
+      "id_requisito": "6ff4f553-8f54-5f53-9bfd-570fc75b4524"
+    },
+    {
+      "id_objetivo": "7400ab4e-4575-5954-a22f-de2d6e91bb36",
+      "id_requisito": "73916614-ee2e-55bb-99a6-98b303044467"
+    },
+    {
+      "id_objetivo": "516724b0-e561-5d2c-8058-f7735f72598f",
+      "id_requisito": "dd101cb6-f7ec-5c52-ac3d-8341467559c0"
+    }
+  ]
+}

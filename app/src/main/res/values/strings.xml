@@ -43,7 +43,7 @@
     <string name="profile_plan_assigned">50 materias · Plan asignado a tu perfil</string>
     <string name="profile_incomplete">Tu perfil está incompleto. Guarda tus datos para completarlo con esta misma cuenta.</string>
     <string name="profile_saved">Cambios guardados</string>
-    <string name="profile_saved_detail">Tu perfil se guardó en Cloud Firestore. Puedes corregirlo aquí; las funciones académicas siguen en desarrollo.</string>
+    <string name="profile_saved_detail">Tu perfil se guardó en Cloud Firestore.</string>
     <string name="profile_save_error">No pudimos guardar los cambios</string>
     <string name="profile_save_error_detail">Tu cuenta ya existe. Conservamos lo que escribiste para que puedas reintentar. Revisa tu conexión o los permisos de acceso.</string>
     <string name="profile_pending">Guardado sin confirmar</string>

@@ -8,3 +8,18 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Cachés, diagnósticos y credenciales locales
+.kotlin/
+*.log
+__pycache__/
+*.py[cod]
+node_modules/
+.firebase/
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*service-account*.json
+*serviceAccount*.json

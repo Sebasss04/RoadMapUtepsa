@@ -1,5 +1,6 @@
 package com.example.roadmap_utepsa.presentation.profile
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.roadmap_utepsa.R
-import com.example.roadmap_utepsa.data.ProfileRegistration
+import com.example.roadmap_utepsa.domain.model.ProfileRegistration
 import com.example.roadmap_utepsa.presentation.viewmodel.ProfileLoad
 import com.example.roadmap_utepsa.presentation.viewmodel.ProfileUiState
 
@@ -35,30 +36,35 @@ fun ProfileScreen(
     onSave: () -> Unit,
     onRetryLoad: () -> Unit,
     onDiscard: () -> Unit,
-    onSignOut: () -> Unit
+    onSignOut: () -> Unit,
+    onReturn: (() -> Unit)? = null
 ) {
     val focus = LocalFocusManager.current
     var confirmDiscard by remember { mutableStateOf(false) }
     var confirmSignOut by remember { mutableStateOf(false) }
+    var confirmReturn by remember { mutableStateOf(false) }
     val existing = state.profile?.registration == ProfileRegistration.COMPLETE
     val completing = state.load == ProfileLoad.READY && !existing
     val requestSignOut = { if (state.hasChanges) confirmSignOut = true else onSignOut() }
+    val requestReturn = { if (!state.saving) {
+        if (state.hasChanges) confirmReturn = true else onReturn?.invoke()
+    } }
+    BackHandler(enabled = onReturn != null) { requestReturn() }
     Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(
             Modifier.fillMaxSize().safeDrawingPadding().imePadding()
                 .verticalScroll(rememberScrollState()).padding(horizontal = 24.dp).padding(bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            // Provisional integration: Account and Summary are deliberately not destinations yet.
             TextButton(
-                onClick = requestSignOut,
+                onClick = if (onReturn != null) requestReturn else requestSignOut,
                 enabled = !state.saving, contentPadding = PaddingValues(0.dp),
                 modifier = Modifier.heightIn(min = 56.dp)
             ) {
                 Icon(painterResource(R.drawable.profile_back), contentDescription = null, Modifier.size(24.dp),
                     tint = MaterialTheme.colorScheme.onSurface)
                 Spacer(Modifier.width(10.dp))
-                Text(stringResource(R.string.profile_sign_out), color = MaterialTheme.colorScheme.onSurface)
+                Text(stringResource(if (onReturn != null) R.string.academic_return else R.string.profile_sign_out), color = MaterialTheme.colorScheme.onSurface)
             }
             Text(stringResource(if (completing) R.string.profile_title_create else R.string.profile_title_edit),
                 fontSize = 30.sp, lineHeight = 42.sp, fontWeight = FontWeight.Bold)
@@ -141,23 +147,31 @@ fun ProfileScreen(
                         modifier = Modifier.align(Alignment.CenterHorizontally)) {
                         Text(stringResource(R.string.profile_sign_out))
                     }
+                    if (existing && onReturn != null) TextButton(onClick = requestSignOut,
+                        enabled = !state.saving, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                        Text(stringResource(R.string.profile_sign_out))
+                    }
                 }
             }
         }
     }
-    if (confirmDiscard || confirmSignOut) AlertDialog(
-        onDismissRequest = { confirmDiscard = false; confirmSignOut = false },
+    if (confirmDiscard || confirmSignOut || confirmReturn) AlertDialog(
+        onDismissRequest = { confirmDiscard = false; confirmSignOut = false; confirmReturn = false },
         title = { Text(stringResource(R.string.profile_discard_title)) },
         text = { Text(stringResource(R.string.profile_discard_detail)) },
         confirmButton = {
             TextButton(onClick = {
-                if (confirmSignOut) onSignOut() else onDiscard()
+                if (confirmSignOut) onSignOut() else {
+                    onDiscard()
+                    if (confirmReturn) onReturn?.invoke()
+                }
                 confirmDiscard = false
                 confirmSignOut = false
+                confirmReturn = false
             }) { Text(stringResource(R.string.profile_discard_confirm)) }
         },
         dismissButton = {
-            TextButton(onClick = { confirmDiscard = false; confirmSignOut = false }) {
+            TextButton(onClick = { confirmDiscard = false; confirmSignOut = false; confirmReturn = false }) {
                 Text(stringResource(R.string.profile_keep_editing))
             }
         }

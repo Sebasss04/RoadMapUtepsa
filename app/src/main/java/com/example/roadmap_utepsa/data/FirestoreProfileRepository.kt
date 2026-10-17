@@ -1,5 +1,9 @@
 package com.example.roadmap_utepsa.data
 
+import com.example.roadmap_utepsa.domain.model.AssignedStudyPlan
+import com.example.roadmap_utepsa.domain.model.ProfileData
+import com.example.roadmap_utepsa.domain.model.ProfileRegistration
+import com.example.roadmap_utepsa.domain.profile.validProfileName
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue

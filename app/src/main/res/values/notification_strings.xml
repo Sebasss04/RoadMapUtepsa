@@ -1,0 +1,8 @@
+<resources>
+    <string name="notification_channel_name">Avisos de RoadMap</string>
+    <string name="notification_channel_description">Bienvenida y novedades de tu carrera</string>
+    <string name="notification_welcome_title">¡Bienvenido a RoadMap UTEPSA!</string>
+    <string name="notification_welcome_body">Tu próximo paso empieza aquí. Revisa tu malla y sigue avanzando en tu carrera.</string>
+    <string name="notification_default_body">Tienes un nuevo aviso de RoadMap UTEPSA.</string>
+    <string name="notification_permission_denied">Puedes activar los avisos en Ajustes → Notificaciones → RoadMap UTEPSA.</string>
+</resources>

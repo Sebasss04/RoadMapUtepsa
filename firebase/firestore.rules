@@ -5,6 +5,15 @@ rules_version = '2';
 // estudiantes/{uid}: id_plan (string fijo, referencia existente e inmutable).
 // Los IDs solo viven en las rutas; no hay correo, contraseña ni roles.
 // carreras y planes_estudio: referencias compartidas, sin escritura del cliente.
+// Paso 3, prototipo local pendiente de publicar:
+// materias/{id}: id_plan, codigo, nombre, semestre, area, min_aprobadas; solo lectura.
+// materias/{id}/prerrequisitos/{idRequisito}: documento vacío, solo lectura.
+// estudiantes/{uid}/estados/{idMateria}: solo estado = EN_CURSO o APROBADA.
+// PENDIENTE se representa eliminando el registro. Oferta sigue denegada.
+// control_academico/revision: version_formato=1 y valor entero monotónico.
+// TODO escritor académico (incluidos diario/preparación) debe incrementarlo
+// atómicamente. Clientes anteriores conservan lectura, pero deben actualizarse
+// para escribir. No requiere migrar ni reescribir estados personales existentes.
 service cloud.firestore {
   match /databases/{database}/documents {
     function isOwner(uid) {
@@ -38,6 +47,83 @@ service cloud.firestore {
         && validPerson(getAfter(/databases/$(database)/documents/personas/$(uid)).data)
         && validStudent(getAfter(/databases/$(database)/documents/estudiantes/$(uid)).data);
     }
+    function academicProfile(uid) {
+      // Para lecturas se comprueba el estado actual, no getAfter().
+      return validUser(get(/databases/$(database)/documents/usuarios/$(uid)).data)
+        && validPerson(get(/databases/$(database)/documents/personas/$(uid)).data)
+        && validStudent(get(/databases/$(database)/documents/estudiantes/$(uid)).data);
+    }
+    function catalogSubject(idMateria) {
+      return exists(/databases/$(database)/documents/materias/$(idMateria))
+        && get(/databases/$(database)/documents/materias/$(idMateria)).data.id_plan == 'sistemas-rm-615-2016';
+    }
+    function validAcademicState(data) {
+      return data.keys().hasAll(['estado']) && data.keys().hasOnly(['estado'])
+        && data.estado is string && data.estado in ['EN_CURSO', 'APROBADA'];
+    }
+    function validAcademicRevision(data) {
+      return data.keys().hasAll(['version_formato', 'valor'])
+        && data.keys().hasOnly(['version_formato', 'valor'])
+        && data.version_formato is int && data.version_formato == 1
+        && data.valor is int && data.valor > 0 && data.valor < 9223372036854775807;
+    }
+    function advancesAcademicRevision(uid) {
+      let revision = /databases/$(database)/documents/estudiantes/$(uid)/control_academico/revision;
+      return validAcademicRevision(getAfter(revision).data)
+        && ((!exists(revision) && getAfter(revision).data.valor == 1)
+          || (exists(revision) && getAfter(revision).data.valor == get(revision).data.valor + 1));
+    }
+    // Preparación v1 local: controla acceso/esquema, no coherencia curricular.
+    // El repositorio valida catálogo, huellas, deltas y conflictos del conjunto.
+    function validPreparation(data) {
+      return data.keys().hasAll(['version_formato', 'decision', 'actualizado_en'])
+        && data.keys().hasOnly(['version_formato', 'decision', 'actualizado_en'])
+        && data.version_formato is int && data.version_formato == 1
+        && data.decision in ['POSPUESTO', 'CONFIRMADO']
+        && data.actualizado_en is timestamp && data.actualizado_en == request.time;
+    }
+    function canSavePreparation(uid, data) {
+      let journal = /databases/$(database)/documents/estudiantes/$(uid)/operaciones_historial/actual;
+      return (data.decision == 'POSPUESTO'
+          && (!existsAfter(journal) || getAfter(journal).data.estado != 'EN_PROGRESO'))
+        || (data.decision == 'CONFIRMADO'
+          && getAfter(journal).data.estado == 'COMPLETADA'
+          && getAfter(journal).data.actualizado_en == request.time);
+    }
+    function validHistoryOperation(data) {
+      let uuid = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
+      return data.keys().hasAll(['version_formato', 'id_operacion', 'huella_base',
+          'huella_objetivo', 'revision_preparacion', 'cambios', 'aplicados', 'estado', 'actualizado_en'])
+        && data.keys().hasOnly(['version_formato', 'id_operacion', 'huella_base',
+          'huella_objetivo', 'revision_preparacion', 'cambios', 'aplicados', 'estado', 'actualizado_en'])
+        && data.version_formato is int && data.version_formato == 1
+        && data.id_operacion is string && data.id_operacion.matches(uuid)
+        && data.huella_base is string && data.huella_base.matches('[a-f0-9]{64}')
+        && data.huella_objetivo is string && data.huella_objetivo.matches('[a-f0-9]{64}')
+        && data.revision_preparacion is string
+        && (data.revision_preparacion == 'AUSENTE'
+          || data.revision_preparacion.matches('-?[0-9]{1,19}:[0-9]{1,9}'))
+        && data.cambios is map && data.cambios.size() <= 50
+        && data.cambios.values().hasOnly(['PA', 'PC', 'AP', 'AC', 'CP', 'CA'])
+        && (data.cambios.size() == 0 || data.cambios.keys().join('|').matches(uuid + '(\\|' + uuid + ')*'))
+        && data.aplicados is list && data.aplicados.size() == data.aplicados.toSet().size()
+        && data.aplicados.toSet().hasOnly(data.cambios.keys())
+        && data.estado in ['EN_PROGRESO', 'COMPLETADA', 'CANCELADA']
+        && (data.estado != 'COMPLETADA' || data.aplicados.size() == data.cambios.size())
+        && data.actualizado_en is timestamp && data.actualizado_en == request.time;
+    }
+    function startsHistoryOperation(data) {
+      return data.estado == 'EN_PROGRESO' && data.aplicados.size() == 0;
+    }
+    function advancesHistoryOperation(before, after) {
+      return (before.id_operacion != after.id_operacion
+          && before.estado in ['COMPLETADA', 'CANCELADA'] && startsHistoryOperation(after))
+        || (before.id_operacion == after.id_operacion && before.estado == 'EN_PROGRESO'
+          && after.huella_base == before.huella_base && after.huella_objetivo == before.huella_objetivo
+          && after.revision_preparacion == before.revision_preparacion && after.cambios == before.cambios
+          && after.aplicados.toSet().hasAll(before.aplicados)
+          && (after.estado != 'CANCELADA' || after.aplicados == before.aplicados));
+    }
     match /usuarios/{uid} {
       allow get: if isOwner(uid);
       allow create: if isOwner(uid) && validUser(request.resource.data)
@@ -57,6 +143,36 @@ service cloud.firestore {
       allow update: if isOwner(uid) && validStudent(request.resource.data)
         && (!('id_plan' in resource.data) || request.resource.data.id_plan == resource.data.id_plan)
         && completeRegistration(uid);
+      match /estados/{idMateria} {
+        // No filtrar por materia en lecturas: permite consultar la colección propia
+        // y diagnosticar registros huérfanos de una eventual operación administrativa.
+        allow get, list: if isOwner(uid) && academicProfile(uid);
+        allow create, update: if isOwner(uid) && completeRegistration(uid)
+          && catalogSubject(idMateria) && validAcademicState(request.resource.data)
+          && advancesAcademicRevision(uid);
+        // Puede limpiar un estado aunque su materia haya sido retirada por Admin.
+        allow delete: if isOwner(uid) && completeRegistration(uid) && advancesAcademicRevision(uid);
+      }
+      match /control_academico/revision {
+        allow get: if isOwner(uid) && academicProfile(uid);
+        allow create, update: if isOwner(uid) && completeRegistration(uid)
+          && validAcademicRevision(request.resource.data) && advancesAcademicRevision(uid);
+      }
+      match /configuracion_academica/historial {
+        allow get: if isOwner(uid) && academicProfile(uid);
+        allow create, update: if isOwner(uid) && completeRegistration(uid)
+          && validPreparation(request.resource.data) && canSavePreparation(uid, request.resource.data)
+          && advancesAcademicRevision(uid);
+      }
+      match /operaciones_historial/actual {
+        allow get: if isOwner(uid) && academicProfile(uid);
+        allow create: if isOwner(uid) && completeRegistration(uid)
+          && validHistoryOperation(request.resource.data) && startsHistoryOperation(request.resource.data)
+          && advancesAcademicRevision(uid);
+        allow update: if isOwner(uid) && completeRegistration(uid)
+          && validHistoryOperation(request.resource.data)
+          && advancesHistoryOperation(resource.data, request.resource.data) && advancesAcademicRevision(uid);
+      }
     }
     match /carreras/{id} {
       allow get: if request.auth != null && id == 'ingenieria-sistemas';
@@ -64,7 +180,16 @@ service cloud.firestore {
     match /planes_estudio/{id} {
       allow get: if request.auth != null && id == 'sistemas-rm-615-2016';
     }
-    // Sin listas privadas, borrados, escrituras de catálogo ni subcolecciones en esta entrega.
+    match /materias/{idMateria} {
+      // La consulta de colección requiere where('id_plan', '==', planV1).
+      allow get, list: if request.auth != null
+        && resource.data.id_plan == 'sistemas-rm-615-2016';
+      match /prerrequisitos/{idRequisito} {
+        // El cargador de catálogo valida las relaciones. No hay escrituras cliente.
+        allow get, list: if request.auth != null && catalogSubject(idMateria);
+      }
+    }
+    // Sin listas de perfiles, borrados de perfil, escrituras de catálogo ni oferta.
     match /{document=**} {
       allow read, write: if false;
     }
