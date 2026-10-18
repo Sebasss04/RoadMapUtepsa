@@ -45,6 +45,13 @@ internal class EstadosVersionados(private val db: FirebaseFirestore, private val
         check(!doc.metadata.isFromCache && !doc.metadata.hasPendingWrites())
         return revision(doc)
     }
+    /** Revisión remota para coordinar consultas académicas y de oferta. */
+    suspend fun revisionConsulta(uid: String): Long {
+        val origen = sesion(uid)
+        val valor = revisionServidor(uid)
+        comprobar(uid, origen)
+        return valor
+    }
     private suspend fun <T> leerEstable(uid: String, ids: Set<String>, session: Any,
                                        extra: suspend () -> T): Pair<Snapshot, T> {
         require(ids.size == 50)

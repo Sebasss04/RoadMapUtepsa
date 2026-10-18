@@ -1,5 +1,214 @@
 # Validación de RoadMap UTEPSA
 
+## Publicación de Para ti — 18/10/2026
+
+El estudiante autorizó subir todos los últimos cambios con documentación. Esta
+petición sustituye la espera previa de commit/push de T3/T4. Entrega en
+`feat/para-ti`, basada en `2f21871`, con PR hacia `main` para revisión del equipo;
+no implica merge automático. Fetch previo correcto: `origin/main` continúa en
+`2f21871`, sin cambios nuevos de Resumen. T1 sigue con el compañero.
+
+Incluye motor, consulta estable, ViewModel por sesión, pantalla, navegación,
+recursos, pruebas JVM/UI/SDK, runner protegido, dos exportaciones de diseño y
+guías actualizadas. No incluye APK, cachés, credenciales, logs ni informes bajo
+`app/build/`; esos informes son locales y regenerables.
+
+Comprobación de publicación: Gradle `:app:testDebugUnitTest :app:assembleDebug
+:app:lintDebug :app:assembleDebugAndroidTest --offline --max-workers=1`, JDK de
+Android Studio y heap de 768 MiB: **BUILD SUCCESSFUL**, 30 s, ocho tareas
+ejecutadas y 74 al día. La caché de configuración se reutilizó. Los informes JVM
+contienen **232 pruebas, cero fallos y errores**; no se forzó su reejecución.
+Lint: **cero errores y 39 advertencias**. La APK generada al publicar tiene
+SHA-256 `05ba5f841d5be597819b065228e9155a1a2c358f9a28c9cdfcb049785b102ead`;
+el hash del ajuste anterior se conserva debajo como evidencia de aquella ejecución.
+Se conserva la validación previa de **15 UI** y **1 SDK demo** con las fechas y
+límites detallados debajo; no se volvió a iniciar AVD ni Firebase demo para subir
+el código. Sin instalaciones, despliegues, migraciones ni escrituras personales.
+La primera ejecución restringida no accedió al bloqueo de la caché Gradle; la
+ejecución con acceso a esa caché completó correctamente.
+
+Evidencia local de esta comprobación:
+`app/build/reports/recommendations/publication-build-20261018.txt`.
+
+## Ajustes de Para ti — 18/10/2026
+
+Petición posterior a la entrega inicial T3/T4: avances parciales por requisitos
+directos, secundaria con beneficio y opcionales sin favorita artificial, conservando
+prioridad de pendientes anteriores. Texto reducido, pendientes desplegables y
+tarjetas verde/azul/gris. Cambios internos, sin persistencia nueva ni cambios de
+Firestore/catálogo/reglas. No se ejecutan pruebas personales ni se instala en el teléfono.
+
+Diseño: sección existente de Figma `11:292`, principal `11:295` y explicación
+`11:362` actualizadas antes de Compose. Detalle ilustrativo de Calidad con 1/2
+requisitos de Proyecto Integrador; nueva exportación
+[08_PARA_TI_AJUSTES_20261018.png](DISENOS/08_PARA_TI_AJUSTES_20261018.png).
+Verificación estructural: 773 descendientes, 393 frames, 267 textos, 87 vectores,
+17 rectángulos y 9 instancias; sin imágenes que sustituyan la UI, familia Roboto
+comprobada. Revisión visual de composición y corrección de acentos residuales.
+Las exportaciones muestran el encuadre inicial; los contenidos largos son desplazables.
+
+La primera comprobación ejecutó 229 JVM correctamente y compiló la APK, pero lint
+falló al generar el informe (`Range ... out of bounds`) después de editar los
+recursos mientras la ejecución estaba activa. No cuenta como compilación completa
+aprobada. La repetición con código fijo terminó correctamente. Durante la revisión
+visual se reforzó el resumen por cantidades cuando hay beneficios mixtos y se fijó
+el nombre de las opcionales en texto oscuro; la verificación definitiva incluye
+estos cambios y las pruebas adicionales.
+Con Gradle y AVD concurrentes hubo poca memoria libre; se detuvo únicamente el
+AVD sintético de esta tarea para terminar la compilación antes de instrumentar.
+
+- Gradle final: `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
+  :app:assembleDebugAndroidTest --offline --max-workers=1`, heap 768 MiB,
+  **BUILD SUCCESSFUL**, 1 min 13 s. APK principal y APK de pruebas compiladas.
+- **232 JVM, cero fallos/errores**; 20 pruebas del motor (10 nuevas frente a la
+  entrega inicial). Incluyen Calidad/Proyecto Integrador con Análisis pendiente,
+  aprobado y en curso, transición parcial→completo, prioridad anterior, orden por
+  cantidad de avances, secundaria que salta opciones sin beneficio, cero/una/ninguna
+  candidata, umbrales, cadenas, no duplicación y conservación de entradas. El caso
+  de cinco ofertadas comprueba Inglés principal, Calidad secundaria y tres opcionales.
+  Los tests existentes de lectura estable y sesión siguen correctos.
+- Lint final: **cero errores, 39 advertencias existentes**. Se corrigieron las dos
+  advertencias nuevas de Modifier y pluralización; no quedan avisos en los archivos
+  de recomendaciones revisados.
+- Contraste calculado: principal 6,14:1, secundaria 7,67:1, opcional 14,78:1;
+  metadatos sobre verde/azul 4,99:1 y 4,95:1. Todos superan 4,5:1.
+- **UI final: 15/15 correctas**, 94,594 s: seis de Para ti y nueve de Oferta,
+  con repositorios sintéticos en memoria. Verifica beneficios mixtos resumidos
+  por cantidades, detalle con ambos tipos de objetivos, ejemplo Inglés/Calidad,
+  1/2 requisitos y Análisis de Datos faltante, opcionales sin secundaria artificial,
+  una sola candidata, pendientes desplegables y avisos, estados bloqueantes,
+  fuente 1,5, nombres largos y navegación conservando búsqueda/borrador/revisión
+  de Oferta. Capturas finales revisadas visualmente; 17 PNG bajo
+  `recommendations-ui-captures/` en el directorio de evidencia.
+  Se usó únicamente `RoadMap_Recommendations_Test_API35`, `emulator-5556`,
+  resolución 824×1784/densidad 320, sin modificar el teléfono ni Pixel_7.
+  La ejecución anterior 14/14 pasó antes del ajuste exclusivo de resumen mixto
+  y color del nombre; la final 15/15 corresponde a la APK cuyo hash figura abajo.
+- SDK demo no repetido: no cambió la lectura, adaptador, persistencia ni contrato
+  remoto. La evidencia SDK de la entrega inicial sigue documentada con su fecha.
+
+SHA-256 de APK final:
+`925c7a6dc851361e11730632e32174065d20eeddee49f1607cd135edb7ce9299`.
+
+Evidencia local regenerable: `app/build/reports/recommendations/adjustments-*`.
+Runner: `scripts/test-recommendations.ps1 -AdbPath <ruta-al-adb-local>` con el AVD
+sintético indicado iniciado. No ejecutar toda la suite Android ni tests personales.
+AVD de esta revisión detenido al terminar; no se iniciaron servicios demo Firebase.
+La entrega inicial y sus resultados históricos se conservan debajo; no sustituyen
+las verificaciones de este ajuste. Al cerrar esta revisión todo quedó local;
+la autorización posterior de publicación se registra en la sección inicial.
+
+## Para ti — T3/T4, 18/10/2026
+
+Responsable: autor/Codex por asignación expresa del estudiante; el compañero
+conserva Resumen. Rama local `feat/para-ti`, base actualizada a `2f21871` (merge
+del PR #1 de Oferta confirmado mediante fetch). No había cambios T1 en main.
+Los cambios locales previos de plan/coordinación se sustituyeron por el alcance
+vigente solicitado. Al cerrar la entrega inicial no se crearon commits, push ni
+PR; la publicación posterior se registra en la sección inicial.
+
+Cierre documental solicitado por el estudiante tras la entrega: continuará las
+correcciones en otro chat. Este cierre solo actualiza las guías; no modifica
+código, no ejecuta nuevamente las suites y no amplía los resultados siguientes.
+
+### Diseño terminado
+
+Figma se actualizó antes de crear la pantalla Compose. Se revisaron visualmente
+los 13 estados editables: principal/otras opciones, explicación, oferta ausente,
+oferta vacía, ninguna candidata, error, carga, pendientes anteriores, alternativa
+disponible, historial pendiente/incoherente, recuperación y detalle cero.
+[Diseño principal](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=11-295)
+y [captura versionada](DISENOS/08_PARA_TI_ESTADOS_20261018.png).
+Se conservan Roboto, paleta, navegación e iconos. Flecha (18×18), advertencia, Oferta y Malla de estado (48×48) se exportaron
+como SVG y se trasladaron sin cambiar paths/strokes a vectores Android; las barras
+conservan sus cinco iconos existentes. Ejemplos identificados como ilustrativos, sin datos personales.
+
+### Implementación terminada
+
+Motor Kotlin puro, lectura conjunta estable y ViewModel por UID/versión conectados
+a Compose. La consulta no expone escrituras. Prioriza pendientes de semestres
+inferiores al mayor con aprobadas/en curso, luego desbloqueos inmediatos; conserva
+ceros, excluye activas/cadenas/ya habilitadas e incluye umbrales y no ofertadas.
+La navegación reutiliza Historial/Malla/Oferta/Perfil; mantiene borrador, consulta
+y revisión esperada de Oferta. Resumen conserva su independencia y acceso actual.
+
+### Verificaciones realizadas
+
+- Gradle final: `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
+  :app:assembleDebugAndroidTest`, **BUILD SUCCESSFUL**, 2 min 28 s, un trabajador
+  y heap 768 MiB para compartir memoria con el AVD. APK principal y androidTest.
+- **222 JVM, cero fallos/errores**: 23 nuevas (10 motor, 7 lectura, 6 ViewModel).
+  Prioridad, mayor desbloqueo dentro/fuera del grupo anterior, alternativa,
+  desempates, ceros, doble requisito, cadena, umbral 44→45, entradas intactas,
+  historial incoherente/planes/IDs; ausencia/vacío/error, cambios en ambas lecturas,
+  límite de tres intentos, identidad, carga sustituida, respuesta no cancelable,
+  cambio de cuenta y de versión de sesión. Dobles fallan si se intenta escribir.
+- Lint final: **cero errores, 39 advertencias**; sin advertencias en los archivos
+  nuevos de recomendaciones después de resolver los dos avisos de plurales.
+- **SDK demo: 1/1 correcta**, 23,778 s. FirebaseApp secundaria, proyecto
+  `demo-roadmap-utepsa`, Auth 9099 y Firestore 8089, cuentas sintéticas, catálogo
+  SAE de 50 materias. Confirmación y selección inicial como fixture; consulta y
+  cálculo dejan snapshots de estados/preparación/diario/revisión/oferta iguales.
+  Tras cambios guardados fuera de la consulta, relee revisiones, excluye aprobada y
+  vuelve a comprobar snapshots intactos. Cambio de cuenta rechaza el UID anterior.
+  Ejecutada antes de los últimos ajustes visuales de tarjeta, plurales e iconos;
+  motor, repositorio y adaptador Firebase no cambiaron después de esa ejecución.
+- **UI final: 13/13 correctas**, 53,193 s: 4 nuevas de Recomendaciones y 9 de
+  regresión de Oferta. Estados y acciones de carga/error/historial/recuperación/
+  ausente/vacía/sin candidatas, prioridad y alternativa, explicación y cero,
+  nombres largos y fuente 1,5. Navegación Oferta → Para ti → Oferta conserva
+  búsqueda/borrador/revisión; solo calcula la selección guardada y vuelve a cargar
+  al reentrar y regresar de Perfil. Regresiones de Historial, Perfil, advertencia
+  de cierre, errores, conflictos, filtros y guardado de Oferta correctas.
+  Una ejecución anterior dio 11/13: se corrigieron el test que pulsaba navegación
+  antes de terminar Guardar y el capturador que suponía una sola raíz al abrir
+  el modal. Se esperó el estado guardado y se detectó el panel por contenido y se capturó su ventana Android separada; no se relajaron las aserciones funcionales.
+  Capturas de los estados y resultados revisadas frente a Figma; SVG y métricas
+  de tarjeta corregidos desde el diseño para mantener nitidez y jerarquía.
+  Tras el ajuste exclusivo del capturador, androidTest recompilado y el caso de
+  detalle/fuente 1,5 repetido: **1/1 correcta**, 12,781 s, con las capturas del
+  modal y cero desbloqueos revisadas limpias. No cambió producción ni se repitieron
+  JVM/lint tras esa modificación exclusiva de pruebas.
+- `git diff --check` correcto. No se modificaron reglas, Auth productivo ni catálogo.
+
+### Entorno, evidencia y límites
+
+Se creó `RoadMap_Recommendations_Test_API35` separado de Pixel_7, imagen API35 de
+4 KB ya instalada, puerto 5556, sin ventana y sin snapshots. Pixel_7 y datos
+personales conservados. El host mostró presión de memoria y el primer arranque
+conjunto de instrumentación terminó con ANR de inicio; una captura posterior
+mostró también diálogo de System UI, aunque el caso aislado prioridad/alternativa
+pasó (1/1). No se presenta ese primer intento como éxito ni el AVD como reparado.
+Se precompiló la APK, liberaron procesos de compilación de esta tarea y redujo la
+resolución del AVD sintético a 824×1784/densidad 320. Se intentó suprimir los diálogos nuevos de error solo en ese AVD, pero el aviso
+ya abierto persistió; reiniciar System UI no acreditó una reparación. El
+capturador pulsa «Wait» únicamente si la ventana activa contiene exactamente
+«System UI isn't responding», conservando el diagnóstico y permitiendo una
+captura limpia. No cierra la app ni cambia sus datos. Los errores de las pruebas
+siguen haciendo fallar la instrumentación. Las capturas de página usan el árbol Compose; las del detalle usan la ventana
+Android completa porque PixelCopy de la Activity no incluye el Dialog del panel.
+Las aserciones confirman el contenido y el desplazamiento del panel antes de capturarlo.
+
+Evidencia regenerable local: `app/build/reports/recommendations/` contiene
+`build-final.txt`, `sdk.txt`, `ui.txt`, diagnóstico de arranque, capturas Compose
+y copia del diseño; `verification.json` resume conteos, geometrías de los cuatro
+SVG y SHA-256 de la APK (`8d84ae45544d181f9ebade22618954e668f3a477e9e876d65fcac2d45697d37d`).
+El código de producción coincide con la ejecución UI de 13 casos; después solo
+se modificó el capturador androidTest y la documentación. El script `scripts/test-recommendations.ps1` rechaza dispositivos
+desconocidos y ejecuta únicamente las clases sintéticas seleccionadas; `-SdkDemo`
+exige los servicios y fixtures demo descritos abajo. No ejecutar la suite Android
+completa ni los tests personales para repetir esta entrega. Auth/Firestore demo y
+el AVD aislado se detuvieron al terminar; no se borró ningún AVD.
+
+Para repetir SDK: generar config con
+`node firebase/scripts/prepare-history-sdk-emulator.cjs --config-only`, iniciar
+`firebase emulators:start --only auth,firestore --project demo-roadmap-utepsa
+--config app/build/reports/history-sdk-emulator/firebase.local.json`, preparar
+fixtures con el mismo script (variables `FIRESTORE_EMULATOR_HOST=127.0.0.1:8089`,
+`FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099`, `GCLOUD_PROJECT=demo-roadmap-utepsa`)
+y ejecutar `scripts/test-recommendations.ps1 -SdkDemo`.
+
+
 ## T2 — Oferta actual SAE, 18/10/2026
 
 Rama `feat/oferta-actual-sae`, base `96a400a`. Se conserva la modificación local

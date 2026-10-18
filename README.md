@@ -12,7 +12,7 @@ El contexto necesario para continuar desde otra computadora está versionado:
 - [Trabajo pendiente y reparto propuesto](CONTEXTO/TRABAJO_EN_EQUIPO.md).
 - [Validación de esta publicación](CONTEXTO/VALIDACION.md).
 
-Implementados: acceso Google, Perfil, Malla, Historial con coherencia, persistencia, recuperación y conflictos; catálogo SAE con duración y guardado optimizado. T2 añade Oferta actual SAE con consulta, selección manual sin materias aprobadas y reemplazo transaccional en `feat/oferta-actual-sae`, cuya publicación autorizó el estudiante tras aprobar sus pruebas. Ver validación e instrucciones de integración en CONTEXTO. Pendientes: integrar Resumen del compañero, Recomendador y funciones completas de Cuenta. Las reglas de Oferta ya fueron publicadas con autorización y relectura productiva verificada. Los mockups no prueban implementación.
+Implementados: acceso Google, Perfil, Malla, Historial con coherencia, persistencia, recuperación y conflictos; catálogo SAE con duración y guardado optimizado. T2 añade Oferta actual SAE con consulta, selección manual sin materias aprobadas y reemplazo transaccional en `feat/oferta-actual-sae`, cuya publicación autorizó el estudiante tras aprobar sus pruebas. Ver validación e instrucciones de integración en CONTEXTO. Para ti añade diseño Figma actualizado, motor de pendientes anteriores/desbloqueos/avances parciales, principal/secundaria/opcionales, consulta estable y pantalla en `feat/para-ti`; ver resultados y límites de validación en CONTEXTO/VALIDACION.md. Pendientes: integrar Resumen del compañero y funciones completas de Cuenta. Las reglas de Oferta ya fueron publicadas con autorización y relectura productiva verificada. Los mockups no prueban implementación.
 
 ## Preparar el entorno
 

@@ -1,6 +1,6 @@
 # RoadMap UTEPSA: estado actual y mantenimiento
 
-Revisión de T2 del 18/10/2026, hora de Bolivia. Leer este documento y [PRODUCTO_Y_PLAN.md](PRODUCTO_Y_PLAN.md) para continuar. Actualizar sus secciones en lugar de crear nuevos relevos o añadir estados contradictorios al final.
+Revisión de Para ti (T3/T4) del 18/10/2026, hora de Bolivia. Leer este documento y [PRODUCTO_Y_PLAN.md](PRODUCTO_Y_PLAN.md) para continuar. Actualizar sus secciones en lugar de crear nuevos relevos o añadir estados contradictorios al final.
 
 ## Ubicaciones y fuentes de verdad
 
@@ -24,11 +24,44 @@ Los viejos documentos acumulaban instrucciones de inicio, pausas, aprobaciones y
 | Coherencia | Dominio Kotlin puro, conectado a ViewModels y repositorios. |
 | Notificaciones | FCM y saludo local con permiso Android. Saludo local no acredita recepción push remota. |
 | Oferta actual SAE / T2 | Flujo implementado en rama `feat/oferta-actual-sae`: consulta, editor de 50 materias, reemplazo atómico, vacío/ausente, errores, resultado incierto y conflictos explícitos. 193 pruebas JVM, 7 UI y 1 SDK demo correctas; consultar VALIDACION.md para detalles y lint. Reglas de Oferta publicadas con autorización posterior al diagnóstico del teléfono y relectura remota verificada. |
-| Resumen / T1, Recomendaciones | No integrados en el checkout de T2; pestañas deshabilitadas. T1 está a cargo del compañero. |
+| Para ti / T3-T4 | Implementado en `feat/para-ti`, con avances parciales, secundaria/opcionales, textos breves y colores propios. Diseño Figma actualizado antes de Compose. Ver resultados de la revisión actual y evidencia previa en VALIDACION.md. |
+| Resumen / T1 | Continúa a cargo del compañero; no disponible en main consultado (`2f21871`). Acceso conservado deshabilitado; no es dependencia de Para ti. |
 | Correo, registro, recuperación, vinculación, Cuenta completa, biometría | Pendientes; declarar dependencias no equivale a implementar. |
 | Bimodulares | Publicadas: 40 modulares, 9 bimodulares y Taller con duración especial; etiquetas visibles, sin horas ni conversión a meses. |
 
 No repetir Historial ni Malla como desarrollos nuevos: ya existen. La revisión actual busca corregirlos y estabilizarlos.
+
+## Para ti — diseño e implementación
+
+Autor/Codex asume T3 y T4 por petición expresa. Rama `feat/para-ti`, adelantada
+sin cambios de árbol al merge de Oferta `origin/main` (`2f21871`). No se encontraron
+cambios de Resumen allí. Se preservaron los cambios locales del plan al sustituirlo
+por el alcance vigente, incluyendo la nueva prioridad de pendientes anteriores.
+
+Diseño: [Figma 11:295](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=11-295),
+13 estados revisados antes de Compose, con ajustes posteriores de jerarquía y
+detalle parcial; [exportación vigente](DISENOS/08_PARA_TI_AJUSTES_20261018.png).
+Implementación: motor Kotlin puro con reglas académicas compartidas, repositorio
+solo de consulta, ViewModel por sesión y pantalla con principal, secundaria y opcionales.
+La referencia para pendientes anteriores es el mayor semestre con aprobadas/en curso,
+no un semestre personal. Priorización orientativa, sin prohibición institucional.
+
+Consulta Preparación y Oferta guardadas entre revisiones académicas estables con
+tres intentos acotados y control de identidad; no añade escritores ni listeners.
+Malla y Oferta abren Para ti; conserva borrador/búsqueda/revisión esperada de Oferta.
+Se mantienen los flujos de Historial, Perfil y cierre de sesión. Cálculo y lectura no
+escriben. Diseño, código y verificaciones se registran por separado en VALIDACION.md.
+No hay despliegues, migraciones ni pruebas personales en esta entrega.
+
+Ajustes del 18/10/2026 implementados: avances parciales por prerrequisitos directos,
+secundaria solo con beneficio académico, opcionales sin favorita artificial y
+pendientes anteriores desplegables. Tarjetas verde/azul/gris y textos breves.
+Figma actualizado antes de Compose; exportación 08_PARA_TI_AJUSTES_20261018.png.
+Resultados y límites de esta revisión en VALIDACION.md. El 18/10/2026 el estudiante
+autorizó publicar la entrega completa en `feat/para-ti` y preparar su PR hacia
+`main`, conservando Resumen para el compañero. El inventario y las indicaciones
+para retomar están en [README.md](README.md#continuar-las-correcciones-en-otro-chat).
+No quedan servicios demo, AVD de prueba ni verificaciones de esta tarea en curso.
 
 ## Arquitectura y persistencia
 
@@ -384,5 +417,4 @@ datos ni cambiar cuentas para tratar cierres del runtime.
 Medir próximas modificaciones reales sin borrar historial para fabricar benchmarks.
 El contrato de revisión global ya está implementado en esta optimización; medir
 el próximo guardado real sin borrar historial ni repetir confirmaciones solo para
-fabricar un benchmark. No quitar CAS silenciosamente. Resumen, Oferta actual y
-Recomendador continúan pendientes según PRODUCTO_Y_PLAN.md.
+fabricar un benchmark. No quitar CAS silenciosamente. El estado vigente de Resumen, Oferta y Para ti figura en la tabla inicial y PRODUCTO_Y_PLAN.md.
