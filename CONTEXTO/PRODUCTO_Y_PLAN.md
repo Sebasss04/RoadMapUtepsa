@@ -191,8 +191,8 @@ Fuera de v1: otras carreras/planes/roles, horarios completos, historial de notas
 
 [Archivo Figma de interfaces](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=17-482). Exportaciones originales en [DISENOS](DISENOS/). Sus informes contienen estados históricos; no prueban qué está implementado hoy. Nuevas pantallas o cambios visuales sustanciales deben partir de los diseños y del acuerdo con el estudiante. Las correcciones de lógica no requieren rediseñar pantallas.
 
-Continuación: publicar Para ti con los ajustes por autorización del 18/10/2026,
-revisar su PR e integrar Resumen cuando el compañero lo entregue, preservando
+Continuación: revisar el [PR #2 de Para ti](https://github.com/Sebasss04/RoadMapUtepsa/pull/2),
+publicado por autorización del 18/10/2026, e integrar Resumen cuando el compañero lo entregue, preservando
 Oferta y Para ti. Cuenta/proveedores/correo/biometría requiere una petición propia
 del estudiante. La clasificación de duración ya cuenta con fuente SAE; verificar
 el estado de publicación en ESTADO_ACTUAL.md. No interpretar esta lista como

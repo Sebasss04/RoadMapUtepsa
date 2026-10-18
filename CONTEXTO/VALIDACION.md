@@ -30,6 +30,12 @@ ejecución con acceso a esa caché completó correctamente.
 Evidencia local de esta comprobación:
 `app/build/reports/recommendations/publication-build-20261018.txt`.
 
+Publicación confirmada: commit `e13ef13`, push a `origin/feat/para-ti` con
+seguimiento remoto y [PR #2](https://github.com/Sebasss04/RoadMapUtepsa/pull/2)
+abierto hacia `main`. No se ejecutó merge. `git diff --cached --check` correcto
+antes del commit. El cierre posterior solo incorpora este resultado y el enlace
+a las guías, sin cambiar código ni ampliar los resultados de pruebas.
+
 ## Ajustes de Para ti — 18/10/2026
 
 Petición posterior a la entrega inicial T3/T4: avances parciales por requisitos

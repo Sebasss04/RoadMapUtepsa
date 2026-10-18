@@ -44,8 +44,10 @@ El alcance vigente está en PRODUCTO_Y_PLAN.md; las comprobaciones en VALIDACION
 Leer las cuatro guías indicadas arriba. La rama es `feat/para-ti`, sobre
 `2f21871`. El 18/10/2026 el estudiante autorizó publicar todos los cambios de
 Para ti, incluidos ajustes, pruebas, diseños y documentación. Esta autorización
-sustituye la espera anterior de commit/push. La entrega se prepara en esta rama
+sustituye la espera anterior de commit/push. La entrega está publicada en esta rama
 con PR hacia `main`, sin merge automático; consultar VALIDACION.md para su estado.
+Push confirmado en `origin/feat/para-ti`, implementación `e13ef13`;
+[PR #2](https://github.com/Sebasss04/RoadMapUtepsa/pull/2) abierto para revisión.
 Antes de continuar, revisar `git status` y conservar cualquier cambio local nuevo.
 
 | Parte | Archivos principales, relativos a la raíz del repositorio |

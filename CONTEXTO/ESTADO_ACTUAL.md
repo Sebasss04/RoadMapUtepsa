@@ -58,8 +58,10 @@ secundaria solo con beneficio académico, opcionales sin favorita artificial y
 pendientes anteriores desplegables. Tarjetas verde/azul/gris y textos breves.
 Figma actualizado antes de Compose; exportación 08_PARA_TI_AJUSTES_20261018.png.
 Resultados y límites de esta revisión en VALIDACION.md. El 18/10/2026 el estudiante
-autorizó publicar la entrega completa en `feat/para-ti` y preparar su PR hacia
-`main`, conservando Resumen para el compañero. El inventario y las indicaciones
+autorizó publicar la entrega completa en `feat/para-ti`. Push confirmado de
+`e13ef13` y [PR #2](https://github.com/Sebasss04/RoadMapUtepsa/pull/2) abierto
+hacia `main`, pendiente de revisión, sin merge. Resumen sigue con el compañero.
+El inventario y las indicaciones
 para retomar están en [README.md](README.md#continuar-las-correcciones-en-otro-chat).
 No quedan servicios demo, AVD de prueba ni verificaciones de esta tarea en curso.
 

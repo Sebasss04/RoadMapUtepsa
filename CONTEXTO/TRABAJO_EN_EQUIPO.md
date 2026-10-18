@@ -91,6 +91,9 @@ git fetch origin
 git merge origin/feat/para-ti
 ```
 
+Entrega publicada: `e13ef13`,
+[PR #2](https://github.com/Sebasss04/RoadMapUtepsa/pull/2), pendiente de revisión.
+
 Resolver conservando Resumen y Para ti en `AppContainer`, `MainActivity`,
 `AppNavigation` y las barras de navegación. No reemplazar estos archivos completos.
 Después ejecutar las verificaciones pertinentes. Cuando el PR esté integrado en
