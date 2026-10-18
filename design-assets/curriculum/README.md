@@ -16,4 +16,9 @@ app/src/main/res/drawable-xxxhdpi fueron renderizados a escala 4x con sharp:
 
 Android aplica los colores del componente Icon, conservando la geometría y transparencia
 originales. No hay referencias de red a URLs de assets temporales en ejecución.
-Las secciones futuras de navegación están deshabilitadas en esta entrega.
+T2 reutiliza estos cinco iconos en Oferta (cabecera 24dp, navegación 21dp).
+El 18/10/2026 se descargaron los SVG de Figma 15:431 y se comparó su geometría y
+dimensiones con estos originales: los cinco coinciden, independientemente del tinte.
+Los PNG locales son no vacíos y se usan en OfertaScreen y CurriculumScreen.
+La selección de materias usa Checkbox de Material 3 como control dinámico.
+Resumen y Para ti siguen deshabilitados hasta integrar sus respectivas entregas.

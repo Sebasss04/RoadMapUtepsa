@@ -1,5 +1,7 @@
 package com.example.roadmap_utepsa
 
+import com.example.roadmap_utepsa.data.OfertaRepository
+import com.example.roadmap_utepsa.data.FirestoreOfertaRepository
 import com.example.roadmap_utepsa.data.AuthRepository
 import com.example.roadmap_utepsa.data.FirebaseAuthRepository
 import com.example.roadmap_utepsa.data.FirestoreProfileRepository
@@ -14,5 +16,6 @@ class AppContainer {
     val authRepository: AuthRepository = FirebaseAuthRepository()
     val profileRepository: ProfileRepository = FirestoreProfileRepository()
     val academicRepository: AcademicRepository = FirestoreAcademicRepository(profileRepository)
+    val ofertaRepository: OfertaRepository = FirestoreOfertaRepository(academicRepository)
     val preparacionRepository: PreparacionRepository = FirestorePreparacionRepository(academicRepository)
 }

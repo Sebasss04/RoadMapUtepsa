@@ -1,6 +1,6 @@
 # RoadMap UTEPSA: producto y plan
 
-Documento vigente, consolidado el 17/10/2026. El estado de implementación y las pruebas están en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md). Los documentos de ARCHIVO son registros históricos: sus pendientes, pausas y autorizaciones describen sesiones anteriores.
+Documento vigente, actualizado el 18/10/2026 para T2. El estado de implementación y las pruebas están en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md). Los documentos de ARCHIVO son registros históricos: sus pendientes, pausas y autorizaciones describen sesiones anteriores.
 
 ## Propósito y alcance
 
@@ -34,6 +34,58 @@ Los datos académicos son autodeclarados. No registrar notas, intentos ni una li
 - Nunca aprobar requisitos, cambiar dependientes ni avanzar estados automáticamente. Una materia finalizada sin aprobación vuelve manualmente a pendiente.
 - Conflictos remotos conservan la selección y exigen revisión; no sobrescribir silenciosamente. La optimización implementa una revisión global que deben incrementar todos los escritores de estados, preparación y diario en el mismo commit. Las reglas compatibles fueron publicadas con autorización explícita el 17/10/2026; no eliminar las comparaciones para reducir la espera.
 - Posponer solo corresponde a la primera preparación y jamás degrada un historial CONFIRMADO. No confirma ni guarda la selección del borrador. El borrador no enviado vive en memoria durante la sesión; el diario permite recuperar lo ya enviado tras una interrupción.
+
+## Oferta actual SAE: contrato T2
+
+Implementación en `feat/oferta-actual-sae`, independiente de T1. `OfertaRepository`,
+`FirestoreOfertaRepository`, `OfertaViewModel` y `OfertaScreen` tienen archivos propios;
+`AcademicData` y `AcademicRepository` conservan sus contratos. Se reutiliza el catálogo
+remoto validado por el repositorio académico, sin un segundo catálogo en producción.
+
+- Documento único `estudiantes/{uid}/ofertas/actual`: campos exactos
+  `version_formato: 1`, `id_plan: sistemas-rm-615-2016`, `materias: [UUID]`
+  (únicos, máximo 50), `revision` (entero positivo), `actualizado_en` (timestamp de servidor).
+  Ausencia confirmada del documento significa no registrada; lista vacía significa guardada vacía.
+  Un error de lectura conserva un estado de error, nunca simula ausencia.
+- Este contrato sustituye para Oferta la propuesta de subcolecciones de los diagramas
+  conceptuales: un único documento permite reemplazar toda la selección atómicamente,
+  sin guardados parciales, periodos ni horarios.
+- Crear compara ausencia y escribe revisión 1. Actualizar compara la revisión esperada
+  dentro de una transacción y aumenta exactamente uno. Oferta no toca estados,
+  preparación, diario ni `control_academico/revision`.
+- Confirmar éxito requiere commit y relectura `Source.SERVER`, sin caché ni escrituras
+  pendientes. Si el resultado es incierto, la recuperación relee antes de reenviar y
+  reconcilia selección + siguiente revisión. No se modifica la selección incierta antes
+  de comprobar ese resultado.
+- Un conflicto conserva el borrador y muestra nombres/siglas de la selección remota.
+  El estudiante puede cargarla o guardar explícitamente su borrador contra esa revisión;
+  otro cambio concurrente produce un nuevo conflicto. Nunca se fuerza una sobreescritura.
+- Por petición del estudiante tras probar T2, el selector y su búsqueda excluyen las
+  materias APROBADA según el historial real. EN_CURSO y pendientes siguen disponibles,
+  incluidas pendientes bloqueadas: no se añade un filtro de prerrequisitos a Oferta.
+  `DatosOferta` transporta estados del repositorio académico sin cambiar AcademicData.
+  Al volver desde Malla se releen los estados conservando borrador, búsqueda y revisión
+  esperada de Oferta; si falla la lectura, se conserva el borrador y se exige reintentar.
+  Si una oferta anterior incluye aprobadas, al editar se retiran solo del borrador y
+  se avisa: Guardar aplica la nueva selección, Cancelar conserva el documento anterior.
+  Antes de enviar un guardado se relee el historial; una nueva aprobación en el
+  borrador detiene el envío para revisar y guardar otra vez. Un resultado incierto
+  se reconcilia antes de modificar esa selección. La búsqueda conserva la normalización
+  de Malla, nombre principal, sigla secundaria y duración.
+- Borrador y búsqueda viven en el ViewModel identificado por UID/versión de sesión:
+  se conservan en rotación y navegación de la misma sesión, sin persistir en disco.
+  Cancelar no escribe; descartar una selección modificada exige confirmación.
+  Cambiar/cerrar sesión retira datos y descarta respuestas tardías.
+- Reglas locales: solo propietario autenticado (proveedor no anónimo), perfil completo,
+  documento exacto, plan fijo, revisión y timestamp del servidor. Sin listados ni borrados.
+  Lista permitida de 50 UUID, verificada contra JSON técnico por `offer-catalog.test.cjs`;
+  es una validación de identidades del servidor, no contenido académico en la APK.
+
+Las reglas de Oferta son un prototipo validado en demo que debe revisar el equipo
+antes de una distribución amplia. Tras el error reportado en el teléfono, el
+estudiante autorizó su publicación: ya están activas en producción, con relectura
+remota verificada y sin cambios a documentos personales. Ver VALIDACION.md.
+Publicar código por sí solo no despliega reglas, migra datos ni instala aplicaciones.
 
 ## Recomendador pendiente
 

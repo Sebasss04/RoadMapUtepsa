@@ -1,6 +1,6 @@
 # Contexto compartido del proyecto
 
-Actualizado el 17/10/2026, hora de Bolivia. Esta carpeta permite continuar en otra computadora sin el historial de chats del autor.
+Actualizado el 18/10/2026 para T2, hora de Bolivia. Esta carpeta permite continuar en otra computadora sin el historial de chats del autor.
 
 ## Orden de lectura
 
@@ -10,6 +10,25 @@ Actualizado el 17/10/2026, hora de Bolivia. Esta carpeta permite continuar en ot
 4. [VALIDACION.md](VALIDACION.md): comprobaciones de esta publicación y sus límites.
 
 Las dos guías principales se incorporaron desde la documentación local vigente y se adaptaron para el clon. Sus secciones de despliegues, auditorías y pruebas Android narran verificaciones anteriores; los archivos de evidencia bajo `app/build/reports/` permanecen locales. Los cierres «sin commits ni push» describen esas sesiones previas y quedan superados por esta entrega a Git. Los pendientes antiguos no deben reejecutarse como instrucciones actuales.
+
+T2 (Oferta) incorpora código y contrato en `feat/oferta-actual-sae`
+(commit inicial de implementación `269aa92` y correcciones posteriores). El
+18/10/2026, tras aprobar sus pruebas en el teléfono, el estudiante autorizó subir
+toda la entrega al repositorio para que el compañero actualice su rama. Esta
+instrucción sustituye la espera anterior de push/PR; la integración a `main` se
+revisa mediante PR, sin merge automático. Leer VALIDACION.md. Las reglas de Oferta
+ya se publicaron con autorización independiente y relectura productiva verificada;
+no repetir el despliegue al descargar estos cambios.
+El contrato de documento único está en PRODUCTO_Y_PLAN.md. Resumen sigue el trabajo
+independiente del compañero y deberá conservarse al integrar ambas ramas.
+El ajuste posterior del selector excluye APROBADA del historial real y conserva
+EN_CURSO/pendientes; ya está instalado y verificado en el teléfono sin modificar
+datos personales. Detalles y pruebas en VALIDACION.md.
+
+Entrega subida a `origin/feat/oferta-actual-sae` y abierta para revisión en el
+[PR #1](https://github.com/Sebasss04/RoadMapUtepsa/pull/1), sin integrar a `main`.
+Incluye `269aa92` (implementación) y `18056b0` (correcciones y contexto).
+El compañero puede actualizar su rama con los comandos de TRABAJO_EN_EQUIPO.md.
 
 ## Fuentes y enlaces
 

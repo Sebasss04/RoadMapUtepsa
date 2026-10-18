@@ -9,7 +9,7 @@ rules_version = '2';
 // materias/{id}: id_plan, codigo, nombre, semestre, area, min_aprobadas; solo lectura.
 // materias/{id}/prerrequisitos/{idRequisito}: documento vacío, solo lectura.
 // estudiantes/{uid}/estados/{idMateria}: solo estado = EN_CURSO o APROBADA.
-// PENDIENTE se representa eliminando el registro. Oferta sigue denegada.
+// PENDIENTE se representa eliminando el registro. Oferta T2: documento único con revisión propia; reglas locales, no desplegadas.
 // control_academico/revision: version_formato=1 y valor entero monotónico.
 // TODO escritor académico (incluidos diario/preparación) debe incrementarlo
 // atómicamente. Clientes anteriores conservan lectura, pero deben actualizarse
@@ -56,6 +56,75 @@ service cloud.firestore {
     function catalogSubject(idMateria) {
       return exists(/databases/$(database)/documents/materias/$(idMateria))
         && get(/databases/$(database)/documents/materias/$(idMateria)).data.id_plan == 'sistemas-rm-615-2016';
+    }
+    // T2: identities only, kept equal to the technical catalog by offer-catalog.test.cjs.
+    function offerOwner(uid) {
+      return isOwner(uid) && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+    function offerSubjectIds() {
+      return [
+        'fb1dab22-2348-551f-bc70-352b22c2ce2d',
+        'd53b90f1-f469-5f3e-a3ae-c248f011f483',
+        '316362c6-79fa-5021-ae3e-f6e65cf4101e',
+        '3c61c8a7-263c-5c5a-8ebc-af022cf63574',
+        '7f9cd4ef-7d44-535f-85da-822e18ddfe88',
+        '8a5dca99-c7af-543a-a205-3a3acc392466',
+        '35aed79d-8fcf-5544-86fb-c2297a89348c',
+        '39de8258-5666-5535-b4cc-f490ecc9ae56',
+        '68b64723-78a8-5d79-89e5-82938bf73036',
+        '81fd3088-3596-55da-a2f7-a0f639d77a3a',
+        '14f7e1d4-f314-571b-8202-3842d76b4092',
+        '75b80182-a5ce-5593-a64d-46cfa1639931',
+        '7e71fe1f-e423-519a-9cb1-0431235a80a1',
+        '22e35e36-a80b-5b1d-ba24-450cd2ef76fb',
+        '15cf174e-3fa1-5e93-837b-6c23314ecf3c',
+        'cb49b20d-fffb-5101-8fa7-3a006de4bce7',
+        '7cea96d9-7707-5220-b218-28a85fe4fa55',
+        'b37ea8d5-fd45-53e8-90d5-bc6f9b6a2e07',
+        '75649722-0bc9-5376-913c-e5547ce0853f',
+        '07919ad2-0848-52b0-ab9d-deea107fcf5d',
+        '73916614-ee2e-55bb-99a6-98b303044467',
+        '52ef8872-be50-5ae6-8fd3-666a17e7bdfe',
+        'f75d0bf8-a6fe-58b2-887b-3bf1101d6050',
+        '914f1e8f-fabb-554a-8883-f375a8ab42fa',
+        'dd101cb6-f7ec-5c52-ac3d-8341467559c0',
+        'bc3b890d-71d2-5748-a046-7301819f821f',
+        '7400ab4e-4575-5954-a22f-de2d6e91bb36',
+        'a2bc5848-c781-5b6d-81d8-2bb5dc27a24d',
+        '369ca5b9-b57f-5b01-91fe-4964b74fcf32',
+        '516724b0-e561-5d2c-8058-f7735f72598f',
+        '9a5192f7-0155-5615-8e4c-2b776b3c3af2',
+        '2b13f519-e145-59c0-9d37-7d8344f2e961',
+        '37661802-7a9d-54c8-b702-822791b84ab5',
+        '224cbffa-b34f-5c8b-b47b-c54d922f7375',
+        'd801219c-e55b-5c04-9039-38bd1504a11b',
+        '26f25e52-a808-5059-ba91-02248ad8704b',
+        '2f696856-c88d-56d5-b58c-31aa7406f91f',
+        '95afd49b-4581-5424-b9d1-baf8d7e61e7a',
+        '6ff4f553-8f54-5f53-9bfd-570fc75b4524',
+        'b09a9ca1-585a-5903-9128-be27be9199c5',
+        '23c9d223-e89a-50bf-8602-d56b44eabea5',
+        '9ba7d046-8c4a-52f2-bf80-7bf786e61e8d',
+        '9b6fce0a-f957-5a6b-880f-06e3a73cdd88',
+        'ae0af14b-3066-5581-b8b8-b5ba02703eed',
+        'b7bc3be4-dabb-5766-b8a4-b49035db8f48',
+        'bf453970-36b5-5fa7-8d8a-68a88dacbb1e',
+        '5f65c1fa-2c7d-59e7-8355-633fac532a10',
+        '8af7e095-4108-5538-b453-498ca54eafb4',
+        'a157d3e5-55cd-5d3e-8dd2-e46862e154ca',
+        '97d17109-daf4-58eb-9304-b49a48df44e2'
+      ];
+    }
+    function validOffer(data) {
+      return data.keys().hasAll(['version_formato', 'id_plan', 'materias', 'revision', 'actualizado_en'])
+        && data.keys().hasOnly(['version_formato', 'id_plan', 'materias', 'revision', 'actualizado_en'])
+        && data.version_formato is int && data.version_formato == 1
+        && data.id_plan == 'sistemas-rm-615-2016'
+        && data.materias is list && data.materias.size() <= 50
+        && data.materias.size() == data.materias.toSet().size()
+        && data.materias.toSet().hasOnly(offerSubjectIds())
+        && data.revision is int && data.revision > 0 && data.revision < 9223372036854775807
+        && data.actualizado_en is timestamp && data.actualizado_en == request.time;
     }
     function validAcademicState(data) {
       return data.keys().hasAll(['estado']) && data.keys().hasOnly(['estado'])
@@ -143,6 +212,16 @@ service cloud.firestore {
       allow update: if isOwner(uid) && validStudent(request.resource.data)
         && (!('id_plan' in resource.data) || request.resource.data.id_plan == resource.data.id_plan)
         && completeRegistration(uid);
+      // One document replaces the full selection atomically. Independent of academic revision.
+      match /ofertas/actual {
+        allow get: if offerOwner(uid) && academicProfile(uid);
+        allow create: if offerOwner(uid) && completeRegistration(uid)
+          && validOffer(request.resource.data) && request.resource.data.revision == 1;
+        allow update: if offerOwner(uid) && completeRegistration(uid)
+          && validOffer(request.resource.data)
+          && request.resource.data.revision == resource.data.revision + 1;
+        // No delete or list permission.
+      }
       match /estados/{idMateria} {
         // No filtrar por materia en lecturas: permite consultar la colección propia
         // y diagnosticar registros huérfanos de una eventual operación administrativa.
@@ -189,7 +268,7 @@ service cloud.firestore {
         allow get, list: if request.auth != null && catalogSubject(idMateria);
       }
     }
-    // Sin listas de perfiles, borrados de perfil, escrituras de catálogo ni oferta.
+    // Sin listas de perfiles, borrados de perfil, escrituras de catálogo ni otros documentos de oferta.
     match /{document=**} {
       allow read, write: if false;
     }

@@ -1,0 +1,48 @@
+<resources>
+    <string name="offer_title">Mi oferta actual</string>
+    <string name="offer_subtitle">Registra las materias que SAE te ofrece.</string>
+    <plurals name="offer_count">
+        <item quantity="one">%1$d materia seleccionada</item>
+        <item quantity="other">%1$d materias seleccionadas</item>
+    </plurals>
+    <string name="offer_saving">Guardando…</string>
+    <string name="offer_save">Guardar oferta</string>
+    <string name="offer_retry_save">Reintentar guardado</string>
+    <string name="offer_cancel">Cancelar edición</string>
+    <string name="offer_loading">Cargando oferta…</string>
+    <string name="offer_read_error">No pudimos leer tu oferta. Reintenta para conocer su estado.</string>
+    <string name="offer_save_error">No pudimos guardar tu oferta</string>
+    <string name="offer_save_error_detail">Tu selección sigue aquí. Revisa tu conexión y reintenta.</string>
+    <string name="offer_uncertain">El resultado está pendiente de confirmar. Al reintentar comprobaremos el servidor antes de enviar de nuevo.</string>
+    <string name="offer_conflict">La oferta cambió en otra sesión</string>
+    <string name="offer_conflict_detail">Revisa la oferta remota. Tu borrador sigue aquí. Decide qué selección conservar.</string>
+    <plurals name="offer_remote_count">
+        <item quantity="one">Oferta remota: %1$d materia</item>
+        <item quantity="other">Oferta remota: %1$d materias</item>
+    </plurals>
+    <string name="offer_load_remote">Cargar oferta remota</string>
+    <string name="offer_keep_draft">Guardar mi borrador contra esta revisión</string>
+    <string name="offer_search">Buscar materia o sigla</string>
+    <string name="offer_select_help">Marca las materias que SAE te ofrece. Las que ya aprobaste no aparecen.</string>
+    <string name="offer_all_approved">Ya aprobaste todas las materias del plan. No quedan materias para seleccionar.</string>
+    <string name="offer_history_updated">Tu historial se actualizó</string>
+    <string name="offer_approved_removed">Retiramos del borrador las materias que ya aprobaste. Revisa la selección y pulsa Guardar oferta para actualizarla. Cancelar conserva tu oferta anterior.</string>
+    <string name="offer_history_read_error">No pudimos actualizar tu historial. Reintenta antes de guardar la oferta. Tu selección sigue aquí.</string>
+    <string name="offer_no_results">No hay materias que coincidan con tu búsqueda.</string>
+    <string name="offer_absent">Añade tu primera oferta</string>
+    <string name="offer_empty">Tu oferta está vacía</string>
+    <string name="offer_absent_detail">Selecciona las materias de la lista que recibiste de SAE. No necesitas ingresar los horarios.</string>
+    <string name="offer_empty_detail">Guardaste una oferta sin materias. Puedes completarla cuando tengas tu lista de SAE.</string>
+    <string name="offer_saved">Oferta guardada</string>
+    <string name="offer_saved_detail">Puedes corregir la selección cuando cambie tu lista.</string>
+    <string name="offer_select">Seleccionar materias</string>
+    <string name="offer_add">Añadir materias</string>
+    <string name="offer_edit">Editar materias</string>
+    <string name="offer_recommendations">Ver recomendaciones</string>
+    <string name="offer_sign_out">Cerrar sesión</string>
+    <string name="offer_discard">¿Descartar los cambios?</string>
+    <string name="offer_discard_detail">La selección modificada se perderá. Todavía no se ha guardado.</string>
+    <string name="offer_sign_out_detail">Se cerrará la sesión y se retirarán tus datos de la pantalla.</string>
+    <string name="offer_confirm">Confirmar</string>
+    <string name="offer_stay">Seguir aquí</string>
+</resources>
