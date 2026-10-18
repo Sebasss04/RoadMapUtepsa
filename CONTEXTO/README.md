@@ -1,6 +1,6 @@
 # Contexto compartido del proyecto
 
-Actualizado el 18/10/2026 para T2, hora de Bolivia. Esta carpeta permite continuar en otra computadora sin el historial de chats del autor.
+Actualizado el 18/10/2026 para Para ti (T3/T4), hora de Bolivia. Esta carpeta permite continuar en otra computadora sin el historial de chats del autor.
 
 ## Orden de lectura
 
@@ -25,10 +25,57 @@ El ajuste posterior del selector excluye APROBADA del historial real y conserva
 EN_CURSO/pendientes; ya está instalado y verificado en el teléfono sin modificar
 datos personales. Detalles y pruebas en VALIDACION.md.
 
-Entrega subida a `origin/feat/oferta-actual-sae` y abierta para revisión en el
-[PR #1](https://github.com/Sebasss04/RoadMapUtepsa/pull/1), sin integrar a `main`.
+Entrega de Oferta subida a `origin/feat/oferta-actual-sae` e integrada mediante el
+[PR #1](https://github.com/Sebasss04/RoadMapUtepsa/pull/1) en `main` (`2f21871`).
 Incluye `269aa92` (implementación) y `18056b0` (correcciones y contexto).
 El compañero puede actualizar su rama con los comandos de TRABAJO_EN_EQUIPO.md.
+
+Para ti: el estudiante asignó motor y pantalla al autor/Codex en `feat/para-ti`;
+Resumen continúa con el compañero. Diseño de 13 estados terminado antes de Compose;
+código conectado y pruebas detalladas en VALIDACION.md. El plan anterior y la
+propuesta de T3 para el compañero quedan sustituidos por esta asignación.
+
+## Continuar Para ti y preparar la integración
+
+Correcciones solicitadas e implementadas el 18/10/2026: avances parciales,
+principal/secundaria/opcionales y contenido breve con nueva jerarquía de colores.
+El alcance vigente está en PRODUCTO_Y_PLAN.md; las comprobaciones en VALIDACION.md.
+
+Leer las cuatro guías indicadas arriba. La rama es `feat/para-ti`, sobre
+`2f21871`. El 18/10/2026 el estudiante autorizó publicar todos los cambios de
+Para ti, incluidos ajustes, pruebas, diseños y documentación. Esta autorización
+sustituye la espera anterior de commit/push. La entrega está publicada en esta rama
+con PR hacia `main`, sin merge automático; consultar VALIDACION.md para su estado.
+Push confirmado en `origin/feat/para-ti`, implementación `e13ef13`;
+[PR #2](https://github.com/Sebasss04/RoadMapUtepsa/pull/2) abierto para revisión.
+Antes de continuar, revisar `git status` y conservar cualquier cambio local nuevo.
+
+| Parte | Archivos principales, relativos a la raíz del repositorio |
+|---|---|
+| Motor y resultado | `app/src/main/java/com/example/roadmap_utepsa/domain/recommendation/MotorRecomendaciones.kt` |
+| Lectura conjunta | `data/RecomendacionesRepository.kt` y adaptador `data/EstadosVersionados.kt`, dentro del mismo paquete |
+| Estado y sesión | `presentation/viewmodel/RecomendacionesViewModel.kt` |
+| Pantalla | `presentation/recommendation/RecomendacionesScreen.kt`, `res/values/recommendation_strings.xml` y cuatro vectores nuevos |
+| Integración compartida | `AppContainer.kt`, `MainActivity.kt`, `presentation/navigation/AppNavigation.kt`, barras de `CurriculumScreen.kt` y `OfertaScreen.kt` |
+| Pruebas | `MotorRecomendacionesTest`, `RecomendacionesRepositoryTest`, `RecomendacionesViewModelTest`, `RecomendacionesFlowTest` y `RecomendacionesSdkEmulatorTest` |
+| Ejecución y evidencia | `scripts/test-recommendations.ps1`, `app/build/reports/recommendations/adjustments-*` y `DISENOS/08_PARA_TI_AJUSTES_20261018.png` |
+
+Revisión actual de ajustes: **232 JVM y 15 UI correctas**, compilación principal y
+androidTest correctas; lint con cero errores y 39 advertencias previas. Capturas
+con fuente 1,5 y contraste revisados. Ver la primera sección de VALIDACION.md.
+No se repitió SDK demo, pues los contratos y la lectura no cambiaron.
+
+Entrega inicial, antes de los ajustes: 222 JVM, 13 UI seleccionadas y 1 SDK demo correctas;
+compilación correcta y lint con 0 errores/39 advertencias. El capturador de
+androidTest se ajustó después y se volvió a verificar el detalle con fuente 1,5.
+Consultar VALIDACION.md para el alcance exacto, comandos, hash de APK y el ANR
+de System UI del AVD sintético. Los informes bajo `app/build/` son locales e
+ignorados: un clon distinto no los tendrá automáticamente. Los servicios demo y
+el AVD de pruebas quedaron detenidos; no se instaló esta entrega en el teléfono.
+
+El próximo chat debe preservar los ajustes implementados, contrastando código,
+Figma y evidencia sin rehacer Para ti ni asumir que Resumen ya llegó. El compañero conserva Resumen. No repetir despliegues, migraciones ni
+pruebas personales por encontrar sus registros históricos.
 
 ## Fuentes y enlaces
 

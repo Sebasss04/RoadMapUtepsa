@@ -1,0 +1,71 @@
+<resources>
+    <string name="rec_title">Recomendadas para ti</string>
+    <string name="rec_subtitle">Elige tu próximo paso.</string>
+    <string name="rec_loading">Preparando recomendaciones…</string>
+    <string name="rec_loading_detail">Revisando tu oferta e historial.</string>
+    <string name="rec_error">No pudimos generar la lista</string>
+    <string name="rec_error_detail">Revisa tu conexión y vuelve a intentar.</string>
+    <string name="rec_history_pending">Confirma tu historial</string>
+    <string name="rec_history_pending_detail">Confirma tus materias para recibir recomendaciones.</string>
+    <string name="rec_history_invalid">Revisa tu historial</string>
+    <string name="rec_history_invalid_detail">Corrige las materias señaladas para continuar.</string>
+    <string name="rec_recovery">Recuperación pendiente</string>
+    <string name="rec_recovery_detail">Termina la actualización de tu historial para continuar.</string>
+    <string name="rec_resume_history">Retomar historial</string>
+    <string name="rec_review_history">Revisar historial</string>
+    <string name="rec_absent">Primero registra tu oferta</string>
+    <string name="rec_absent_detail">Añade las materias que SAE te ofrece para poder recomendarte cuáles cursar.</string>
+    <string name="rec_register_offer">Registrar oferta SAE</string>
+    <string name="rec_empty">Tu oferta está vacía</string>
+    <string name="rec_empty_detail">Guardaste una oferta sin materias. Puedes editarla cuando tengas tu lista de SAE.</string>
+    <string name="rec_edit_offer">Editar oferta SAE</string>
+    <string name="rec_none">No hay candidatas por ahora</string>
+    <string name="rec_none_detail">Las materias ofertadas ya están aprobadas, en curso o requieren otras aprobadas.</string>
+    <string name="rec_review_malla">Revisar mi malla</string>
+    <string name="rec_main">Recomendación principal</string>
+    <string name="rec_other">Otras opciones para completar tu elección</string>
+    <string name="rec_previous_detail">Priorizamos tus pendientes anteriores.</string>
+    <string name="rec_alternative_detail">Tus pendientes anteriores no están disponibles en esta oferta.</string>
+    <string name="rec_order">Primero pendientes anteriores; luego desbloqueos completos, avances parciales, semestre y sigla.</string>
+    <string name="rec_eligible">Está en tu oferta y cumples sus requisitos.</string>
+    <plurals name="rec_count">
+        <item quantity="one">Al aprobarla, habilitas %1$d materia</item>
+        <item quantity="other">Al aprobarla, habilitas %1$d materias</item>
+    </plurals>
+    <string name="rec_explain">Ver detalle</string>
+    <string name="rec_why">Detalle de la recomendación</string>
+    <string name="rec_can">Puedes cursarla</string>
+    <string name="rec_no_requirements">No requiere materias previas.</string>
+    <string name="rec_requirements">Requisitos satisfechos (aprobados):</string>
+    <plurals name="rec_threshold">
+        <item quantity="one">Umbral satisfecho: %1$d materia aprobada, sin contar esta materia.</item>
+        <item quantity="other">Umbral satisfecho: %1$d materias aprobadas, sin contar esta materia.</item>
+    </plurals>
+    <string name="rec_unlocks">Si la apruebas, habilitarías:</string>
+    <string name="rec_read_only">Orientación basada en tus datos guardados. Cada opción se evalúa por separado; no realiza una inscripción.</string>
+    <string name="rec_understood">Entendido</string>
+    <string name="rec_meta">%1$s · %2$s · Semestre %3$d</string>
+    <string name="rec_two">Si quieres cursar dos</string>
+    <string name="rec_secondary">Recomendación secundaria</string>
+    <string name="rec_optional">Opcional</string>
+    <string name="rec_optional_reason">Suma una materia aprobada a tu carrera</string>
+    <string name="rec_show_previous">Ver pendientes anteriores</string>
+    <string name="rec_hide_previous">Ocultar pendientes anteriores</string>
+    <string name="rec_unlock_one">Al aprobarla, habilitas %1$s</string>
+    <string name="rec_partial_one">Avanzas hacia %1$s</string>
+    <plurals name="rec_partial_count">
+        <item quantity="one">Avanzas requisitos de %1$d materia</item>
+        <item quantity="other">Avanzas requisitos de %1$d materias</item>
+    </plurals>
+    <string name="rec_partial_title">Si la apruebas, avanzas hacia:</string>
+    <plurals name="rec_partial_progress">
+        <item quantity="one">Cumplirías %1$d de %2$d requisito.</item>
+        <item quantity="other">Cumplirías %1$d de %2$d requisitos.</item>
+    </plurals>
+    <string name="rec_after_approved">Quedarían aprobados:</string>
+    <string name="rec_still_needed">También necesitas aprobar:</string>
+    <plurals name="rec_remaining_threshold">
+        <item quantity="one">Además, faltaría %1$d materia aprobada para alcanzar el mínimo.</item>
+        <item quantity="other">Además, faltarían %1$d materias aprobadas para alcanzar el mínimo.</item>
+    </plurals>
+</resources>

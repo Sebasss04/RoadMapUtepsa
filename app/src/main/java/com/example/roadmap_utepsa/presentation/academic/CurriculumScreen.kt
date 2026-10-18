@@ -32,7 +32,8 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                      onSelect: (EstadoAcademico) -> Unit, onSave: () -> Unit,
                      onClose: () -> Unit, onDismissSaved: () -> Unit,
                      onReviewHistory: (() -> Unit)? = null, historyStatus: EstadoPreparacionUi = EstadoPreparacionUi.CONFIRMADO,
-                     onReviewConflict: () -> Unit = {}, onOffer: (() -> Unit)? = null, signOutWarning: Int = R.string.academic_sign_out_detail) {
+                     onReviewConflict: () -> Unit = {}, onOffer: (() -> Unit)? = null, signOutWarning: Int = R.string.academic_sign_out_detail,
+                     onRecommendations: (() -> Unit)? = null) {
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf<String?>(null) }
     var semester by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -83,7 +84,7 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                 val icons = listOf(R.drawable.academic_summary, R.drawable.academic_curriculum,
                     R.drawable.academic_offer, R.drawable.academic_recommendations)
                 labels.forEachIndexed { index, label ->
-                    NavigationBarItem(selected = index == 1, onClick = { if (index == 2) onOffer?.invoke() }, enabled = !saving && (index == 1 || (index == 2 && onOffer != null)),
+                    NavigationBarItem(selected = index == 1, onClick = { if (index == 2) onOffer?.invoke() else if (index == 3) onRecommendations?.invoke() }, enabled = !saving && (index == 1 || (index == 2 && onOffer != null) || (index == 3 && onRecommendations != null)),
                         colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primaryContainer,
                             selectedIconColor = MaterialTheme.colorScheme.primary, selectedTextColor = MaterialTheme.colorScheme.primary),
                         icon = { Icon(painterResource(icons[index]), null, Modifier.size(21.dp)) },

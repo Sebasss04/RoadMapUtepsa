@@ -1,6 +1,6 @@
 # Trabajo pendiente y coordinación
 
-Coordinación actualizada el 18/10/2026, hora de Bolivia. El estudiante confirmó que su compañero tomó T1 (Resumen de avance), trabajando a distancia con su propia cuenta de Codex. Las demás asignaciones siguen siendo propuestas; no se acredita implementación ni una rama de T1 por este acuerdo.
+Coordinación actualizada el 18/10/2026, hora de Bolivia. El estudiante confirmó que su compañero tomó T1 (Resumen de avance), trabajando a distancia con su propia cuenta de Codex. El estudiante asignó expresamente motor y pantalla de Para ti al autor/Codex; el compañero conserva Resumen. No se acredita una rama de T1 por este acuerdo.
 
 ## Qué se entregó hasta ahora
 
@@ -18,8 +18,8 @@ Coordinación actualizada el 18/10/2026, hora de Bolivia. El estudiante confirm�
 |---|---|---|
 | T1 / compañero, asignación confirmada | Resumen de avance | Usa datos académicos existentes; muestra cantidades PENDIENTE/EN_CURSO/APROBADA y `aprobadas / 50 × 100`; EN_CURSO no suma como aprobada; contempla carga, error, historial pendiente/incoherente y cambio de cuenta; respeta Figma y no crea escrituras ni listas paralelas de aprobadas. Incluye pruebas del cálculo/casos relevantes y evidencia visual. |
 | T2 / autor, rama `feat/oferta-actual-sae` | Oferta actual SAE y exclusión de aprobadas verificadas. El estudiante aprobó sus pruebas en el teléfono y autorizó subir toda la entrega para que el compañero actualice su rama; sustituye la espera anterior de push/PR. Reglas ya publicadas con autorización independiente y relectura productiva verificada. | Selección manual por nombre/sigla sin aprobadas; una oferta editable por cuenta; guardar reemplaza la selección; diferencia ausente de guardada vacía; error conserva selección; sin horarios ni periodos. Validación y límites en VALIDACION.md. |
-| T3 / compañero tras T1, coordinado con T2 | Motor de recomendaciones en Kotlin puro | Candidatas ofertadas, pendientes y habilitadas. Simula cada aprobación sin persistir; cuenta desbloqueos inmediatos, incluido umbral 45; no cuenta cadenas, materias ya habilitadas ni activas. Orden: desbloqueos descendente, semestre/código ascendente. Explica requisitos y desbloqueos. Prueba dobles requisitos, umbrales y desempates. Puede comenzar con fixtures mientras se define Oferta. |
-| T4 / integración conjunta tras T2 y T3 | Pantalla Recomendaciones | Usa historial coherente/oferta real; maneja oferta ausente/vacía, ninguna candidata, carga y error; no modifica estados; sigue Figma y mantiene separación por sesión. |
+| T3 / autor-Codex, `feat/para-ti` | Motor Kotlin puro implementado | Prioridad de pendientes anteriores, desbloqueos completos y avances parciales; principal/secundaria/opcionales, desempates y cero; requisitos dobles, cadenas y umbral 44→45 probados. Ver VALIDACION.md. |
+| T4 / autor-Codex, `feat/para-ti` | Diseño Figma y pantalla terminados; validación seleccionada correcta | Lecturas guardadas estables, gates explícitos, explicación, sesión, navegación y conservación de Oferta verificados. Cierre real en VALIDACION.md. |
 | T5 / acordar después | Cuenta y autenticación completa | Correo/contraseña, registro, recuperación y vinculación conservando UID; biometría opcional por cuenta/dispositivo sobre sesión existente, con reintento/cierre. Dividir en tareas antes de tocar Auth y navegación. |
 | T6 / autor con QA del compañero | Estabilidad y medición real | Comparar misma APK en físico/AVD estándar 4 KB con recursos suficientes; conservar datos del AVD original. Medir el próximo guardado necesario, sin borrar/recrear historial para fabricar benchmarks. Diferenciar fallo de framework, cierre de app y error recuperable. |
 | T7 / quien entregue cada tarea | Calidad y contexto | Pruebas pertinentes, capturas sin datos personales, README/guías actualizadas y PR con alcance, validación y limitaciones. Revisión de reglas antes de una distribución amplia. |
@@ -29,6 +29,21 @@ El estado de cada entrega debe contrastarse con código y VALIDACION.md; figurar
 Para trabajar T1 y T2 en paralelo, mantener archivos propios de pantalla, ViewModel, repositorio, pruebas y recursos (por ejemplo, `offer_strings.xml` para Oferta). Reutilizar el catálogo existente sin modificar su contrato ni los escritores de Historial/Malla. Acordar quién integra los cambios de `AppNavigation`, `AppContainer` y navegación inferior: son puntos compartidos que pueden generar conflictos aun con ramas separadas. Integrarlos de forma coordinada al cerrar cada entrega. El contrato y las reglas de Oferta pertenecen a T2 y deben validarse con datos sintéticos antes de cualquier despliegue.
 
 ## Integración de T2
+
+La petición vigente sustituye el plan preparado: autor/Codex asume T3 y T4 en
+`feat/para-ti`, sin esperar a Resumen. Diseño actualizado y revisado antes de Compose;
+implementación y pruebas detalladas en PRODUCTO_Y_PLAN y VALIDACION. Se consultó
+`origin/main` durante esta entrega: `2f21871` integra el PR #1 de Oferta y su árbol
+coincide con la base de T2. Rama local adelantada a ese merge sin perder cambios.
+No se encontraron cambios T1 en main. No se ha enviado ningún mensaje al compañero.
+
+El estudiante solicitó después implementar los ajustes de Para ti: avances
+parciales, secundaria con beneficio, opcionales y simplificación visual/textual.
+Autor/Codex mantiene T3/T4; T1 sigue con el compañero. El estudiante autorizó
+posteriormente publicar toda la entrega el 18/10/2026. La espera anterior de
+commit/push queda sustituida por publicación en `feat/para-ti` y PR hacia `main`,
+sin merge automático. Conservar las reglas de PRODUCTO_Y_PLAN.md y consultar
+VALIDACION.md y el inventario de continuidad en README.md.
 
 Tras probar Oferta, el estudiante pidió excluir las materias ya aprobadas del
 selector. Ajuste implementado e instalado: estados reales en `DatosOferta`, búsqueda
@@ -49,30 +64,41 @@ diagnóstico del teléfono; no repetir el despliegue como parte de la integraci�
 
 ## Cómo evitar pisarse
 
-El estudiante terminó primero T2 y autorizó compartirlo el 18/10/2026 tras aprobar
-las pruebas manuales. La rama ya está en `origin` y el
-[PR #1](https://github.com/Sebasss04/RoadMapUtepsa/pull/1) está abierto, pendiente
-de revisión, sin merge a `main`. Para incorporar Oferta en la rama existente del compañero,
-primero guardar sus cambios propios en un commit y, desde esa misma rama, ejecutar:
+El PR #1 de Oferta ya fue integrado en main por el equipo: consulta remota de esta
+entrega confirmó `2f21871` y la rama Para ti se adelantó a ese commit. Su árbol
+coincide con la base de Oferta; no había cambios nuevos de Resumen para integrar.
+Las instrucciones anteriores para incorporar la rama T2 quedan sustituidas por
+actualizar `origin/main` en la rama propia, preservando antes los cambios locales.
+
+1. Mantener T1 del compañero y T3/T4 del autor en archivos propios. Para ti añade
+   parámetros opcionales al final de AppNavigation, CurriculumScreen y OfertaScreen.
+   Conservarlos junto a Resumen al resolver puntos compartidos (AppContainer,
+   MainActivity, AppNavigation y barras), sin reemplazar archivos completos.
+2. Consultar estado y diferencias antes de integrar; no resetear cambios ajenos.
+3. Mantener revisión académica, CAS, diario, conflictos y relecturas de servidor.
+4. No volver a publicar reglas ni migrar catálogo al actualizar el código.
+5. Registrar resultados y límites en VALIDACION.md; actualizar las guías vigentes.
+   Para ti tiene autorización de publicación del 18/10/2026; revisar su PR antes de integrar.
+
+## Incorporar Para ti mientras Resumen sigue en desarrollo
+
+Después de revisar el PR de `feat/para-ti`, el compañero puede incorporar esta
+rama a su rama de Resumen sin esperar al merge de `main`. Conservar primero sus
+cambios en un commit de su propia rama y ejecutar desde ella:
 
 ```powershell
 git fetch origin
-git merge origin/feat/oferta-actual-sae
+git merge origin/feat/para-ti
 ```
 
-Resolver conflictos conservando Resumen y Oferta, sobre todo en `AppNavigation`,
-`AppContainer`, `MainActivity` y la navegación inferior. No reemplazar archivos
-completos por una sola versión. Repetir compilación/pruebas pertinentes y comprobar
-que ambas pantallas sigan accesibles antes de subir T1. Mientras el PR de Oferta
-no se integre, actualizar solo `main` no incorpora esta entrega. Si el PR ya fue
-integrado, usar `git merge origin/main` en su lugar. No volver a publicar reglas,
-migrar catálogo ni ejecutar pruebas personales de escritura al actualizar la rama.
+Entrega publicada: `e13ef13`,
+[PR #2](https://github.com/Sebasss04/RoadMapUtepsa/pull/2), pendiente de revisión.
 
-1. Antes de empezar, indicar en el PR o en este documento quién toma la tarea y su rama. Comprobar `git status`; no resetear cambios ajenos.
-2. Partir de `main` actualizado. Ejemplo para el compañero: `git switch -c feat/resumen-avance`. Una rama por entrega; integrar por PR revisado por el otro integrante.
-3. T1 puede reutilizar `AcademicRepository`, `AcademicViewModel` y las reglas de dominio. Coordinar cambios compartidos de `AppNavigation`, `AppContainer`, recursos y navegación inferior. T2/T3 deben acordar el contrato de Oferta antes de integrarse.
-4. Mantener contrato de revisión para cualquier escritor de estados/preparación/diario, incluso un futuro Admin. No eliminar comparaciones para acelerar el guardado.
-5. Al cerrar cada entrega, actualizar las secciones vigentes de ESTADO_ACTUAL y este tablero: realizado, pruebas, limitaciones, responsable y siguiente paso. No acumular nuevos relevos por chat.
+Resolver conservando Resumen y Para ti en `AppContainer`, `MainActivity`,
+`AppNavigation` y las barras de navegación. No reemplazar estos archivos completos.
+Después ejecutar las verificaciones pertinentes. Cuando el PR esté integrado en
+`main`, actualizar desde `origin/main` en lugar de incorporar nuevamente la rama.
+El push no habilita ni implementa Resumen y no requiere desplegar Firebase.
 
 ## Validar sin tocar datos personales
 

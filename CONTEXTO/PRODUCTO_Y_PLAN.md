@@ -1,6 +1,6 @@
 # RoadMap UTEPSA: producto y plan
 
-Documento vigente, actualizado el 18/10/2026 para T2. El estado de implementación y las pruebas están en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md). Los documentos de ARCHIVO son registros históricos: sus pendientes, pausas y autorizaciones describen sesiones anteriores.
+Documento vigente, actualizado el 18/10/2026 para Para ti (T3/T4). El estado de implementación y las pruebas están en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md). Los documentos de ARCHIVO son registros históricos: sus pendientes, pausas y autorizaciones describen sesiones anteriores.
 
 ## Propósito y alcance
 
@@ -19,7 +19,7 @@ Primera versión: una carrera y un plan, RM 615/2016, 50 materias, 9 semestres c
 | Malla | Nombre principal; sigla secundaria; clasificación Modular/Bimodular/Duración especial, semestre, área, requisitos y estado. Búsqueda por nombre/sigla sin distinguir tildes o mayúsculas, filtros y edición. Semestre curricular no determina habilitación. |
 | Avance | Conteos por estado y porcentaje `aprobadas / 50 × 100`, calculados. En curso no suma como aprobada. Resumen es una pantalla futura. |
 | Oferta SAE | Una sola oferta actual editable por cuenta. Selección manual por nombre/sigla; guardar reemplaza la selección. Distinguir ausente de guardada vacía. Sin periodos ni horarios. |
-| Recomendaciones | Prioridad por desbloqueos inmediatos, con explicación; cálculo reproducible descrito abajo. |
+| Recomendaciones | Primero pendientes anteriores candidatas; luego desbloqueos completos y avances parciales. Principal, secundaria con beneficio y opcionales sin favorita artificial. Cálculo reproducible descrito abajo. |
 | Cuenta | Edición de perfil, proveedores y biometría opcional. Pantalla completa futura. Cerrar sesión retira contenido privado. |
 | Biometría | Opcional por cuenta/dispositivo; desbloquea una sesión existente con el prompt Android. Permitir reintentar o cerrar sesión. No sustituye Firebase Auth. |
 
@@ -87,14 +87,88 @@ estudiante autorizó su publicación: ya están activas en producción, con rele
 remota verificada y sin cambios a documentos personales. Ver VALIDACION.md.
 Publicar código por sí solo no despliega reglas, migra datos ni instala aplicaciones.
 
-## Recomendador pendiente
+## Para ti — alcance vigente del 18/10/2026
 
-1. Usar una lectura completa y coherente del historial y la oferta actual. Si falta preparación o hay contradicciones, orientar a corregirlas antes de recomendar.
-2. Candidatas: ofertadas, pendientes y habilitadas por todos los requisitos y el umbral.
-3. Simular APROBADA para cada candidata por separado, sin persistir la simulación.
-4. Contar otras materias pendientes que pasan de bloqueadas a habilitadas inmediatamente. Incluir umbrales; excluir las ya habilitadas y los desbloqueos en cadena. Las desbloqueadas no necesitan estar ofertadas.
-5. Ordenar por desbloqueos descendente, semestre ascendente y código ascendente.
-6. Explicar elegibilidad y materias desbloqueadas. Distinguir oferta ausente, oferta guardada vacía y ausencia de candidatas. No prometer optimización global ni calendario.
+Motor y pantalla corresponden al autor/Codex en `feat/para-ti`, por asignación
+expresa del estudiante. Sustituye el plan anterior y la propuesta de T3 para el
+compañero; él conserva T1 (Resumen). Resumen no bloquea esta entrega.
+
+### Diseño terminado antes de Compose
+
+Se actualizó la sección existente de [Recomendaciones](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=11-295),
+con 13 estados editables revisados visualmente: principal, detalle, oferta ausente,
+oferta vacía, ninguna candidata, error, carga, pendientes anteriores, alternativa
+disponible, historial pendiente, incoherente, recuperación pendiente y detalle
+con cero desbloqueos. Roboto, colores, botones e iconos proceden del diseño existente.
+Los datos de las tarjetas están identificados como ejemplos ilustrativos.
+[Evidencia conjunta](DISENOS/08_PARA_TI_ESTADOS_20261018.png).
+Nodos nuevos: prioridad `63:800`, alternativa `63:869`, historial `63:938`,
+incoherencia `63:988`, recuperación `63:1038`, detalle cero `65:811`.
+
+### Cálculo y datos
+
+- `MotorRecomendaciones` es Kotlin puro y reutiliza `ReglasAcademicas` y
+  `ReglasHistorial`. Rechaza historias incoherentes y planes/IDs incompatibles.
+- Candidatas: ofertadas, pendientes y habilitadas. Excluye aprobadas y en curso.
+- Referencia: semestre más alto con alguna aprobada o en curso. Pendientes de
+  semestres inferiores son anteriores; sin materias activas no se infieren atrasos.
+  No se denomina semestre actual ni se calculan promedios.
+- Si existen candidatas anteriores, tienen prioridad. Dentro de cada grupo se
+  ordena por desbloqueos completos descendente, cantidad de objetivos con avance
+  parcial descendente, semestre y código ascendente. Sin candidatas
+  anteriores pero con pendientes anteriores, se explica la alternativa disponible.
+- Cada aprobación se simula por separado. Solo cuentan otras pendientes que pasan
+  de bloqueadas a habilitadas inmediatamente, incluso no ofertadas y umbrales.
+  Excluye cadenas, activas, ya habilitadas y la candidata. Conserva opciones con cero.
+- Avance parcial: la candidata es requisito directo de otra pendiente bloqueada y,
+  tras simular su aprobación, la otra sigue bloqueada. Se exponen requisitos que
+  quedarían aprobados, los que todavía faltan (EN_CURSO no es APROBADA) y umbral
+  restante. No se duplica un objetivo como desbloqueo completo y parcial. Sumar una
+  aprobación hacia un umbral sin relación directa no crea avances parciales.
+- Principal: primera candidata. Secundaria: primera restante con desbloqueos o
+  avances parciales; opcionales: todas las otras, sin duplicados. Sin beneficio
+  restante se muestran solo opciones bajo «Si quieres cursar dos», sin favorita.
+  Las simulaciones son independientes; no autorizan cursar una materia bloqueada
+  al mismo tiempo que su requisito. No se calculan horarios ni carga académica.
+- La explicación enumera requisitos aprobados, umbral satisfecho, desbloqueadas y avances parciales.
+  La prioridad orienta; no expresa una prohibición oficial de inscripción.
+- `ConsultaRecomendacionesRepository` consulta Preparación y Oferta guardada entre
+  lecturas de revisión antes, entre ambas y después. Exige misma identidad de sesión,
+  UID, plan y catálogo; repite la pareja hasta tres intentos si cambia revisión.
+  Errores de lectura nunca equivalen a oferta ausente o vacía. No expone escrituras.
+- ViewModel por UID/versión de sesión: exige historial confirmado y coherente y
+  ninguna operación activa. Cancela cargas sustituidas y descarta respuestas tardías.
+  Retira resultados durante recarga, al salir y al cambiar sesión.
+
+### Pantalla y navegación
+
+Revisión posterior del 18/10: principal verde (#EAF5EF/#21664A), secundaria azul
+(#EAF2FF/#244B87), opcionales gris (#F7F8FA/#20232B), siempre con etiquetas.
+Las tarjetas muestran nombre, sigla/duración/semestre, motivo breve y «Ver detalle».
+Los requisitos y el orden quedan en el panel; los pendientes anteriores se despliegan
+a petición. «Opcional» significa alternativa de esta oferta, no materia prescindible.
+No se promete evitar atrasos. Diseño revisado primero en la sección existente de
+Figma; [exportación del ajuste](DISENOS/08_PARA_TI_AJUSTES_20261018.png).
+
+Compose usa el diseño actualizado, tema e iconos existentes; los cuatro SVG exportados
+(flecha, advertencia y dos iconos de estado) conservan la geometría exportada desde Figma como vectores.
+Barras de Malla y Oferta habilitan Para ti; la nueva pantalla permite volver a ambas,
+revisar Historial, visitar Perfil y cerrar sesión con el aviso de borrador de Oferta.
+Oferta conserva ViewModel, búsqueda, borrador y revisión esperada al navegar.
+Solo la selección guardada participa en el cálculo. Entrar de nuevo o regresar de
+Perfil vuelve a consultar; Historial y Malla mantienen sus flujos existentes.
+Resumen permanece independiente y deshabilitado mientras no se integre T1.
+
+### Verificación de la entrega inicial
+
+Los ajustes posteriores de avances parciales, categorías y contenido tienen su
+propia sección vigente en VALIDACION.md. Los siguientes conteos corresponden a
+la entrega inicial, antes de esas correcciones.
+
+Diseño terminado y código implementado. Compilación APK principal/androidTest,
+222 JVM (23 nuevas), 13 UI seleccionadas (4 nuevas y 9 de Oferta) y 1 SDK demo
+correctas. Lint: cero errores y 39 advertencias. Revisar evidencia y límites del
+AVD en VALIDACION.md. No se requieren despliegues de reglas, migraciones ni datos personales.
 
 ## Bimodulares y límites
 
@@ -117,4 +191,9 @@ Fuera de v1: otras carreras/planes/roles, horarios completos, historial de notas
 
 [Archivo Figma de interfaces](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=17-482). Exportaciones originales en [DISENOS](DISENOS/). Sus informes contienen estados históricos; no prueban qué está implementado hoy. Nuevas pantallas o cambios visuales sustanciales deben partir de los diseños y del acuerdo con el estudiante. Las correcciones de lógica no requieren rediseñar pantallas.
 
-Orden sugerido después de estabilizar el flujo actual: Resumen; Oferta actual; Recomendador; Cuenta/proveedores/correo/biometría según prioridad del estudiante. La clasificación de duración ya cuenta con fuente SAE; verificar el estado de publicación en ESTADO_ACTUAL.md. No interpretar esta lista como autorización para implementar todas las unidades en una revisión de errores.
+Continuación: revisar el [PR #2 de Para ti](https://github.com/Sebasss04/RoadMapUtepsa/pull/2),
+publicado por autorización del 18/10/2026, e integrar Resumen cuando el compañero lo entregue, preservando
+Oferta y Para ti. Cuenta/proveedores/correo/biometría requiere una petición propia
+del estudiante. La clasificación de duración ya cuenta con fuente SAE; verificar
+el estado de publicación en ESTADO_ACTUAL.md. No interpretar esta lista como
+autorización para implementar todas las unidades en una revisión de errores.

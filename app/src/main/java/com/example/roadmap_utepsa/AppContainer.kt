@@ -18,4 +18,9 @@ class AppContainer {
     val academicRepository: AcademicRepository = FirestoreAcademicRepository(profileRepository)
     val ofertaRepository: OfertaRepository = FirestoreOfertaRepository(academicRepository)
     val preparacionRepository: PreparacionRepository = FirestorePreparacionRepository(academicRepository)
+    private val recommendationRevision = com.example.roadmap_utepsa.data.EstadosVersionados(
+        com.google.firebase.firestore.FirebaseFirestore.getInstance(), com.google.firebase.auth.FirebaseAuth.getInstance())
+    val recomendacionesRepository: com.example.roadmap_utepsa.data.RecomendacionesRepository =
+        com.example.roadmap_utepsa.data.ConsultaRecomendacionesRepository(preparacionRepository, ofertaRepository,
+            recommendationRevision::revisionConsulta) { com.google.firebase.auth.FirebaseAuth.getInstance().currentUser }
 }
