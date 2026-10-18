@@ -1,6 +1,6 @@
 # RoadMap UTEPSA: estado actual y mantenimiento
 
-Revisión del 17/10/2026, hora de Bolivia. Leer este documento y [PRODUCTO_Y_PLAN.md](PRODUCTO_Y_PLAN.md) para continuar. Actualizar sus secciones en lugar de crear nuevos relevos o añadir estados contradictorios al final.
+Revisión de T2 del 18/10/2026, hora de Bolivia. Leer este documento y [PRODUCTO_Y_PLAN.md](PRODUCTO_Y_PLAN.md) para continuar. Actualizar sus secciones en lugar de crear nuevos relevos o añadir estados contradictorios al final.
 
 ## Ubicaciones y fuentes de verdad
 
@@ -23,7 +23,8 @@ Los viejos documentos acumulaban instrucciones de inicio, pausas, aprobaciones y
 | Historial | Primera preparación separada de consulta y edición; resumen guardado, cancelación, revisión de diferencias, confirmación, diario, recuperación y conflictos. Posponer no degrada CONFIRMADO. |
 | Coherencia | Dominio Kotlin puro, conectado a ViewModels y repositorios. |
 | Notificaciones | FCM y saludo local con permiso Android. Saludo local no acredita recepción push remota. |
-| Resumen, Oferta, Recomendaciones | Pendientes; pestañas deshabilitadas. |
+| Oferta actual SAE / T2 | Flujo implementado en rama `feat/oferta-actual-sae`: consulta, editor de 50 materias, reemplazo atómico, vacío/ausente, errores, resultado incierto y conflictos explícitos. 193 pruebas JVM, 7 UI y 1 SDK demo correctas; consultar VALIDACION.md para detalles y lint. Reglas productivas todavía deniegan Oferta. |
+| Resumen / T1, Recomendaciones | No integrados en el checkout de T2; pestañas deshabilitadas. T1 está a cargo del compañero. |
 | Correo, registro, recuperación, vinculación, Cuenta completa, biometría | Pendientes; declarar dependencias no equivale a implementar. |
 | Bimodulares | Publicadas: 40 modulares, 9 bimodulares y Taller con duración especial; etiquetas visibles, sin horas ni conversión a meses. |
 
@@ -46,6 +47,21 @@ Rutas académicas implementadas:
 - `estudiantes/{uid}/control_academico/revision`: `version_formato=1`, `valor` entero monotónico; todos los escritores académicos deben incrementarlo en el mismo commit.
 
 El guardado de Malla compara los 50 estados, incluidos documentos ausentes, mediante un snapshot completo protegido por la revisión global. El asistente aplica grupos de hasta cinco y valida el conjunto completo; cada transacción comprueba la revisión para detectar cualquier cambio desde el snapshot. El último grupo confirma marcador y diario atómicamente. Las consultas de preparación leen estados y controles entre dos lecturas iguales de revisión; la relectura final desde servidor sigue siendo necesaria antes de comunicar éxito. Las reglas protegen acceso/esquema; la coherencia curricular se valida en la app. Un marcador CONFIRMADO no evita recalcular coherencia tras editar Malla.
+
+## Oferta actual SAE (T2)
+
+Pantalla basada en Figma `15:431` y editor `15:494`, adaptados a Compose/Material 3
+con los componentes y cinco iconos existentes (geometría comparada con los SVG de
+Figma). El nombre es principal y sigla/duración secundarias por la especificación
+actual; los datos de ejemplo del diseño se sustituyen por el catálogo remoto.
+Malla e Historial conservan su flujo; Oferta se habilita desde la navegación inferior.
+No se cambian los contratos de AcademicData/AcademicRepository ni escritores académicos.
+Ver el [contrato de Oferta](PRODUCTO_Y_PLAN.md#oferta-actual-sae-contrato-t2).
+
+La rama partió de `96a400a` tras consultar `origin/main`; no había implementación
+T1 en ese estado. Se conservó la modificación local de coordinación en
+TRABAJO_EN_EQUIPO.md. Publicación/PR y validaciones finales se registran en
+VALIDACION.md; una rama local por sí sola no es una entrega compartida.
 
 ## Cierre anterior, espera de confirmación y correcciones
 

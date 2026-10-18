@@ -165,7 +165,10 @@ async function expect(name, promise, status) {
   await expect('owner can read orphan for diagnosis', get('alice', 'estudiantes/alice/estados/retired'), 200);
   await expect('orphan update cannot reintroduce state', commit('alice', [write('estudiantes/alice/estados/retired', { estado: 'EN_CURSO' })]), 403);
   await expect('owner can clean orphan state', commit('alice', [remove('estudiantes/alice/estados/retired')]), 200);
-  for (const doc of ['estudiantes/alice/ofertas/actual', `estudiantes/alice/ofertas/actual/materias/${subject('BMS-300').id}`,
+  // T2 allows confirmed absence of the current offer; nested/unknown paths remain denied.
+  await expect('T2 owner can distinguish missing current offer', get('alice', 'estudiantes/alice/ofertas/actual'), 404);
+  await expect('T2 malformed offer still denied', commit('alice', [write('estudiantes/alice/ofertas/actual', {})]), 403);
+  for (const doc of [`estudiantes/alice/ofertas/actual/materias/${subject('BMS-300').id}`,
     'estudiantes/alice/estados/unknown/nested/doc', 'unknown/doc']) {
     await expect(`future or unknown read denied ${doc}`, get('alice', doc), 403);
     await expect(`future or unknown write denied ${doc}`, commit('alice', [write(doc, {})]), 403);

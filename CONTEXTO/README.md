@@ -1,6 +1,6 @@
 # Contexto compartido del proyecto
 
-Actualizado el 17/10/2026, hora de Bolivia. Esta carpeta permite continuar en otra computadora sin el historial de chats del autor.
+Actualizado el 18/10/2026 para T2, hora de Bolivia. Esta carpeta permite continuar en otra computadora sin el historial de chats del autor.
 
 ## Orden de lectura
 
@@ -10,6 +10,12 @@ Actualizado el 17/10/2026, hora de Bolivia. Esta carpeta permite continuar en ot
 4. [VALIDACION.md](VALIDACION.md): comprobaciones de esta publicación y sus límites.
 
 Las dos guías principales se incorporaron desde la documentación local vigente y se adaptaron para el clon. Sus secciones de despliegues, auditorías y pruebas Android narran verificaciones anteriores; los archivos de evidencia bajo `app/build/reports/` permanecen locales. Los cierres «sin commits ni push» describen esas sesiones previas y quedan superados por esta entrega a Git. Los pendientes antiguos no deben reejecutarse como instrucciones actuales.
+
+T2 (Oferta) incorpora código y contrato en una rama local de entrega; todavía no se
+publicó ni creó el PR porque la revisión automática requiere confirmar su publicación
+al repositorio público. Leer las pruebas en VALIDACION.md; el código no desplegó reglas.
+El contrato de documento único está en PRODUCTO_Y_PLAN.md. Resumen sigue el trabajo
+independiente del compañero y deberá conservarse al integrar ambas ramas.
 
 ## Fuentes y enlaces
 

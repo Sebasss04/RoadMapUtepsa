@@ -12,7 +12,7 @@ El contexto necesario para continuar desde otra computadora está versionado:
 - [Trabajo pendiente y reparto propuesto](CONTEXTO/TRABAJO_EN_EQUIPO.md).
 - [Validación de esta publicación](CONTEXTO/VALIDACION.md).
 
-Implementados: acceso Google, Perfil, Malla, Historial con coherencia, persistencia, recuperación y conflictos; catálogo SAE con duración y guardado optimizado. Pendientes: Resumen, Oferta actual, Recomendador y funciones completas de Cuenta. Los mockups no prueban implementación.
+Implementados: acceso Google, Perfil, Malla, Historial con coherencia, persistencia, recuperación y conflictos; catálogo SAE con duración y guardado optimizado. T2 añade Oferta actual SAE con consulta, selección manual y reemplazo transaccional en su rama de entrega (ver validación y PR). Pendientes: integrar Resumen del compañero, Recomendador y funciones completas de Cuenta. Las reglas de Oferta aún requieren publicación productiva autorizada. Los mockups no prueban implementación.
 
 ## Preparar el entorno
 

@@ -1,6 +1,14 @@
 package com.example.roadmap_utepsa.presentation.navigation
 
 import androidx.compose.runtime.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.res.stringResource
+import com.example.roadmap_utepsa.R
+import com.example.roadmap_utepsa.data.OfertaRepository
+import com.example.roadmap_utepsa.presentation.offer.OfertaScreen
+import com.example.roadmap_utepsa.presentation.viewmodel.OfertaViewModel
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.platform.LocalContext
@@ -29,7 +37,8 @@ fun AppNavigation(
     profileRepository: ProfileRepository,
     academicRepository: AcademicRepository,
     authRepository: AuthRepository,
-    preparacionRepository: PreparacionRepository? = null
+    preparacionRepository: PreparacionRepository? = null,
+    ofertaRepository: OfertaRepository? = null
 ) {
     val state by authViewModel.state.collectAsState()
     val scope = rememberCoroutineScope()
@@ -45,12 +54,22 @@ fun AppNavigation(
         }
         val profileState by profileViewModel.state.collectAsState()
         var editingProfile by rememberSaveable(uid, state.sessionVersion) { mutableStateOf(false) }
+        var offerOpened by rememberSaveable(uid, state.sessionVersion) { mutableStateOf(false) }
+        var showingOffer by rememberSaveable(uid, state.sessionVersion) { mutableStateOf(false) }
+        var discardOfferOnSignOut by remember { mutableStateOf(false) }
         val academicHolder = rememberSaveableStateHolder()
         LaunchedEffect(profileState.saved) {
             if (profileState.saved) editingProfile = false
         }
         val complete = profileState.load == ProfileLoad.READY &&
             profileState.profile?.registration == ProfileRegistration.COMPLETE
+        val offerVm = if (offerOpened && ofertaRepository != null) remember(uid, state.sessionVersion, viewModelOwner, ofertaRepository) {
+            ViewModelProvider(viewModelOwner, OfertaViewModel.Factory(
+                uid, state.sessionVersion, ofertaRepository, authRepository, { authViewModel.state.value.sessionVersion }))
+                .get(OfertaViewModel.key(uid, state.sessionVersion),
+                    OfertaViewModel::class.java)
+        } else null
+        val offerDraftPresent = offerVm?.state?.collectAsState()?.value?.dirty == true
         if (complete && !editingProfile) {
             val academicViewModel = remember(uid, state.sessionVersion, viewModelOwner, academicRepository, authRepository) {
                 ViewModelProvider(viewModelOwner, AcademicViewModel.Factory(uid, academicRepository, authRepository))
@@ -59,14 +78,22 @@ fun AppNavigation(
             val academicState by academicViewModel.state.collectAsState()
             val curriculum: @Composable ((() -> Unit)?, EstadoPreparacionUi) -> Unit = { review, pending ->
                 academicHolder.SaveableStateProvider(AcademicViewModel.key(uid, state.sessionVersion)) {
-                    CurriculumScreen(academicState, academicViewModel::reload,
+                    if (showingOffer && offerVm != null) {
+                        val offerState by offerVm.state.collectAsState()
+                        OfertaScreen(offerState,
+                            offerVm::reload, offerVm::edit, offerVm::query, offerVm::toggle,
+                            offerVm::save, offerVm::cancel, offerVm::resolveConflict,
+                            onMalla = { showingOffer = false }, onProfile = { editingProfile = true },
+                            onSignOut = authViewModel::signOut)
+                    } else CurriculumScreen(academicState, academicViewModel::reload,
                         onProfile = { editingProfile = true }, onSignOut = authViewModel::signOut,
                         onOpen = academicViewModel::openSubject, onSelect = academicViewModel::selectState,
                         onSave = academicViewModel::saveState, onClose = academicViewModel::closeSubject,
                         onDismissSaved = academicViewModel::dismissSaved,
                         onReviewConflict = academicViewModel::reviewConflict,
                         onReviewHistory = review?.let { callback -> { academicViewModel.closeSubject(); callback() } },
-                        historyStatus = pending)
+                        historyStatus = pending, onOffer = if (ofertaRepository != null) ({ offerOpened = true; showingOffer = true }) else null,
+                        signOutWarning = if (offerDraftPresent) R.string.offer_discard_detail else R.string.academic_sign_out_detail)
                 }
             }
             if (preparacionRepository == null) curriculum(null, EstadoPreparacionUi.CONFIRMADO)
@@ -83,9 +110,17 @@ fun AppNavigation(
             onSave = profileViewModel::save,
             onRetryLoad = profileViewModel::retryLoad,
             onDiscard = profileViewModel::discardChanges,
-            onSignOut = authViewModel::signOut,
-            onReturn = if (complete) ({ editingProfile = false }) else null
+            onSignOut = { if (offerDraftPresent) discardOfferOnSignOut = true else authViewModel.signOut() },
+            onReturn = if (complete) ({ editingProfile = false; showingOffer = false }) else null
         )
+        if (discardOfferOnSignOut) AlertDialog(
+            onDismissRequest = { discardOfferOnSignOut = false },
+            title = { Text(stringResource(R.string.offer_sign_out)) },
+            text = { Text(stringResource(R.string.offer_discard_detail)) },
+            confirmButton = { TextButton({ discardOfferOnSignOut = false; authViewModel.signOut() }) {
+                Text(stringResource(R.string.offer_confirm)) } },
+            dismissButton = { TextButton({ discardOfferOnSignOut = false }) {
+                Text(stringResource(R.string.offer_stay)) } })
     } else {
         LoginScreen(state = state, onSignIn = {
             scope.launch { authViewModel.signInWithGoogle(helper::getGoogleIdToken) }

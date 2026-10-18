@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 val authState by authViewModel.state.collectAsState()
                 SessionNotifications(authState.uid, authState.sessionVersion)
                 AppNavigation(authViewModel, this@MainActivity, container.profileRepository,
-                    container.academicRepository, container.authRepository, container.preparacionRepository)
+                    container.academicRepository, container.authRepository, container.preparacionRepository, container.ofertaRepository)
             }
         }
     }

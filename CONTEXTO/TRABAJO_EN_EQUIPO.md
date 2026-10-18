@@ -1,6 +1,6 @@
 # Trabajo pendiente y coordinación
 
-Estado al 17/10/2026. Responsables propuestos, todavía sin aceptación del compañero.
+Coordinación actualizada el 18/10/2026, hora de Bolivia. El estudiante confirmó que su compañero tomó T1 (Resumen de avance), trabajando a distancia con su propia cuenta de Codex. Las demás asignaciones siguen siendo propuestas; no se acredita implementación ni una rama de T1 por este acuerdo.
 
 ## Qué se entregó hasta ahora
 
@@ -16,15 +16,28 @@ Estado al 17/10/2026. Responsables propuestos, todavía sin aceptación del comp
 
 | ID / propuesta | Trabajo | Se considera terminado cuando… |
 |---|---|---|
-| T1 / compañero, primer encargo | Resumen de avance | Usa datos académicos existentes; muestra cantidades PENDIENTE/EN_CURSO/APROBADA y `aprobadas / 50 × 100`; EN_CURSO no suma como aprobada; contempla carga, error, historial pendiente/incoherente y cambio de cuenta; respeta Figma y no crea escrituras ni listas paralelas de aprobadas. Incluye pruebas del cálculo/casos relevantes y evidencia visual. |
-| T2 / autor, coordinar con T1 | Oferta actual SAE | Selección manual por nombre/sigla; una oferta editable por cuenta; guardar reemplaza la selección; diferencia ausente de guardada vacía; error conserva selección; sin horarios ni periodos. Definir contrato, repositorio y reglas con pruebas de aislamiento antes de desplegar. |
+| T1 / compañero, asignación confirmada | Resumen de avance | Usa datos académicos existentes; muestra cantidades PENDIENTE/EN_CURSO/APROBADA y `aprobadas / 50 × 100`; EN_CURSO no suma como aprobada; contempla carga, error, historial pendiente/incoherente y cambio de cuenta; respeta Figma y no crea escrituras ni listas paralelas de aprobadas. Incluye pruebas del cálculo/casos relevantes y evidencia visual. |
+| T2 / autor, rama `feat/oferta-actual-sae` | Oferta actual SAE terminada en desarrollo con demo; validación en VALIDACION.md; pendiente autorización de publicación al repositorio público, revisión/integración por PR y habilitación productiva autorizada. | Selección manual por nombre/sigla; una oferta editable por cuenta; guardar reemplaza la selección; diferencia ausente de guardada vacía; error conserva selección; sin horarios ni periodos. Definir contrato, repositorio y reglas con pruebas de aislamiento antes de desplegar. |
 | T3 / compañero tras T1, coordinado con T2 | Motor de recomendaciones en Kotlin puro | Candidatas ofertadas, pendientes y habilitadas. Simula cada aprobación sin persistir; cuenta desbloqueos inmediatos, incluido umbral 45; no cuenta cadenas, materias ya habilitadas ni activas. Orden: desbloqueos descendente, semestre/código ascendente. Explica requisitos y desbloqueos. Prueba dobles requisitos, umbrales y desempates. Puede comenzar con fixtures mientras se define Oferta. |
 | T4 / integración conjunta tras T2 y T3 | Pantalla Recomendaciones | Usa historial coherente/oferta real; maneja oferta ausente/vacía, ninguna candidata, carga y error; no modifica estados; sigue Figma y mantiene separación por sesión. |
 | T5 / acordar después | Cuenta y autenticación completa | Correo/contraseña, registro, recuperación y vinculación conservando UID; biometría opcional por cuenta/dispositivo sobre sesión existente, con reintento/cierre. Dividir en tareas antes de tocar Auth y navegación. |
 | T6 / autor con QA del compañero | Estabilidad y medición real | Comparar misma APK en físico/AVD estándar 4 KB con recursos suficientes; conservar datos del AVD original. Medir el próximo guardado necesario, sin borrar/recrear historial para fabricar benchmarks. Diferenciar fallo de framework, cierre de app y error recuperable. |
 | T7 / quien entregue cada tarea | Calidad y contexto | Pruebas pertinentes, capturas sin datos personales, README/guías actualizadas y PR con alcance, validación y limitaciones. Revisión de reglas antes de una distribución amplia. |
 
-Estas tareas no están implementadas por figurar aquí. T1 es la propuesta inicial para que el compañero pueda aportar sin rehacer Malla/Historial. Las prioridades pueden ajustarse entre ambos.
+El estado de cada entrega debe contrastarse con código y VALIDACION.md; figurar en este tablero no acredita su cierre. T1 quedó a cargo del compañero. T2 se implementó el 18/10 en `feat/oferta-actual-sae`, independiente del cálculo de Resumen. Las comprobaciones y límites actuales están en VALIDACION.md. Las prioridades pueden ajustarse entre ambos.
+
+Para trabajar T1 y T2 en paralelo, mantener archivos propios de pantalla, ViewModel, repositorio, pruebas y recursos (por ejemplo, `offer_strings.xml` para Oferta). Reutilizar el catálogo existente sin modificar su contrato ni los escritores de Historial/Malla. Acordar quién integra los cambios de `AppNavigation`, `AppContainer` y navegación inferior: son puntos compartidos que pueden generar conflictos aun con ramas separadas. Integrarlos de forma coordinada al cerrar cada entrega. El contrato y las reglas de Oferta pertenecen a T2 y deben validarse con datos sintéticos antes de cualquier despliegue.
+
+## Integración de T2
+
+Oferta añade `AppContainer.ofertaRepository`, un parámetro opcional al final de
+`AppNavigation`, el acceso `onOffer` opcional a CurriculumScreen y la conexión desde
+MainActivity. Pantalla, recursos, ViewModel, repositorio y pruebas son propios.
+En el estado de `origin/main` consultado al iniciar no había cambios T1: se mantienen
+Resumen y Para ti deshabilitados. Si T1 llega antes de integrar, incorporar `main`
+a esta rama y conservar ambas pantallas al resolver navegación/contenedor/menú.
+No fusionar automáticamente: el compañero debe revisar el PR. Las reglas de Oferta
+se prueban en demo y requieren una autorización posterior para producción.
 
 ## Cómo evitar pisarse
 
