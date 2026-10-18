@@ -25,6 +25,11 @@ El ajuste posterior del selector excluye APROBADA del historial real y conserva
 EN_CURSO/pendientes; ya está instalado y verificado en el teléfono sin modificar
 datos personales. Detalles y pruebas en VALIDACION.md.
 
+Entrega subida a `origin/feat/oferta-actual-sae` y abierta para revisión en el
+[PR #1](https://github.com/Sebasss04/RoadMapUtepsa/pull/1), sin integrar a `main`.
+Incluye `269aa92` (implementación) y `18056b0` (correcciones y contexto).
+El compañero puede actualizar su rama con los comandos de TRABAJO_EN_EQUIPO.md.
+
 ## Fuentes y enlaces
 
 | Recurso | Ubicación y uso |

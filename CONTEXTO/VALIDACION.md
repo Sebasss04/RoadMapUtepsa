@@ -202,6 +202,12 @@ nuevos que integrar; la rama remota de Oferta no existía. El compañero puede
 incorporar `origin/feat/oferta-actual-sae` antes de subir T1 según TRABAJO_EN_EQUIPO.md.
 La publicación de código no vuelve a desplegar Firebase ni modifica cuentas.
 
+Push confirmado de `feat/oferta-actual-sae` con seguimiento de `origin` y commits
+`269aa92` + `18056b0`. [PR #1](https://github.com/Sebasss04/RoadMapUtepsa/pull/1)
+abierto hacia `main`, pendiente de revisión del compañero; no se ejecutó merge.
+El último ajuste de esta publicación registra el enlace y las instrucciones,
+sin cambiar el código ya verificado.
+
 ## Registro anterior — actualización del 17/10/2026
 
 Esta publicación reúne cambios locales desde el commit `1d5f9dd` y añade contexto portable para el equipo. No implementa las tareas nuevas de Resumen/Oferta/Recomendador propuestas en el tablero.

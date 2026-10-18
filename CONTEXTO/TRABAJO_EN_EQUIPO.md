@@ -50,7 +50,9 @@ diagnóstico del teléfono; no repetir el despliegue como parte de la integraci�
 ## Cómo evitar pisarse
 
 El estudiante terminó primero T2 y autorizó compartirlo el 18/10/2026 tras aprobar
-las pruebas manuales. Para incorporar Oferta en la rama existente del compañero,
+las pruebas manuales. La rama ya está en `origin` y el
+[PR #1](https://github.com/Sebasss04/RoadMapUtepsa/pull/1) está abierto, pendiente
+de revisión, sin merge a `main`. Para incorporar Oferta en la rama existente del compañero,
 primero guardar sus cambios propios en un commit y, desde esa misma rama, ejecutar:
 
 ```powershell
