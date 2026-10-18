@@ -12,11 +12,12 @@ data class OfertaUiState(
     val editing: Boolean = false, val draft: Set<String> = emptySet(), val query: String = "",
     val saving: Boolean = false, val saved: Boolean = false, val error: Boolean = false,
     val conflict: Boolean = false, val remote: Oferta? = null, val uncertain: Boolean = false,
-    val expired: Boolean = false
+    val expired: Boolean = false, val approvedRemoved: Boolean = false, val refreshFailed: Boolean = false
 ) {
     val dirty get() = editing && draft != data?.oferta?.materias.orEmpty()
     val visible get() = data?.let {
-        filterCurriculum(AcademicData(it.uid, it.idPlan, it.catalogo, emptyList(), emptyMap()), query, null, null)
+        filterCurriculum(AcademicData(it.uid, it.idPlan, it.catalogo.filter { subject -> subject.id !in it.aprobadas },
+            emptyList(), it.estados), query, null, null)
     }.orEmpty()
 }
 class OfertaViewModel(private val uid: String, private val sessionVersion: Long,
@@ -36,40 +37,61 @@ class OfertaViewModel(private val uid: String, private val sessionVersion: Long,
         return true
     }
     fun reload() {
-        if (!valid() || state.value.saving || state.value.editing || readJob?.isActive == true) return
-        mutable.value = OfertaUiState()
+        if (!valid() || state.value.saving || state.value.uncertain || readJob?.isActive == true) return
+        mutable.value = if (state.value.editing) state.value.copy(loading = true, refreshFailed = false) else OfertaUiState()
         readJob = viewModelScope.launch {
             try {
                 val data = repository.load(uid)
                 ensureActive()
                 check(data.uid == uid)
-                if (valid()) mutable.value = OfertaUiState(loading = false, data = data)
+                if (valid()) {
+                    val s = state.value
+                    if (s.editing) {
+                        val draft = data.sinAprobadas(s.draft)
+                        // Keep the offer revision being edited: a remote offer change must still conflict on save.
+                        mutable.value = s.copy(loading = false, data = data.copy(oferta = s.data?.oferta), draft = draft,
+                            approvedRemoved = s.approvedRemoved || draft != s.draft, refreshFailed = false)
+                    } else mutable.value = OfertaUiState(loading = false, data = data)
+                }
             } catch (e: CancellationException) { throw e
-            } catch (_: Exception) { if (valid()) mutable.value = OfertaUiState(loading = false, error = true) }
+            } catch (_: Exception) { if (valid()) mutable.value = if (state.value.editing)
+                state.value.copy(loading = false, refreshFailed = true) else OfertaUiState(loading = false, error = true) }
         }
     }
-    fun edit() { if (valid() && state.value.data != null && !state.value.saving) mutable.value = state.value.copy(
-        editing = true, draft = state.value.data?.oferta?.materias.orEmpty(), saved = false, error = false) }
+    fun edit() {
+        val s = state.value
+        val data = s.data ?: return
+        if (valid() && !s.saving && !s.loading) {
+            val original = data.oferta?.materias.orEmpty()
+            val draft = data.sinAprobadas(original)
+            mutable.value = s.copy(editing = true, draft = draft, saved = false, error = false,
+                approvedRemoved = draft != original, refreshFailed = false)
+        }
+    }
     fun query(value: String) { if (valid()) mutable.value = state.value.copy(query = value) }
     fun toggle(id: String) {
         val s = state.value
-        if (!valid() || !s.editing || s.saving || s.conflict || s.uncertain || s.data?.catalogo?.none { it.id == id } != false) return
+        if (!valid() || !s.editing || s.loading || s.refreshFailed || s.saving || s.conflict || s.uncertain ||
+            s.data?.catalogo?.none { it.id == id } != false || id in s.data?.aprobadas.orEmpty()) return
         mutable.value = s.copy(draft = if (id in s.draft) s.draft - id else s.draft + id, error = false)
     }
     fun cancel() { if (valid() && !state.value.saving) mutable.value = state.value.copy(
-        editing = false, draft = emptySet(), query = "", error = false, conflict = false, remote = null, uncertain = false) }
+        editing = false, draft = emptySet(), query = "", error = false, conflict = false, remote = null, uncertain = false,
+        approvedRemoved = false, refreshFailed = false) }
     /** Remote adoption and explicit draft retry are separate user decisions. */
     fun resolveConflict(keepDraft: Boolean) {
         val s = state.value
         if (!valid() || !s.conflict || s.saving) return
+        val original = if (keepDraft) s.draft else s.remote?.materias.orEmpty()
+        val draft = s.data?.sinAprobadas(original) ?: original
         mutable.value = s.copy(data = s.data?.copy(oferta = s.remote),
-            draft = if (keepDraft) s.draft else s.remote?.materias.orEmpty(),
+            draft = draft, approvedRemoved = s.approvedRemoved || draft != original,
             conflict = false, remote = null, error = false, uncertain = false)
         if (keepDraft) save()
     }
     fun save() {
         val s = state.value
-        if (!valid() || !s.editing || s.saving || s.conflict || s.data == null) return
+        if (!valid() || !s.editing || s.loading || s.refreshFailed || s.saving || s.conflict || s.data == null) return
         mutable.value = s.copy(saving = true, error = false, saved = false)
         viewModelScope.launch {
             try {
@@ -83,9 +105,20 @@ class OfertaViewModel(private val uid: String, private val sessionVersion: Long,
                     }
                     if (remote?.revision != s.data.oferta?.revision) throw ConflictoOferta(remote)
                 }
+                // Refresh academic states before sending a normal save. Never mutate an uncertain selection before reconciliation.
+                val latest = repository.load(uid)
+                ensureActive()
+                if (!valid()) return@launch
+                check(latest.uid == uid)
+                val draft = latest.sinAprobadas(s.draft)
+                if (draft != s.draft) {
+                    mutable.value = s.copy(data = latest.copy(oferta = s.data.oferta), draft = draft,
+                        saving = false, approvedRemoved = true, uncertain = false)
+                    return@launch
+                }
                 val result = repository.save(uid, s.draft, s.data.oferta?.revision)
                 ensureActive()
-                if (valid()) mutable.value = s.copy(data = s.data.copy(oferta = result), editing = false,
+                if (valid()) mutable.value = s.copy(data = latest.copy(oferta = result), editing = false,
                     saving = false, saved = true, uncertain = false, query = "")
             } catch (e: CancellationException) { throw e
             } catch (e: Exception) {

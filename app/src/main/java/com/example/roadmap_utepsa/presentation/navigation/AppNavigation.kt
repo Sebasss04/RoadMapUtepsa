@@ -79,6 +79,7 @@ fun AppNavigation(
             val curriculum: @Composable ((() -> Unit)?, EstadoPreparacionUi) -> Unit = { review, pending ->
                 academicHolder.SaveableStateProvider(AcademicViewModel.key(uid, state.sessionVersion)) {
                     if (showingOffer && offerVm != null) {
+                        LaunchedEffect(offerVm) { offerVm.reload() }
                         val offerState by offerVm.state.collectAsState()
                         OfertaScreen(offerState,
                             offerVm::reload, offerVm::edit, offerVm::query, offerVm::toggle,

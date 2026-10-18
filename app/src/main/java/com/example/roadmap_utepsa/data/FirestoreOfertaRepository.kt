@@ -40,7 +40,7 @@ class FirestoreOfertaRepository(
         check(data.uid == uid && data.materias.size == 50)
         val offer = read(uid, data.idPlan, data.materias.map { it.id }.toSet())
         checkSession()
-        return DatosOferta(uid, data.idPlan, data.materias, offer)
+        return DatosOferta(uid, data.idPlan, data.materias, offer, data.estados)
     }
     override suspend fun save(uid: String, materias: Set<String>, expectedRevision: Long?): Oferta {
         val checkSession = identity(uid)

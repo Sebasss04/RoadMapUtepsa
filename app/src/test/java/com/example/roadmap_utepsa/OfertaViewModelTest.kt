@@ -26,6 +26,7 @@ class OfertaViewModelTest {
     }
     private inner class Repo : OfertaRepository {
         var catalog = fixture.materias
+        var states: Map<String, EstadoAcademico> = emptyMap()
         var remote: Oferta? = null
         var writes = 0
         var reads = 0
@@ -36,7 +37,7 @@ class OfertaViewModelTest {
         override suspend fun load(uid: String): DatosOferta {
             reads++
             if (readFail) error("offline")
-            return DatosOferta(uid, fixture.idPlan, catalog, remote)
+            return DatosOferta(uid, fixture.idPlan, catalog, remote, states)
         }
         override suspend fun save(uid: String, materias: Set<String>, expectedRevision: Long?): Oferta {
             writes++
@@ -66,7 +67,7 @@ class OfertaViewModelTest {
         vm.edit(); vm.save(); runCurrent(); assertEquals(0, repo.writes)
         repo.readFail = false; vm.reload(); runCurrent(); assertNotNull(vm.state.value.data)
     }
-    @Test fun saveReplacesAllAndAllowsAnyCatalogSubject() = runTest(dispatcher) {
+    @Test fun saveReplacesAllAndAllowsUnapprovedCatalogSubjects() = runTest(dispatcher) {
         val repo = Repo().apply { remote = Oferta(fixture.idPlan, setOf(first), 1) }
         val vm = vm(repo); runCurrent(); vm.edit(); vm.toggle(first); vm.toggle(last); vm.save(); runCurrent()
         assertEquals(setOf(last), repo.remote?.materias); assertEquals(2L, repo.remote?.revision)
@@ -75,6 +76,62 @@ class OfertaViewModelTest {
     @Test fun selectionRejectsUnknownAndToggleRemoves() = runTest(dispatcher) {
         val vm = vm(Repo()); runCurrent(); vm.edit(); vm.toggle("foreign"); assertTrue(vm.state.value.draft.isEmpty())
         vm.toggle(first); vm.toggle(first); assertTrue(vm.state.value.draft.isEmpty())
+    }
+    @Test fun approvedSubjectsAreExcludedFromSearchAndCannotBeSelected() = runTest(dispatcher) {
+        val current = fixture.materias[1]
+        val repo = Repo().apply { states = mapOf(first to EstadoAcademico.APROBADA, current.id to EstadoAcademico.EN_CURSO) }
+        val vm = vm(repo); runCurrent(); vm.edit()
+        assertEquals(49, vm.state.value.visible.size)
+        assertTrue(vm.state.value.visible.any { it.id == current.id })
+        vm.toggle(first); assertTrue(vm.state.value.draft.isEmpty())
+        vm.toggle(current.id); assertEquals(setOf(current.id), vm.state.value.draft)
+        vm.query(fixture.materias.first().codigo); assertTrue(vm.state.value.visible.isEmpty())
+    }
+    @Test fun removingSavedApprovedSubjectsRequiresExplicitSaveAndCancelDoesNotWrite() = runTest(dispatcher) {
+        val repo = Repo().apply {
+            states = mapOf(first to EstadoAcademico.APROBADA)
+            remote = Oferta(fixture.idPlan, setOf(first, last), 3)
+        }
+        val vm = vm(repo); runCurrent(); vm.edit()
+        assertEquals(setOf(last), vm.state.value.draft)
+        assertTrue(vm.state.value.approvedRemoved); assertTrue(vm.state.value.dirty)
+        vm.cancel(); assertEquals(setOf(first, last), repo.remote?.materias); assertEquals(0, repo.writes)
+        vm.edit(); vm.save(); runCurrent()
+        assertEquals(setOf(last), repo.remote?.materias); assertEquals(4L, repo.remote?.revision)
+    }
+    @Test fun returningToEditorRefreshesStatesButKeepsDraftQueryAndExpectedOfferRevision() = runTest(dispatcher) {
+        val repo = Repo(); val vm = vm(repo); runCurrent(); vm.edit(); vm.toggle(first); vm.toggle(last); vm.query("sis")
+        repo.states = mapOf(first to EstadoAcademico.APROBADA)
+        repo.remote = Oferta(fixture.idPlan, emptySet(), 1)
+        vm.reload(); runCurrent()
+        assertEquals(setOf(last), vm.state.value.draft); assertEquals("sis", vm.state.value.query)
+        assertTrue(vm.state.value.approvedRemoved); assertNull(vm.state.value.data?.oferta)
+        vm.save(); runCurrent(); assertTrue(vm.state.value.conflict)
+    }
+    @Test fun stateRefreshFailurePreservesDraftAndBlocksSaveUntilRetry() = runTest(dispatcher) {
+        val repo = Repo(); val vm = vm(repo); runCurrent(); vm.edit(); vm.toggle(first)
+        repo.readFail = true; vm.reload(); runCurrent(); vm.save(); runCurrent()
+        assertTrue(vm.state.value.refreshFailed); assertEquals(setOf(first), vm.state.value.draft)
+        assertEquals(0, repo.writes)
+        repo.readFail = false; vm.reload(); runCurrent(); vm.save(); runCurrent()
+        assertTrue(vm.state.value.saved)
+    }
+    @Test fun newlyApprovedDraftIsReviewedBeforeAnyWrite() = runTest(dispatcher) {
+        val repo = Repo(); val vm = vm(repo); runCurrent(); vm.edit(); vm.toggle(first); vm.toggle(last)
+        repo.states = mapOf(first to EstadoAcademico.APROBADA)
+        vm.save(); runCurrent()
+        assertEquals(0, repo.writes); assertTrue(vm.state.value.editing); assertTrue(vm.state.value.approvedRemoved)
+        assertEquals(setOf(last), vm.state.value.draft)
+        vm.save(); runCurrent(); assertEquals(setOf(last), repo.remote?.materias)
+    }
+    @Test fun allApprovedHasNoOptionsAndConflictAdoptionAlsoExcludesApproved() = runTest(dispatcher) {
+        val repo = Repo(); val vm = vm(repo); runCurrent(); vm.edit(); vm.toggle(first)
+        repo.remote = Oferta(fixture.idPlan, setOf(first, last), 1)
+        repo.states = fixture.materias.associate { it.id to EstadoAcademico.APROBADA }
+        vm.reload(); runCurrent(); vm.save(); runCurrent()
+        assertTrue(vm.state.value.visible.isEmpty()); assertTrue(vm.state.value.conflict)
+        vm.resolveConflict(false)
+        assertTrue(vm.state.value.draft.isEmpty()); assertTrue(vm.state.value.approvedRemoved)
     }
     @Test fun searchIgnoresCaseAccentsAndSupportsCode() = runTest(dispatcher) {
         val repo = Repo()
@@ -124,7 +181,7 @@ class OfertaViewModelTest {
         assertTrue(vm.state.value.uncertain)
         repo.remote = Oferta(fixture.idPlan, setOf(first), 1)
         vm.save(); runCurrent(); assertTrue(vm.state.value.saved); assertEquals(1, repo.writes)
-        assertEquals(2, repo.reads)
+        assertEquals(3, repo.reads)
     }
     @Test fun uncertainRetryCannotWriteWhileServerReadFails() = runTest(dispatcher) {
         val repo = Repo().apply { fail = ResultadoOfertaIncierto(IllegalStateException()) }

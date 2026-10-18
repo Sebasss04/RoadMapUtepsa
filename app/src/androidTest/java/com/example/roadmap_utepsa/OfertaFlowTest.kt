@@ -41,9 +41,10 @@ class OfertaFlowTest {
         var failSave = false
         var gate: CompletableDeferred<Unit>? = null
         var writes = 0
+        var states: Map<String, EstadoAcademico> = emptyMap()
         override suspend fun load(uid: String): DatosOferta {
             if (failRead) error("offline")
-            return DatosOferta(uid, data.idPlan, data.materias, offer)
+            return DatosOferta(uid, data.idPlan, data.materias, offer, states)
         }
         override suspend fun save(uid: String, materias: Set<String>, expectedRevision: Long?): Oferta {
             writes++; gate?.await()
@@ -147,6 +148,47 @@ class OfertaFlowTest {
         start(Repo().apply { failRead = true })
         compose.onNodeWithText("No pudimos leer tu oferta. Reintenta para conocer su estado.").assertIsDisplayed()
         compose.onNodeWithText("Añade tu primera oferta").assertDoesNotExist(); screenshot("09-error-lectura")
+    }
+    @Test fun approvedSearchExcludedWhileCurrentAndPendingRemainSelectable() {
+        val approved = data.materias.first()
+        val current = data.materias[1]
+        val repo = Repo().apply { states = mapOf(approved.id to EstadoAcademico.APROBADA, current.id to EstadoAcademico.EN_CURSO) }
+        val vm = start(repo)
+        compose.onNodeWithText("Seleccionar materias").performScrollTo().performClick()
+        compose.onNodeWithTag("offer-search").performTextInput(approved.codigo)
+        compose.onNodeWithTag("offer-search").performImeAction()
+        compose.onNodeWithTag("offer-list").performScrollToNode(hasText("No hay materias que coincidan con tu búsqueda."))
+        compose.onNodeWithText(approved.nombre).assertDoesNotExist()
+        compose.onNodeWithTag("offer-search").performTextReplacement(current.codigo)
+        compose.onNodeWithTag("offer-search").performImeAction()
+        compose.onNodeWithTag("offer-list").performScrollToNode(hasText(current.nombre))
+        compose.onNodeWithText(current.nombre).performClick()
+        compose.onNodeWithTag("offer-save").performClick()
+        assertEquals(setOf(current.id), repo.offer?.materias)
+        assertTrue(vm.state.value.saved)
+    }
+    @Test fun savedApprovedRemovalIsExplainedAndAllApprovedShowsEmptySelector() {
+        val approved = data.materias.first()
+        val repo = Repo().apply {
+            states = mapOf(approved.id to EstadoAcademico.APROBADA)
+            offer = Oferta(data.idPlan, setOf(approved.id), 1)
+        }
+        val vm = start(repo, 1.5f)
+        compose.onNodeWithText("Editar materias").performScrollTo().performClick()
+        compose.onNodeWithTag("offer-list").performScrollToNode(hasText("Tu historial se actualizó"))
+        compose.onNodeWithText("Tu historial se actualizó").assertIsDisplayed()
+        assertTrue(vm.state.value.draft.isEmpty())
+        compose.onNodeWithText("Cancelar edición").performClick()
+        compose.onNodeWithText("Confirmar").performClick()
+        assertEquals(setOf(approved.id), repo.offer?.materias); assertEquals(0, repo.writes)
+        repo.states = data.materias.associate { it.id to EstadoAcademico.APROBADA }
+        compose.runOnUiThread { vm.reload() }; compose.waitForIdle()
+        compose.onNodeWithText("Editar materias").performScrollTo().performClick()
+        val message = "Ya aprobaste todas las materias del plan. No quedan materias para seleccionar."
+        compose.onNodeWithTag("offer-list").performScrollToNode(hasText(message))
+        compose.onNodeWithText(message).assertIsDisplayed()
+        compose.onNodeWithTag("offer-save").performClick()
+        assertTrue(repo.offer!!.materias.isEmpty()); assertEquals(1, repo.writes)
     }
     @Test fun navigationPreservesDraftAndHistoryRemainsOperational() {
         val auth = Auth(); val offer = Repo()

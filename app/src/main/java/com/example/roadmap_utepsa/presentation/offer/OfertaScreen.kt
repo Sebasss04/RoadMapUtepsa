@@ -49,7 +49,7 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                     Text(pluralStringResource(R.plurals.offer_count, state.draft.size, state.draft.size), fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Button({ focus.clearFocus(); onSave() }, Modifier.fillMaxWidth().heightIn(min = 56.dp).testTag("offer-save"),
-                        enabled = !state.saving && !state.conflict) {
+                        enabled = !state.loading && !state.refreshFailed && !state.saving && !state.conflict) {
                         Text(stringResource(if (state.saving) R.string.offer_saving else if (state.error)
                             R.string.offer_retry_save else R.string.offer_save))
                     }
@@ -85,6 +85,13 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                     Button(onRetry) { Text(stringResource(R.string.profile_retry)) }
                 }
                 state.editing -> {
+                    if (state.refreshFailed) item {
+                        Text(stringResource(R.string.offer_history_read_error))
+                        Button(onRetry) { Text(stringResource(R.string.profile_retry)) }
+                    }
+                    if (state.approvedRemoved) item {
+                        OfferNotice(stringResource(R.string.offer_history_updated), stringResource(R.string.offer_approved_removed))
+                    }
                     if (state.error) item {
                         OfferNotice(stringResource(R.string.offer_save_error), stringResource(
                             if (state.uncertain) R.string.offer_uncertain else R.string.offer_save_error_detail), true)
@@ -108,13 +115,14 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                             keyboardActions = KeyboardActions(onSearch = { focus.clearFocus() }))
                     }
                     item { Text(stringResource(R.string.offer_select_help), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-                    if (state.visible.isEmpty()) item { Text(stringResource(R.string.offer_no_results)) }
+                    if (state.visible.isEmpty()) item { Text(stringResource(if (state.data.catalogo.all { it.id in state.data.aprobadas })
+                        R.string.offer_all_approved else R.string.offer_no_results)) }
                     state.visible.groupBy { it.semestre }.forEach { (semester, subjects) ->
                         item(key = "semester-$semester") { Text(stringResource(R.string.academic_semester, semester), fontWeight = FontWeight.Bold) }
                         items(subjects, key = { it.id }) { subject ->
                             Surface(shape = RoundedCornerShape(18.dp), color = MaterialTheme.colorScheme.surfaceVariant) {
                                 Row(Modifier.fillMaxWidth().toggleable(subject.id in state.draft,
-                                    enabled = !state.saving && !state.conflict && !state.uncertain, role = Role.Checkbox,
+                                    enabled = !state.refreshFailed && !state.saving && !state.conflict && !state.uncertain, role = Role.Checkbox,
                                     onValueChange = { focus.clearFocus(); onToggle(subject.id) }).padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                                     Checkbox(subject.id in state.draft, onCheckedChange = null, enabled = !state.saving && !state.conflict && !state.uncertain)
                                     Column(Modifier.padding(start = 12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {

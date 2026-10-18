@@ -23,7 +23,7 @@ Los viejos documentos acumulaban instrucciones de inicio, pausas, aprobaciones y
 | Historial | Primera preparación separada de consulta y edición; resumen guardado, cancelación, revisión de diferencias, confirmación, diario, recuperación y conflictos. Posponer no degrada CONFIRMADO. |
 | Coherencia | Dominio Kotlin puro, conectado a ViewModels y repositorios. |
 | Notificaciones | FCM y saludo local con permiso Android. Saludo local no acredita recepción push remota. |
-| Oferta actual SAE / T2 | Flujo implementado en rama `feat/oferta-actual-sae`: consulta, editor de 50 materias, reemplazo atómico, vacío/ausente, errores, resultado incierto y conflictos explícitos. 193 pruebas JVM, 7 UI y 1 SDK demo correctas; consultar VALIDACION.md para detalles y lint. Reglas productivas todavía deniegan Oferta. |
+| Oferta actual SAE / T2 | Flujo implementado en rama `feat/oferta-actual-sae`: consulta, editor de 50 materias, reemplazo atómico, vacío/ausente, errores, resultado incierto y conflictos explícitos. 193 pruebas JVM, 7 UI y 1 SDK demo correctas; consultar VALIDACION.md para detalles y lint. Reglas de Oferta publicadas con autorización posterior al diagnóstico del teléfono y relectura remota verificada. |
 | Resumen / T1, Recomendaciones | No integrados en el checkout de T2; pestañas deshabilitadas. T1 está a cargo del compañero. |
 | Correo, registro, recuperación, vinculación, Cuenta completa, biometría | Pendientes; declarar dependencias no equivale a implementar. |
 | Bimodulares | Publicadas: 40 modulares, 9 bimodulares y Taller con duración especial; etiquetas visibles, sin horas ni conversión a meses. |
@@ -49,6 +49,43 @@ Rutas académicas implementadas:
 El guardado de Malla compara los 50 estados, incluidos documentos ausentes, mediante un snapshot completo protegido por la revisión global. El asistente aplica grupos de hasta cinco y valida el conjunto completo; cada transacción comprueba la revisión para detectar cualquier cambio desde el snapshot. El último grupo confirma marcador y diario atómicamente. Las consultas de preparación leen estados y controles entre dos lecturas iguales de revisión; la relectura final desde servidor sigue siendo necesaria antes de comunicar éxito. Las reglas protegen acceso/esquema; la coherencia curricular se valida en la app. Un marcador CONFIRMADO no evita recalcular coherencia tras editar Malla.
 
 ## Oferta actual SAE (T2)
+
+Diagnóstico tras la prueba del estudiante en teléfono físico: se consultaron las
+reglas activas de producción en modo de solo lectura. Su SHA-256 sigue siendo
+`7b70043cfb047d57009062fa1f3ebdd8b87f6cc444e90464855cdb37327479dd`:
+no contienen `match /ofertas/actual` y el cierre general deniega esa ruta.
+El cliente intenta leerla desde servidor antes de mostrar ausencia/editor, por
+lo que el rechazo activa el mensaje genérico de lectura y cada reintento vuelve
+a fallar. No confundir desarrollo T2 completo con habilitación productiva.
+El estudiante autorizó después publicar las reglas de Oferta. El despliegue terminó
+con código cero y relectura remota idéntica al candidato local SHA-256
+`4fc14fb7e06bf3de81b8791bf67db1942202c191868561a8bfbbe61da8ecfc02`.
+Se comprobó por tokens que, al quitar los cuatro bloques nuevos de Oferta, las
+reglas existentes quedan iguales. No se modificaron documentos personales.
+No se obtuvo Logcat del teléfono; la causa del bloqueo se confirmó en las reglas
+remotas, sin atribuir una excepción observada al dispositivo. Ver VALIDACION.md.
+
+Después de publicar, `ProductionOfferReadOnlyTest` pasó en el teléfono físico:
+lectura productiva de 50 materias, oferta ausente correctamente, pantalla de
+primera oferta y apertura/cancelación del editor. Misma sesión y snapshots
+académicos/oferta iguales antes y después; ninguna escritura invocada. Se conservó
+la APK principal y se instaló únicamente la APK de pruebas. El teléfono se
+desbloqueó a petición de la verificación y la app quedó reabierta. No se probó un
+guardado personal; el estudiante debe registrar su selección real.
+
+Ajuste posterior solicitado por el estudiante: el selector deja de mostrar materias
+APROBADA, también en la búsqueda. Se conservan EN_CURSO y pendientes, sin filtrar
+por prerrequisitos. El editor recibe estados reales, refresca al volver desde Malla
+y conserva borrador/búsqueda/revisión esperada. Las aprobadas de una oferta antigua
+se retiran solo del borrador con aviso y se persisten únicamente al pulsar Guardar;
+Cancelar conserva la oferta previa. La relectura antes de enviar detecta nuevas
+aprobaciones y exige revisar la selección antes de volver a guardar. No modifica
+el contrato de Firestore, los estados académicos ni las reglas ya publicadas.
+Verificación del ajuste: 199 JVM, nueve UI sintéticas y una lectura productiva
+en el teléfono correctas. La comprobación real buscó una aprobada (sin resultados)
+y una no aprobada (disponible), conservando sesión y snapshots académicos/oferta.
+APK actualizada instalada con `-r`, sin guardados personales de prueba. Lint:
+cero errores, 32 advertencias. Evidencia y límites en VALIDACION.md.
 
 Pantalla basada en Figma `15:431` y editor `15:494`, adaptados a Compose/Material 3
 con los componentes y cinco iconos existentes (geometría comparada con los SVG de

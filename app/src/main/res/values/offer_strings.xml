@@ -23,7 +23,11 @@
     <string name="offer_load_remote">Cargar oferta remota</string>
     <string name="offer_keep_draft">Guardar mi borrador contra esta revisión</string>
     <string name="offer_search">Buscar materia o sigla</string>
-    <string name="offer_select_help">Marca solo las materias que aparecen en tu lista.</string>
+    <string name="offer_select_help">Marca las materias que SAE te ofrece. Las que ya aprobaste no aparecen.</string>
+    <string name="offer_all_approved">Ya aprobaste todas las materias del plan. No quedan materias para seleccionar.</string>
+    <string name="offer_history_updated">Tu historial se actualizó</string>
+    <string name="offer_approved_removed">Retiramos del borrador las materias que ya aprobaste. Revisa la selección y pulsa Guardar oferta para actualizarla. Cancelar conserva tu oferta anterior.</string>
+    <string name="offer_history_read_error">No pudimos actualizar tu historial. Reintenta antes de guardar la oferta. Tu selección sigue aquí.</string>
     <string name="offer_no_results">No hay materias que coincidan con tu búsqueda.</string>
     <string name="offer_absent">Añade tu primera oferta</string>
     <string name="offer_empty">Tu oferta está vacía</string>

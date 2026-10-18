@@ -17,7 +17,7 @@ Coordinación actualizada el 18/10/2026, hora de Bolivia. El estudiante confirm�
 | ID / propuesta | Trabajo | Se considera terminado cuando… |
 |---|---|---|
 | T1 / compañero, asignación confirmada | Resumen de avance | Usa datos académicos existentes; muestra cantidades PENDIENTE/EN_CURSO/APROBADA y `aprobadas / 50 × 100`; EN_CURSO no suma como aprobada; contempla carga, error, historial pendiente/incoherente y cambio de cuenta; respeta Figma y no crea escrituras ni listas paralelas de aprobadas. Incluye pruebas del cálculo/casos relevantes y evidencia visual. |
-| T2 / autor, rama `feat/oferta-actual-sae` | Oferta actual SAE terminada en desarrollo con demo; validación en VALIDACION.md; pendiente autorización de publicación al repositorio público, revisión/integración por PR y habilitación productiva autorizada. | Selección manual por nombre/sigla; una oferta editable por cuenta; guardar reemplaza la selección; diferencia ausente de guardada vacía; error conserva selección; sin horarios ni periodos. Definir contrato, repositorio y reglas con pruebas de aislamiento antes de desplegar. |
+| T2 / autor, rama `feat/oferta-actual-sae` | Oferta actual SAE y exclusión de aprobadas verificadas. El estudiante aprobó sus pruebas en el teléfono y autorizó subir toda la entrega para que el compañero actualice su rama; sustituye la espera anterior de push/PR. Reglas ya publicadas con autorización independiente y relectura productiva verificada. | Selección manual por nombre/sigla sin aprobadas; una oferta editable por cuenta; guardar reemplaza la selección; diferencia ausente de guardada vacía; error conserva selección; sin horarios ni periodos. Validación y límites en VALIDACION.md. |
 | T3 / compañero tras T1, coordinado con T2 | Motor de recomendaciones en Kotlin puro | Candidatas ofertadas, pendientes y habilitadas. Simula cada aprobación sin persistir; cuenta desbloqueos inmediatos, incluido umbral 45; no cuenta cadenas, materias ya habilitadas ni activas. Orden: desbloqueos descendente, semestre/código ascendente. Explica requisitos y desbloqueos. Prueba dobles requisitos, umbrales y desempates. Puede comenzar con fixtures mientras se define Oferta. |
 | T4 / integración conjunta tras T2 y T3 | Pantalla Recomendaciones | Usa historial coherente/oferta real; maneja oferta ausente/vacía, ninguna candidata, carga y error; no modifica estados; sigue Figma y mantiene separación por sesión. |
 | T5 / acordar después | Cuenta y autenticación completa | Correo/contraseña, registro, recuperación y vinculación conservando UID; biometría opcional por cuenta/dispositivo sobre sesión existente, con reintento/cierre. Dividir en tareas antes de tocar Auth y navegación. |
@@ -30,6 +30,13 @@ Para trabajar T1 y T2 en paralelo, mantener archivos propios de pantalla, ViewMo
 
 ## Integración de T2
 
+Tras probar Oferta, el estudiante pidió excluir las materias ya aprobadas del
+selector. Ajuste implementado e instalado: estados reales en `DatosOferta`, búsqueda
+filtrada, EN_CURSO/pendientes disponibles y refresco al volver desde Malla conservando
+borrador y revisión esperada. No requiere desplegar nuevas reglas ni cambiar
+AcademicData/AcademicRepository. 199 JVM, nueve UI sintéticas y una lectura real
+en el teléfono correctas; ver VALIDACION.md. Mantener este filtro al integrar T1.
+
 Oferta añade `AppContainer.ofertaRepository`, un parámetro opcional al final de
 `AppNavigation`, el acceso `onOffer` opcional a CurriculumScreen y la conexión desde
 MainActivity. Pantalla, recursos, ViewModel, repositorio y pruebas son propios.
@@ -37,9 +44,27 @@ En el estado de `origin/main` consultado al iniciar no había cambios T1: se man
 Resumen y Para ti deshabilitados. Si T1 llega antes de integrar, incorporar `main`
 a esta rama y conservar ambas pantallas al resolver navegación/contenedor/menú.
 No fusionar automáticamente: el compañero debe revisar el PR. Las reglas de Oferta
-se prueban en demo y requieren una autorización posterior para producción.
+se probaron en demo y ya se publicaron con autorización explícita posterior al
+diagnóstico del teléfono; no repetir el despliegue como parte de la integración.
 
 ## Cómo evitar pisarse
+
+El estudiante terminó primero T2 y autorizó compartirlo el 18/10/2026 tras aprobar
+las pruebas manuales. Para incorporar Oferta en la rama existente del compañero,
+primero guardar sus cambios propios en un commit y, desde esa misma rama, ejecutar:
+
+```powershell
+git fetch origin
+git merge origin/feat/oferta-actual-sae
+```
+
+Resolver conflictos conservando Resumen y Oferta, sobre todo en `AppNavigation`,
+`AppContainer`, `MainActivity` y la navegación inferior. No reemplazar archivos
+completos por una sola versión. Repetir compilación/pruebas pertinentes y comprobar
+que ambas pantallas sigan accesibles antes de subir T1. Mientras el PR de Oferta
+no se integre, actualizar solo `main` no incorpora esta entrega. Si el PR ya fue
+integrado, usar `git merge origin/main` en su lugar. No volver a publicar reglas,
+migrar catálogo ni ejecutar pruebas personales de escritura al actualizar la rama.
 
 1. Antes de empezar, indicar en el PR o en este documento quién toma la tarea y su rama. Comprobar `git status`; no resetear cambios ajenos.
 2. Partir de `main` actualizado. Ejemplo para el compañero: `git switch -c feat/resumen-avance`. Una rama por entrega; integrar por PR revisado por el otro integrante.

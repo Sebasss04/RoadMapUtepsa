@@ -60,9 +60,18 @@ remoto validado por el repositorio académico, sin un segundo catálogo en produ
 - Un conflicto conserva el borrador y muestra nombres/siglas de la selección remota.
   El estudiante puede cargarla o guardar explícitamente su borrador contra esa revisión;
   otro cambio concurrente produce un nuevo conflicto. Nunca se fuerza una sobreescritura.
-- El editor permite cualquier materia del catálogo, incluidas aprobadas, en curso o
-  bloqueadas; disponibilidad SAE y elegibilidad son conceptos independientes. La búsqueda
-  reutiliza la normalización de Malla. Nombre principal, sigla secundaria y duración.
+- Por petición del estudiante tras probar T2, el selector y su búsqueda excluyen las
+  materias APROBADA según el historial real. EN_CURSO y pendientes siguen disponibles,
+  incluidas pendientes bloqueadas: no se añade un filtro de prerrequisitos a Oferta.
+  `DatosOferta` transporta estados del repositorio académico sin cambiar AcademicData.
+  Al volver desde Malla se releen los estados conservando borrador, búsqueda y revisión
+  esperada de Oferta; si falla la lectura, se conserva el borrador y se exige reintentar.
+  Si una oferta anterior incluye aprobadas, al editar se retiran solo del borrador y
+  se avisa: Guardar aplica la nueva selección, Cancelar conserva el documento anterior.
+  Antes de enviar un guardado se relee el historial; una nueva aprobación en el
+  borrador detiene el envío para revisar y guardar otra vez. Un resultado incierto
+  se reconcilia antes de modificar esa selección. La búsqueda conserva la normalización
+  de Malla, nombre principal, sigla secundaria y duración.
 - Borrador y búsqueda viven en el ViewModel identificado por UID/versión de sesión:
   se conservan en rotación y navegación de la misma sesión, sin persistir en disco.
   Cancelar no escribe; descartar una selección modificada exige confirmación.
@@ -73,9 +82,10 @@ remoto validado por el repositorio académico, sin un segundo catálogo en produ
   es una validación de identidades del servidor, no contenido académico en la APK.
 
 Las reglas de Oferta son un prototipo validado en demo que debe revisar el equipo
-antes de una distribución amplia. **No se publicaron**: producción sigue denegando
-Oferta hasta un despliegue posterior con autorización específica. Publicar este código
-no despliega reglas, migra datos ni instala la aplicación en dispositivos personales.
+antes de una distribución amplia. Tras el error reportado en el teléfono, el
+estudiante autorizó su publicación: ya están activas en producción, con relectura
+remota verificada y sin cambios a documentos personales. Ver VALIDACION.md.
+Publicar código por sí solo no despliega reglas, migra datos ni instala aplicaciones.
 
 ## Recomendador pendiente
 
