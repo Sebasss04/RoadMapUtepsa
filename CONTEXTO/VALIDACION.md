@@ -1,5 +1,182 @@
 # Validación de RoadMap UTEPSA
 
+## Publicación de rama autorizada — 18/10/2026
+
+El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
+Esta autorización comprende commit y push normales de los 25 archivos auditados.
+La integración en main queda para una aprobación posterior. Las secciones siguientes
+registran la validación local previa: 258 JVM y 59 UI sintéticas correctas,
+compilación correcta y lint 0 errores/39 advertencias. No se vuelve a desplegar
+Firebase ni se modifican datos personales al publicar esta rama.
+
+
+## Auditoría final aprobada: corrección y validación local — 18/10/2026
+
+Rama `audit/t1-integracion-final`, HEAD/base `30685a6`. Fetch de solo lectura confirma
+origin/main en el mismo commit. No se hizo commit, push, merge, rebase ni despliegue.
+Respaldo externo: 260 archivos de la auditoría, ZIP extraído y cotejado por SHA-256.
+
+- Regresión nueva: partialSaveKeepsRecoveryWarningEvenWithIncoherence falló antes
+  de corregir, esperando GUARDADO_PENDIENTE y recibiendo REQUIERE_REVISION. Después pasó.
+- Producción: cambio acotado en ResumenUiState; se conserva prioridad de guardado
+  parcial sin quitar la revisión de contradicciones de un historial confirmado.
+- Gradle desde Android Studio: `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
+  :app:assembleDebugAndroidTest --offline --max-workers=1 -Dorg.gradle.jvmargs=-Xmx768m`.
+  BUILD SUCCESSFUL, 6 min 32 s. 18 XML: **258 pruebas JVM, 0 fallos/errores/omitidas**.
+  Lint actualizado: **0 errores y 39 advertencias**. Ambas APK compiladas.
+- UI: **59 casos distintos correctos**, en ejecuciones dirigidas: ResumenVisual 7,
+  ResumenIntegration 3, AcademicFlow 11, HistorialFlow 20, OfertaFlow 9,
+  RecomendacionesFlow 6 y LoginFeedback 3. AVD RutaSistemas_Integration_API35,
+  serial emulator-5554 comprobado por nombre, boot completo y páginas de 4096 bytes.
+  Repositorios/datos sintéticos; nunca suite completa, pruebas personales ni login real.
+- Primer AcademicFlow: 9/11. Repetición aislada: 1/2; persistió la fila fuera del
+  viewport. Se ajustó solo el harness: cerrar teclado tras búsqueda y desplazarse
+  antes de afirmar visibilidad. Todas las aserciones y casos se conservaron.
+  Gradle completo repetido: BUILD SUCCESSFUL, 23 s, 7 tareas ejecutadas/75 al día;
+  JVM/lint reutilizados, mismo código de producción. APK androidTest recompilada.
+  AcademicFlow final completo 11/11. Después pasaron las otras cuatro suites.
+- Los 7 visuales y 3 de integración corresponden a la primera APK de pruebas;
+  el resto a la recompilación del harness. Producción y esas dos suites no cambiaron.
+  No se presenta como una sola ejecución de 59 sin intentos anteriores.
+- La prueba visual nueva verifica aviso parcial + contradicción, conteos 0/1/49
+  y callback Ver historial. Captura sintética revisada visualmente.
+- Conservación por hashes contra auditoría: solo cuatro archivos Kotlin cambiaron
+  durante esta fase (estado Resumen y tres archivos de pruebas), más estas seis guías.
+  Navegación integrada previa, AppContainer/MainActivity, modelos, repositorios,
+  ViewModels existentes, motor, UUID, reglas y Gradle se conservaron.
+- `git diff --check` correcto; siguen 14 modificados y 11 nuevos, sin eliminaciones.
+  Escaneo acotado de secretos sin coincidencias; no se incluyen build, APK ni logs en Git.
+
+Evidencia regenerable: `app/build/reports/final-audit/`, `final-run/`, XML JVM y lint.
+Los intentos fallidos se conservan; el JSON final de la auditoría distingue intentos.
+
+Límites: terminal Gradle bloqueada por permisos Java del directorio; se ejecutó
+desde IDE. Emulador lanzado desde IDE tras fallo de aceleración en terminal.
+No se cambiaron ACL ni funciones de Windows. Firebase demo no estaba activo: SDK
+Firestore/Auth y reglas no se reejecutaron. No se acredita Google real, teléfono,
+producción ni reparación del AVD personal. Las 39 advertencias siguen pendientes.
+Los apartados siguientes conservan verificaciones anteriores con su alcance propio.
+
+
+## Validación de integración local T1 + main — 18/10/2026
+
+Base actual: `30685a6`, incorporada por fast-forward desde `96a400a`, más T1/login
+sin commit. Respaldo previo de los 19 archivos locales verificado mediante SHA-256.
+La autorización posterior al plan permitió integrar directamente en el clon original.
+Sin push, commits, escrituras GitHub, despliegues ni datos académicos personales.
+
+- Gradle desde Android Studio: `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
+  :app:assembleDebugAndroidTest --offline --max-workers=1 -Dorg.gradle.jvmargs=-Xmx768m`:
+  BUILD SUCCESSFUL, 4 min 3 s. Los 18 XML acreditan **257 JVM**, cero fallos/errores.
+- Lint: **0 errores y 39 advertencias existentes**. APK principal y AndroidTest compiladas.
+- Android en AVD separado `RutaSistemas_Integration_API35`, páginas de 4096 bytes:
+  **38 casos distintos correctos** en ejecuciones dirigidas: 35 regresiones
+  (241.811 s: AcademicFlow 11, ResumenVisual 6, LoginFeedback 3, OfertaFlow 9,
+  RecomendacionesFlow 6) y los tres nuevos de integración (32.863 s).
+  Repositorios sintéticos, sin selector Google real ni escrituras académicas personales.
+- Los tres nuevos verifican las cuatro pestañas/CTA, filtros de Malla, borrador y
+  búsqueda de Oferta, revisión esperada al guardar, oferta guardada como entrada
+  de Para ti, retorno de Perfil, aviso de descarte y aislamiento al cambiar cuenta.
+- El primer intento de los tres casos dio 2/3: el harness pidió una acción IME que
+  Malla declara Default. Se corrigió a cerrar el teclado por Espresso y se eligió
+  un estado con avance para comprobar el CTA; no se cambió producción ni se
+  eliminaron aserciones de conservación. AndroidTest se recompiló correctamente
+  en 1 min 20 s. La repetición final de los tres pasó; JVM/lint corresponden al
+  mismo código de producción, sin cambios posteriores.
+- No se ejecutó toda la instrumentación, SDK/demo ni pruebas productivas. Pixel_7
+  y sus datos no se iniciaron ni alteraron. Este resultado no acredita teléfono
+  físico, Google real ni reparación del AVD personal de 16 KB.
+
+Evidencia local regenerable: `app/build/reports/integration-t1/`, XML JVM y lint.
+El runner externo comprueba nombre del AVD, boot completo y páginas de 4 KB antes
+de instalar; nunca instala en Pixel_7 por coincidencia de serial.
+
+La terminal restringida falló antes de compilar por projectDirectory no escribible
+desde Java; la verificación se trasladó al ejecutor Gradle del IDE. Los registros
+anteriores de T1 y del autor conservados debajo no sustituyen los resultados nuevos.
+La configuración Google registrada en la sesión anterior y los límites del AVD
+personal están descritos en ESTADO_ACTUAL, sin reejecutar operaciones productivas.
+
+Arranque directo de MainActivity en el AVD sintético: Status ok, COLD, 5237 ms;
+login visible y proceso vivo después de las pruebas. No se inició sesión real.
+El AVD sintético se detuvo al terminar; Pixel_7 y sus datos permanecen intactos.
+
+## Registro previo de T1 y login, antes de integrar
+
+Resultados históricos; no sustituyen la verificación vigente anterior.
+
+### Resultado final después del acceso a Figma
+
+- Referencias leídas mediante get_design_context con screenshot: archivo
+  YCcVIGVjbSLOKygieTbEOt, nodos 8:253/318/387/434. El acceso fue concedido después
+  del primer rechazo; la limitación anterior de acceso a Figma queda resuelta.
+- Gradle desde Android Studio: `:app:assembleDebug :app:testDebugUnitTest
+  :app:lintDebug :app:assembleDebugAndroidTest`, ejecución correcta. El IDE mostró
+  188 pruebas JVM aprobadas; los 13 XML suman 188, cero fallos/errores/omitidas.
+- La primera ejecución offline falló por datastore-preferences-jvm:1.1.7 ausente en
+  caché. Se repitió sin --offline para descargar dependencias ya declaradas desde
+  los repositorios del proyecto. No se cambiaron versiones ni configuración.
+- Tras la revisión de capturas se corrigieron colores heredados y la advertencia
+  nueva ModifierParameter. Repetición final desde el ejecutor Gradle del IDE:
+  `:app:assembleDebug :app:lintDebug :app:assembleDebugAndroidTest --offline
+  --max-workers=1`, correcta. Lint final: **0 errores, 39 advertencias**; ninguna
+  nueva en Resumen. APK debug y AndroidTest generados y reinstalados con -r.
+- Instrumentación dirigida, sin ejecutar la suite completa:
+  `ResumenVisualTest` (6) + los 3 métodos summary* de `AcademicFlowTest`: **9 pruebas
+  verificadas** sobre la APK final en ejecuciones dirigidas. La ejecución inicial
+  completa pasó las 9 en 153.889 s; después de corregir colores y captura se
+  interrumpieron dos intentos por cierres nativos ART. En el segundo pasaron las
+  6 visuales y una integración; las dos restantes pasaron individualmente
+  (6.811 s y 7.525 s). No se afirma una suite final de 9 sin interrupciones.
+  Solo estados sintéticos/repositorios en memoria,
+  sin solicitar Google ni leer/escribir historial personal. No acreditan Firestore real.
+- Los 12 tests nuevos JVM cubren 0/1/5/50 aprobadas, EN_CURSO sin avance, todas las
+  combinaciones de conteos, catálogo inválido y estados ajenos, carga/error/sesión,
+  historial pendiente/parcial/incoherente. Las pruebas previas comprueban UID,
+  respuestas tardías, sesión, CAS, recuperación y concurrencia.
+- Android comprueba ejemplo 5 aprobadas + 2 en curso = 10%, primer ingreso exitoso,
+  carga sin conteos, error/reintento sin falso cero, avisos de historial, navegación
+  Malla/Resumen sin perder búsqueda, actualización tras guardar y cambio de cuenta/
+  cierre sin arrastrar progreso. Oferta/Para ti/CTA futuro permanecen deshabilitados.
+- Capturas finales de Compose revisadas frente a Figma: `01-ejemplo-figma`,
+  `02-primer-ingreso`, `03-carga`, `04-error`, `05-historial-pendiente` y
+  `06-historial-incoherente`. UIAutomation produjo un fotograma vacío transitorio
+  en el primer lote; se corrigió el capturador a onRoot().captureToImage y se
+  repitió. El reloj/barras del sistema se adaptan al dispositivo, no se simulan.
+- Assets: los cinco iconos existentes coinciden en geometría con Figma; summary y
+  curriculum difieren solo en el color base, aplicado mediante Icon. Advertencia
+  original SVG 48×48, renderizada con sharp a PNG 192×192 para xxxhdpi, colocada a
+  48dp. Todo está almacenado localmente y sin URLs temporales en la APK.
+
+Evidencia local regenerable: XML/JUnit en `app/build/test-results/testDebugUnitTest`,
+lint en `app/build/reports/lint-results-debug.*` y logs/capturas Android en
+`app/build/reports/t1-local/`. Estos archivos están ignorados; no son historial Git.
+
+### Límites e intentos anteriores de esta intervención
+
+La terminal restringida sigue devolviendo writable=false para el directorio del
+proyecto desde Java, aunque puede escribir archivos. Se reprodujo incluso en una
+copia temporal; Android Studio sí consiguió compilar. No se alteraron permisos de
+Windows ni configuración para evitarlo. La alternativa inicial compiló recursos con
+AAPT2 y todos los fuentes Kotlin/Compose; Kotlin/JUnit directos pasaron 188 pruebas.
+El primer intento directo tuvo 64 fallos por buscar fixtures desde otra carpeta;
+corregido el directorio, pasaron todos sin modificar pruebas para ocultarlos.
+
+Las pruebas Android pasaron en el AVD Pixel_7 API35 de 16KB, conservando datos. No
+se borró, restableció ni creó un AVD. Esto no resuelve ni aísla la causa histórica de
+ART/system_server: durante la repetición final hubo SIGSEGV de la app en libart
+(dirección 0x10, Espresso/IdlingResourceRegistry) y registros contemporáneos de
+Google Play/Google Search con cierres nativos. La causa exacta no se aisló. Se
+conservaron logs y se ejecutaron los casos restantes individualmente, sin
+reconfigurar ART, SDK o AVD. No se atribuye el cierre a lógica Kotlin sin evidencia.
+No se repitieron pruebas personales ni SDK/Firestore productivos. Durante T1 no hubo cambios Auth, reglas, catálogo, GitHub, ramas o commits.
+La intervención posterior de login se registra arriba.
+
+Git final consultado solo en lectura, con bloqueos opcionales deshabilitados:
+`main` / `96a400a`; 7 archivos modificados y 7 nuevos, sin confirmar. T2 a T5 siguen
+pendientes de autorización nueva. Dependencias de T3 y próximos pasos en
+TRABAJO_EN_EQUIPO. Ningún APK se publicó ni se inició integración remota.
+
 ## Publicación de Para ti — 18/10/2026
 
 El estudiante autorizó subir todos los últimos cambios con documentación. Esta

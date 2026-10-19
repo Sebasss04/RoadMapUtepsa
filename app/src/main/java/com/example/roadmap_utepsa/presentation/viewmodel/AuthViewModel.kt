@@ -15,7 +15,8 @@ data class AuthUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val uid: String? = null,
-    val sessionVersion: Long = 0
+    val sessionVersion: Long = 0,
+    val errorMessageRes: Int? = null
 )
 
 class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
@@ -42,7 +43,7 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     // El proveedor se usa solo durante la operación; el ViewModel no guarda un Context.
     suspend fun signInWithGoogle(getIdToken: suspend () -> Result<String>) {
         if (state.value.isLoading || state.value.isAuthenticated) return
-        mutableState.update { it.copy(isLoading = true, errorMessage = null) }
+        mutableState.update { it.copy(isLoading = true, errorMessage = null, errorMessageRes = null) }
         try {
             repository.signInWithGoogle(getIdToken().getOrThrow())
             synchronizeIdentity(repository.currentUid)
@@ -50,7 +51,7 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
             throw e
         } catch (e: Exception) {
             mutableState.update {
-                it.copy(errorMessage = "No se pudo iniciar sesión con Google. Inténtalo de nuevo.")
+                it.copy(errorMessage = null, errorMessageRes = googleSignInErrorMessage(e))
             }
         } finally {
             mutableState.update { it.copy(isLoading = false) }
@@ -60,7 +61,7 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     fun signOut() {
         repository.signOut()
         synchronizeIdentity(repository.currentUid)
-        mutableState.update { it.copy(isLoading = false, errorMessage = null) }
+        mutableState.update { it.copy(isLoading = false, errorMessage = null, errorMessageRes = null) }
     }
 
     class Factory(private val repository: AuthRepository) : ViewModelProvider.Factory {

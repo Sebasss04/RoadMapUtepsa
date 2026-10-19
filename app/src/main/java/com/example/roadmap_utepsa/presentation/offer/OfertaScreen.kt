@@ -27,7 +27,8 @@ import com.example.roadmap_utepsa.presentation.academic.durationLabel
 fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
     onQuery: (String) -> Unit, onToggle: (String) -> Unit, onSave: () -> Unit,
     onCancel: () -> Unit, onConflict: (Boolean) -> Unit, onMalla: () -> Unit,
-    onProfile: () -> Unit, onSignOut: () -> Unit, onRecommendations: (() -> Unit)? = null) {
+    onProfile: () -> Unit, onSignOut: () -> Unit, onRecommendations: (() -> Unit)? = null,
+    onSummary: (() -> Unit)? = null) {
     val focus = androidx.compose.ui.platform.LocalFocusManager.current
     var discard by remember { mutableStateOf(false) }
     var signOut by remember { mutableStateOf(false) }
@@ -63,8 +64,8 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                     val icons = listOf(R.drawable.academic_summary, R.drawable.academic_curriculum,
                         R.drawable.academic_offer, R.drawable.academic_recommendations)
                     labels.forEachIndexed { index, label ->
-                        NavigationBarItem(selected = index == 2, onClick = { if (index == 1) onMalla() else if (index == 3) onRecommendations?.invoke() },
-                            enabled = !state.saving && (index in 1..2 || index == 3 && onRecommendations != null),
+                        NavigationBarItem(selected = index == 2, onClick = { if (index == 0) onSummary?.invoke() else if (index == 1) onMalla() else if (index == 3) onRecommendations?.invoke() },
+                            enabled = !state.saving && (index in 1..2 || index == 0 && onSummary != null || index == 3 && onRecommendations != null),
                             colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primaryContainer,
                                 selectedIconColor = MaterialTheme.colorScheme.primary, selectedTextColor = MaterialTheme.colorScheme.primary),
                             icon = { Icon(painterResource(icons[index]), null, Modifier.size(21.dp)) },

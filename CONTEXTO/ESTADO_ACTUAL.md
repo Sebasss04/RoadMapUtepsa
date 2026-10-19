@@ -1,6 +1,71 @@
 # RoadMap UTEPSA: estado actual y mantenimiento
 
+## Publicación de rama autorizada — 18/10/2026
+
+El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
+Esta autorización comprende commit y push normales de los 25 archivos auditados.
+La integración en main queda para una aprobación posterior. Las secciones siguientes
+registran la validación local previa: 258 JVM y 59 UI sintéticas correctas,
+compilación correcta y lint 0 errores/39 advertencias. No se vuelve a desplegar
+Firebase ni se modifican datos personales al publicar esta rama.
+
+
+## Auditoría final y corrección local — 18/10/2026
+
+Estado vigente: rama `audit/t1-integracion-final`, base `30685a6`, sin commit ni publicación.
+Resumen conserva GUARDADO_PENDIENTE aunque haya contradicciones; CONFIRMADO incoherente
+sigue mostrando revisión. Regresión JVM comprobada antes (falló) y después (pasó).
+Validación nueva: **258 JVM y 59 UI sintéticas distintas correctas**; APK principal y
+AndroidTest compiladas; lint **0 errores/39 advertencias**. Detalles, intentos y límites
+en VALIDACION.md. Repositorios, CAS, Historial, Oferta, motor y contratos preservados.
+Solo se corrigió producción en ResumenUiState; AcademicFlowTest ajusta teclado/scroll
+sin retirar aserciones. Sin Firebase productivo ni cuentas reales. Publicar requiere
+una autorización nueva expresa. Los apartados de integración siguientes son antecedentes.
+
+
+## Integración local de T1 con main — 18/10/2026
+
+Sebastián autorizó actualizar su rama y unificar T1 con los avances de Alexandre.
+`main` local avanzó por fast-forward de `96a400a` a `30685a6`, merge del PR #2;
+el PR #1 de Oferta ya estaba integrado en `2f21871`. No volver a fusionar las ramas
+de Oferta/Para ti ni interpretar sus registros anteriores de PR abierto como pendientes.
+T1 está integrado en esta copia de trabajo, **sin commit**: GitHub main todavía
+no contiene estos cambios locales de Resumen.
+
+Se respaldaron los 19 archivos locales con manifiesto SHA-256 y lectura posterior
+del ZIP antes de actualizar; el respaldo permanece fuera del repositorio. No se
+usó reset, restore, clean, stash ni rebase. Los archivos nuevos se conservaron;
+el parche versionado respaldado se retiró temporalmente para permitir fast-forward
+y se repuso junto a la integración revisada. No se descartó trabajo del estudiante.
+
+Navegación local: Resumen, Malla, Oferta y Para ti comparten un destino exclusivo
+por UID/versión; Resumen utiliza el AcademicViewModel existente. Se conservan la
+clave de estado de Malla, filtros/búsqueda/semestre, borrador/búsqueda/revisión de
+Oferta, recarga de Para ti y avisos de descarte. El CTA de Resumen abre Para ti;
+sus gates existentes siguen decidiendo si faltan historial u oferta. Perfil vuelve
+a Resumen/Para ti desde esas pantallas y conserva el retorno previo Oferta→Malla.
+
+AppContainer/MainActivity, repositorios, motor, revisión académica/CAS, diario,
+UUID y catálogo son los de `30685a6`. No hay modificaciones propias de integración
+en sus contratos ni despliegues. Se mantienen los errores controlados del login.
+Tres pruebas UI nuevas cubren los cuatro destinos, selección guardada frente a
+borrador, revisión al guardar, retorno de Perfil/aviso de cierre y cambio de cuenta.
+
+Integración verificada: Gradle correcto, 257 JVM, 38 Android sintéticos y lint
+0 errores/39 advertencias. Ejecuciones, primer intento y límites en VALIDACION.
+
+Google: la firma debug de esta PC se registró con autorización específica en la
+sesión anterior; Google autenticó y mostró Completa tu perfil. El JSON descargado
+actualizado quedó pendiente por limitación de automatización. No se repite ese
+cambio remoto ni se inventan datos de perfil/historial. La incidencia ART/System UI
+del AVD personal continúa abierta y no se confunde con validación del código.
+
+
 Revisión de Para ti (T3/T4) del 18/10/2026, hora de Bolivia. Leer este documento y [PRODUCTO_Y_PLAN.md](PRODUCTO_Y_PLAN.md) para continuar. Actualizar sus secciones en lugar de crear nuevos relevos o añadir estados contradictorios al final.
+
+Arranque directo de MainActivity en el AVD sintético: Status ok, COLD, 5237 ms;
+login visible y proceso vivo después de las pruebas. No se inició sesión real.
+El AVD sintético se detuvo al terminar; Pixel_7 y sus datos permanecen intactos.
 
 ## Ubicaciones y fuentes de verdad
 
@@ -25,7 +90,7 @@ Los viejos documentos acumulaban instrucciones de inicio, pausas, aprobaciones y
 | Notificaciones | FCM y saludo local con permiso Android. Saludo local no acredita recepción push remota. |
 | Oferta actual SAE / T2 | Flujo implementado en rama `feat/oferta-actual-sae`: consulta, editor de 50 materias, reemplazo atómico, vacío/ausente, errores, resultado incierto y conflictos explícitos. 193 pruebas JVM, 7 UI y 1 SDK demo correctas; consultar VALIDACION.md para detalles y lint. Reglas de Oferta publicadas con autorización posterior al diagnóstico del teléfono y relectura remota verificada. |
 | Para ti / T3-T4 | Implementado en `feat/para-ti`, con avances parciales, secundaria/opcionales, textos breves y colores propios. Diseño Figma actualizado antes de Compose. Ver resultados de la revisión actual y evidencia previa en VALIDACION.md. |
-| Resumen / T1 | Continúa a cargo del compañero; no disponible en main consultado (`2f21871`). Acceso conservado deshabilitado; no es dependencia de Para ti. |
+| Resumen / T1 | Integrado localmente sobre `30685a6`, sin confirmar; conectado a Malla/Oferta/Para ti. Ver validación vigente. |
 | Correo, registro, recuperación, vinculación, Cuenta completa, biometría | Pendientes; declarar dependencias no equivale a implementar. |
 | Bimodulares | Publicadas: 40 modulares, 9 bimodulares y Taller con duración especial; etiquetas visibles, sin horas ni conversión a meses. |
 
@@ -64,6 +129,58 @@ hacia `main`, pendiente de revisión, sin merge. Resumen sigue con el compañero
 El inventario y las indicaciones
 para retomar están en [README.md](README.md#continuar-las-correcciones-en-otro-chat).
 No quedan servicios demo, AVD de prueba ni verificaciones de esta tarea en curso.
+
+## Registro T1 anterior a integrar Oferta y Para ti — 18/10/2026
+
+Los accesos deshabilitados descritos aquí pertenecen a la entrega anterior.
+La navegación vigente de las cuatro pantallas se describe al inicio.
+
+Implementación local sobre `main`, `96a400a`; copia inicialmente sin cambios.
+Se suspendió el flujo histórico de ramas/PR por instrucción del estudiante. No se
+hicieron commits, cambios de rama, escrituras GitHub ni modificaciones Firebase.
+Durante T1 Google Sign-In quedó pospuesto; el diagnóstico posterior está descrito arriba.
+T2, T3, T4 y T5 no se iniciaron.
+
+- `ResumenAcademico` deriva PENDIENTE/EN_CURSO/APROBADA y el porcentaje entero
+  `aprobadas / 50 × 100` de la lectura existente. Valida las 50 identidades,
+  pertenencia al plan y ausencia de estados ajenos; EN_CURSO no suma aprobación.
+- `ResumenUiState` distingue carga, lectura fallida, sesión vencida, preparación
+  pendiente, guardado parcial e incoherencia recalculada incluso con CONFIRMADO.
+  Los conteos guardados no acreditan coherencia; el aviso permite revisar Historial.
+- Resumen comparte `AcademicViewModel` con Malla, conserva filtros/búsqueda/semestre
+  y se actualiza tras sus guardados válidos y la relectura de retorno de Historial.
+  Consultar no genera escrituras ni persiste otra lista. UID/versión de sesión,
+  Perfil, cierre, CAS, revisión global y repositorios se conservaron.
+- Referencia Figma ahora accesible: `8:253` (ejemplo), `8:318` (primer ingreso),
+  `8:387` (carga), `8:434` (error). Se ajustaron cabecera 56dp, contenido 16/24dp,
+  tipografía/alturas de línea, tarjetas, porcentaje 42sp, progreso 8dp, esqueletos,
+  borde/colores y bloque de error con el icono original 48dp.
+- Se verificaron los cinco iconos existentes con los assets de Figma: misma geometría
+  y colores aplicados por Icon. El SVG nuevo de advertencia se conservó sin cambios
+  en `design-assets/summary/warning.svg`, del nodo `8:472`; su PNG 192×192 está en
+  drawable-xxxhdpi y se muestra a 48dp. No hay URLs temporales en ejecución.
+- Oferta, Para ti y el CTA de recomendaciones siguen deshabilitados. El bloque visual
+  aprobado se muestra sin implementar T2/T3/T4. Resumen permite ir a Malla e Historial;
+  Atrás vuelve a Malla. Los datos del ejemplo usado en QA son sintéticos.
+
+Verificación final: APK app y AndroidTest compilados con Gradle desde Android Studio;
+188 pruebas JVM correctas; lint 0 errores y 39 advertencias preexistentes; 9 pruebas
+Android verificadas en ejecuciones dirigidas (6 visuales sintéticas + 3 de navegación/
+cambio de cuenta), incluidas
+actualización tras guardar, retorno con filtros, error/reintento y retiro de datos al
+cambiar UID/cerrar. Se revisaron capturas reales contra los cuatro estados Figma y
+los avisos de historial. Las capturas usan captureToImage de Compose para evitar
+fotogramas vacíos transitorios del compositor del emulador.
+
+El Gradle de la terminal restringida sigue rechazando la comprobación Java de
+escritura del directorio. Android Studio pudo ejecutar las tareas sin cambiar
+configuración. Una primera ejecución offline no encontró datastore-preferences-jvm;
+se descargó la versión ya declarada desde los repositorios configurados, sin cambiar
+dependencias. La repetición final offline compiló y pasó lint. APK y pruebas se
+instalaron localmente con -r, conservando datos. No se publicaron APK ni se borró o
+restableció el AVD. Hubo cierres nativos ART en dos intentos finales: las seis visuales
+y una integración pasaron en el reintento; las otras dos integraciones pasaron en
+procesos individuales. No se declara reparado ART/system_server; ver VALIDACION.
 
 ## Arquitectura y persistencia
 

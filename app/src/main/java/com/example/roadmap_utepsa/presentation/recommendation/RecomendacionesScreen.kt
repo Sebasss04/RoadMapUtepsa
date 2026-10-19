@@ -27,7 +27,7 @@ import com.example.roadmap_utepsa.presentation.viewmodel.*
 fun RecomendacionesScreen(state: RecomendacionesUiState, onRetry: () -> Unit,
     onMalla: () -> Unit, onOffer: () -> Unit, onHistory: () -> Unit,
     onProfile: () -> Unit, onSignOut: () -> Unit,
-    signOutWarning: Int = R.string.academic_sign_out_detail) {
+    signOutWarning: Int = R.string.academic_sign_out_detail, onSummary: (() -> Unit)? = null) {
     var detail by remember(state) { mutableStateOf<Recomendacion?>(null) }
     var showPrevious by remember(state) { mutableStateOf(false) }
     var signOut by remember { mutableStateOf(false) }
@@ -43,7 +43,7 @@ fun RecomendacionesScreen(state: RecomendacionesUiState, onRetry: () -> Unit,
                 val labels = listOf(R.string.academic_summary, R.string.academic_curriculum, R.string.academic_offer, R.string.academic_recommendations)
                 val icons = listOf(R.drawable.academic_summary, R.drawable.academic_curriculum, R.drawable.academic_offer, R.drawable.academic_recommendations)
                 labels.forEachIndexed { index, label -> NavigationBarItem(selected = index == 3,
-                    onClick = { if (index == 1) onMalla() else if (index == 2) onOffer() }, enabled = index != 0,
+                    onClick = { if (index == 0) onSummary?.invoke() else if (index == 1) onMalla() else if (index == 2) onOffer() }, enabled = index != 0 || onSummary != null,
                     colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primaryContainer,
                         selectedIconColor = MaterialTheme.colorScheme.primary, selectedTextColor = MaterialTheme.colorScheme.primary),
                     icon = { Icon(painterResource(icons[index]), null, Modifier.size(21.dp)) }, label = { Text(stringResource(label), fontSize = 11.sp) }) }

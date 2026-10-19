@@ -1,5 +1,28 @@
 # RoadMap UTEPSA: producto y plan
 
+## Publicación de rama autorizada — 18/10/2026
+
+El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
+Esta autorización comprende commit y push normales de los 25 archivos auditados.
+La integración en main queda para una aprobación posterior. Las secciones siguientes
+registran la validación local previa: 258 JVM y 59 UI sintéticas correctas,
+compilación correcta y lint 0 errores/39 advertencias. No se vuelve a desplegar
+Firebase ni se modifican datos personales al publicar esta rama.
+
+
+## Auditoría final y corrección local — 18/10/2026
+
+Estado vigente: rama `audit/t1-integracion-final`, base `30685a6`, sin commit ni publicación.
+Resumen conserva GUARDADO_PENDIENTE aunque haya contradicciones; CONFIRMADO incoherente
+sigue mostrando revisión. Regresión JVM comprobada antes (falló) y después (pasó).
+Validación nueva: **258 JVM y 59 UI sintéticas distintas correctas**; APK principal y
+AndroidTest compiladas; lint **0 errores/39 advertencias**. Detalles, intentos y límites
+en VALIDACION.md. Repositorios, CAS, Historial, Oferta, motor y contratos preservados.
+Solo se corrigió producción en ResumenUiState; AcademicFlowTest ajusta teclado/scroll
+sin retirar aserciones. Sin Firebase productivo ni cuentas reales. Publicar requiere
+una autorización nueva expresa. Los apartados de integración siguientes son antecedentes.
+
+
 Documento vigente, actualizado el 18/10/2026 para Para ti (T3/T4). El estado de implementación y las pruebas están en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md). Los documentos de ARCHIVO son registros históricos: sus pendientes, pausas y autorizaciones describen sesiones anteriores.
 
 ## Propósito y alcance
@@ -17,7 +40,7 @@ Primera versión: una carrera y un plan, RM 615/2016, 50 materias, 9 semestres c
 | Perfil | Nombres, apellidos, carrera y plan asignados. Alta y edición comparten formulario. Perfil completo antes del contenido académico. Error de lectura no equivale a perfil ausente. |
 | Historial | Primera preparación: bienvenida, aprobadas, en curso, revisión y confirmación; permite configurar después. Accesos posteriores: consulta → edición precargada → diferencias → guardar/cancelar. Consultar o cancelar nunca pospone una confirmación anterior. |
 | Malla | Nombre principal; sigla secundaria; clasificación Modular/Bimodular/Duración especial, semestre, área, requisitos y estado. Búsqueda por nombre/sigla sin distinguir tildes o mayúsculas, filtros y edición. Semestre curricular no determina habilitación. |
-| Avance | Conteos por estado y porcentaje `aprobadas / 50 × 100`, calculados. En curso no suma como aprobada. Resumen es una pantalla futura. |
+| Avance | Conteos por estado y porcentaje `aprobadas / 50 × 100`, calculados. En curso no suma como aprobada. Resumen está implementado e integrado en esta copia local; usa el AcademicViewModel existente. |
 | Oferta SAE | Una sola oferta actual editable por cuenta. Selección manual por nombre/sigla; guardar reemplaza la selección. Distinguir ausente de guardada vacía. Sin periodos ni horarios. |
 | Recomendaciones | Primero pendientes anteriores candidatas; luego desbloqueos completos y avances parciales. Principal, secundaria con beneficio y opcionales sin favorita artificial. Cálculo reproducible descrito abajo. |
 | Cuenta | Edición de perfil, proveedores y biometría opcional. Pantalla completa futura. Cerrar sesión retira contenido privado. |
@@ -157,7 +180,7 @@ revisar Historial, visitar Perfil y cerrar sesión con el aviso de borrador de O
 Oferta conserva ViewModel, búsqueda, borrador y revisión esperada al navegar.
 Solo la selección guardada participa en el cálculo. Entrar de nuevo o regresar de
 Perfil vuelve a consultar; Historial y Malla mantienen sus flujos existentes.
-Resumen permanece independiente y deshabilitado mientras no se integre T1.
+T1 ya está conectado localmente a las cuatro pantallas sobre main `30685a6`, sin commit; no modifica el motor ni la lectura estable.
 
 ### Verificación de la entrega inicial
 
@@ -191,7 +214,9 @@ Fuera de v1: otras carreras/planes/roles, horarios completos, historial de notas
 
 [Archivo Figma de interfaces](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=17-482). Exportaciones originales en [DISENOS](DISENOS/). Sus informes contienen estados históricos; no prueban qué está implementado hoy. Nuevas pantallas o cambios visuales sustanciales deben partir de los diseños y del acuerdo con el estudiante. Las correcciones de lógica no requieren rediseñar pantallas.
 
-Continuación: revisar el [PR #2 de Para ti](https://github.com/Sebasss04/RoadMapUtepsa/pull/2),
+El PR #2 ya fue integrado en main mediante `30685a6`; no volver a fusionarlo.
+La copia local incorpora T1 sin confirmar y requiere su validación de integración.
+Registro del cierre anterior: revisar el [PR #2 de Para ti](https://github.com/Sebasss04/RoadMapUtepsa/pull/2),
 publicado por autorización del 18/10/2026, e integrar Resumen cuando el compañero lo entregue, preservando
 Oferta y Para ti. Cuenta/proveedores/correo/biometría requiere una petición propia
 del estudiante. La clasificación de duración ya cuenta con fuente SAE; verificar

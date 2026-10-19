@@ -1,6 +1,36 @@
 # Contexto compartido del proyecto
 
-Actualizado el 18/10/2026 para Para ti (T3/T4), hora de Bolivia. Esta carpeta permite continuar en otra computadora sin el historial de chats del autor.
+## Publicación de rama autorizada — 18/10/2026
+
+El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
+Esta autorización comprende commit y push normales de los 25 archivos auditados.
+La integración en main queda para una aprobación posterior. Las secciones siguientes
+registran la validación local previa: 258 JVM y 59 UI sintéticas correctas,
+compilación correcta y lint 0 errores/39 advertencias. No se vuelve a desplegar
+Firebase ni se modifican datos personales al publicar esta rama.
+
+
+## Auditoría final y corrección local — 18/10/2026
+
+Estado vigente: rama `audit/t1-integracion-final`, base `30685a6`, sin commit ni publicación.
+Resumen conserva GUARDADO_PENDIENTE aunque haya contradicciones; CONFIRMADO incoherente
+sigue mostrando revisión. Regresión JVM comprobada antes (falló) y después (pasó).
+Validación nueva: **258 JVM y 59 UI sintéticas distintas correctas**; APK principal y
+AndroidTest compiladas; lint **0 errores/39 advertencias**. Detalles, intentos y límites
+en VALIDACION.md. Repositorios, CAS, Historial, Oferta, motor y contratos preservados.
+Solo se corrigió producción en ResumenUiState; AcademicFlowTest ajusta teclado/scroll
+sin retirar aserciones. Sin Firebase productivo ni cuentas reales. Publicar requiere
+una autorización nueva expresa. Los apartados de integración siguientes son antecedentes.
+
+
+## Integración local — 18/10/2026
+
+main local actualizado por fast-forward a `30685a6`. Los PR #1 y #2 están integrados.
+T1 se unificó localmente con Oferta/Para ti, sin commit. No volver a fusionar sus
+ramas. Estado, respaldo y límites en ESTADO_ACTUAL; comprobaciones en VALIDACION.
+La integración fue autorizada expresamente después del plan; sin push ni Firebase.
+
+Validación: 257 JVM y 38 Android sintéticos correctos; lint 0 errores/39 advertencias.
 
 ## Orden de lectura
 
@@ -35,7 +65,7 @@ Resumen continúa con el compañero. Diseño de 13 estados terminado antes de Co
 código conectado y pruebas detalladas en VALIDACION.md. El plan anterior y la
 propuesta de T3 para el compañero quedan sustituidos por esta asignación.
 
-## Continuar Para ti y preparar la integración
+## Registro anterior de publicación de Para ti
 
 Correcciones solicitadas e implementadas el 18/10/2026: avances parciales,
 principal/secundaria/opcionales y contenido breve con nueva jerarquía de colores.

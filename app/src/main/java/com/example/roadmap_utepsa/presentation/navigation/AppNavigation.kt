@@ -22,6 +22,7 @@ import com.example.roadmap_utepsa.data.AuthRepository
 import com.example.roadmap_utepsa.data.AcademicRepository
 import com.example.roadmap_utepsa.data.PreparacionRepository
 import com.example.roadmap_utepsa.domain.model.ProfileRegistration
+import com.example.roadmap_utepsa.presentation.academic.ResumenScreen
 import com.example.roadmap_utepsa.presentation.academic.CurriculumScreen
 import com.example.roadmap_utepsa.presentation.viewmodel.AcademicViewModel
 import com.example.roadmap_utepsa.presentation.viewmodel.EstadoPreparacionUi
@@ -32,6 +33,8 @@ import com.example.roadmap_utepsa.presentation.viewmodel.AuthViewModel
 import com.example.roadmap_utepsa.presentation.viewmodel.ProfileViewModel
 import com.example.roadmap_utepsa.services.GoogleAuthHelper
 import kotlinx.coroutines.launch
+
+private enum class AcademicDestination { CURRICULUM, SUMMARY, OFFER, RECOMMENDATIONS }
 
 @Composable
 fun AppNavigation(
@@ -59,8 +62,7 @@ fun AppNavigation(
         val profileState by profileViewModel.state.collectAsState()
         var editingProfile by rememberSaveable(uid, state.sessionVersion) { mutableStateOf(false) }
         var offerOpened by rememberSaveable(uid, state.sessionVersion) { mutableStateOf(false) }
-        var showingOffer by rememberSaveable(uid, state.sessionVersion) { mutableStateOf(false) }
-        var showingRecommendations by rememberSaveable(uid, state.sessionVersion) { mutableStateOf(false) }
+        var destination by rememberSaveable(uid, state.sessionVersion) { mutableStateOf(AcademicDestination.CURRICULUM) }
         var discardOfferOnSignOut by remember { mutableStateOf(false) }
         val academicHolder = rememberSaveableStateHolder()
         LaunchedEffect(profileState.saved) {
@@ -86,39 +88,53 @@ fun AppNavigation(
                     .get(AcademicViewModel.key(uid, state.sessionVersion), AcademicViewModel::class.java)
             }
             val academicState by academicViewModel.state.collectAsState()
+            val openCurriculum = { destination = AcademicDestination.CURRICULUM }
+            val openSummary = { academicViewModel.closeSubject(); destination = AcademicDestination.SUMMARY }
+            val openOffer: (() -> Unit)? = if (ofertaRepository != null) ({
+                academicViewModel.closeSubject(); offerOpened = true; destination = AcademicDestination.OFFER
+            }) else null
+            val openRecommendations: (() -> Unit)? = if (recommendationsVm != null) ({
+                academicViewModel.closeSubject(); destination = AcademicDestination.RECOMMENDATIONS
+            }) else null
             val curriculum: @Composable ((() -> Unit)?, EstadoPreparacionUi) -> Unit = { review, pending ->
-                academicHolder.SaveableStateProvider(AcademicViewModel.key(uid, state.sessionVersion)) {
-                    if (showingRecommendations && recommendationsVm != null) {
+                    if (destination == AcademicDestination.RECOMMENDATIONS && recommendationsVm != null) {
                         DisposableEffect(recommendationsVm) {
                             recommendationsVm.reload()
                             onDispose { recommendationsVm.leave() }
                         }
                         val recommendationsState by recommendationsVm.state.collectAsState()
                         RecomendacionesScreen(recommendationsState, recommendationsVm::reload,
-                            onMalla = { showingRecommendations = false; showingOffer = false },
-                            onOffer = { showingRecommendations = false; offerOpened = true; showingOffer = true },
-                            onHistory = { showingRecommendations = false; showingOffer = false; review?.invoke() },
+                            onMalla = openCurriculum,
+                            onOffer = { openOffer?.invoke() },
+                            onHistory = { openCurriculum(); review?.invoke() },
                             onProfile = { editingProfile = true }, onSignOut = authViewModel::signOut,
-                            signOutWarning = if (offerDraftPresent) R.string.offer_discard_detail else R.string.academic_sign_out_detail)
-                    } else if (showingOffer && offerVm != null) {
+                            signOutWarning = if (offerDraftPresent) R.string.offer_discard_detail else R.string.academic_sign_out_detail,
+                            onSummary = openSummary)
+                    } else if (destination == AcademicDestination.OFFER && offerVm != null) {
                         LaunchedEffect(offerVm) { offerVm.reload() }
                         val offerState by offerVm.state.collectAsState()
                         OfertaScreen(offerState,
                             offerVm::reload, offerVm::edit, offerVm::query, offerVm::toggle,
                             offerVm::save, offerVm::cancel, offerVm::resolveConflict,
-                            onMalla = { showingOffer = false }, onProfile = { editingProfile = true },
+                            onMalla = openCurriculum, onProfile = { editingProfile = true },
                             onSignOut = authViewModel::signOut,
-                            onRecommendations = if (recommendationsVm != null) ({ showingRecommendations = true }) else null)
-                    } else CurriculumScreen(academicState, academicViewModel::reload,
+                            onRecommendations = openRecommendations, onSummary = openSummary)
+                    } else if (destination == AcademicDestination.SUMMARY) {
+                        ResumenScreen(academicState, pending, academicViewModel::reload,
+                            onProfile = { editingProfile = true }, onCurriculum = openCurriculum,
+                            onHistory = review, onSignOut = authViewModel::signOut,
+                            onOffer = openOffer, onRecommendations = openRecommendations)
+                    } else academicHolder.SaveableStateProvider(AcademicViewModel.key(uid, state.sessionVersion)) {
+                        CurriculumScreen(academicState, academicViewModel::reload,
                         onProfile = { editingProfile = true }, onSignOut = authViewModel::signOut,
                         onOpen = academicViewModel::openSubject, onSelect = academicViewModel::selectState,
                         onSave = academicViewModel::saveState, onClose = academicViewModel::closeSubject,
                         onDismissSaved = academicViewModel::dismissSaved,
                         onReviewConflict = academicViewModel::reviewConflict,
                         onReviewHistory = review?.let { callback -> { academicViewModel.closeSubject(); callback() } },
-                        historyStatus = pending, onOffer = if (ofertaRepository != null) ({ offerOpened = true; showingOffer = true }) else null,
+                        historyStatus = pending, onOffer = openOffer,
                         signOutWarning = if (offerDraftPresent) R.string.offer_discard_detail else R.string.academic_sign_out_detail,
-                        onRecommendations = if (recommendationsVm != null) ({ showingRecommendations = true }) else null)
+                        onRecommendations = openRecommendations, onSummary = openSummary)
                 }
             }
             if (preparacionRepository == null) curriculum(null, EstadoPreparacionUi.CONFIRMADO)
@@ -136,7 +152,10 @@ fun AppNavigation(
             onRetryLoad = profileViewModel::retryLoad,
             onDiscard = profileViewModel::discardChanges,
             onSignOut = { if (offerDraftPresent) discardOfferOnSignOut = true else authViewModel.signOut() },
-            onReturn = if (complete) ({ editingProfile = false; showingOffer = false }) else null
+            onReturn = if (complete) ({
+                editingProfile = false
+                if (destination == AcademicDestination.OFFER) destination = AcademicDestination.CURRICULUM
+            }) else null
         )
         if (discardOfferOnSignOut) AlertDialog(
             onDismissRequest = { discardOfferOnSignOut = false },

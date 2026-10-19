@@ -7,6 +7,7 @@ import androidx.activity.SystemBarStyle
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.espresso.Espresso
 import com.example.roadmap_utepsa.data.*
 import com.example.roadmap_utepsa.domain.model.*
 import com.example.roadmap_utepsa.presentation.navigation.AppNavigation
@@ -91,6 +92,7 @@ class AcademicFlowTest {
     private fun find(code: String) {
         compose.onNodeWithTag("curriculum-list").performScrollToIndex(0)
         compose.onNodeWithText("Buscar materia o sigla").performScrollTo().performTextReplacement(code)
+        Espresso.closeSoftKeyboard()
         compose.waitForIdle()
     }
     private fun open(repo: Repository, code: String = "BMS-300") {
@@ -109,14 +111,65 @@ class AcademicFlowTest {
         bitmap.recycle()
     }
 
+    @Test fun summaryReflectsSavedStateAndPreservesCurriculumFiltersWithoutWrites() {
+        val repo = start()
+        open(repo)
+        compose.onNodeWithTag("state-APROBADA").performScrollTo().performClick()
+        save()
+        compose.waitUntil(5000) { repo.writes == 1 && repo.data.estados.isNotEmpty() }
+        find("algebra")
+        compose.onNodeWithText("Resumen").performClick()
+        compose.onNodeWithText("2 %").assertIsDisplayed()
+        compose.onNodeWithText("1 de 50 aprobadas").assertIsDisplayed()
+        screenshot("06-resumen")
+        compose.onNodeWithText("Malla").performClick()
+        compose.onNodeWithText("Buscar materia o sigla").assertTextContains("algebra")
+        compose.onNodeWithText("Resumen").performClick()
+        compose.onNodeWithText("1 de 50 aprobadas").assertIsDisplayed()
+        assertEquals(1, repo.writes)
+    }
+
+    @Test fun summaryReadErrorIsNotZeroAndRetryRestoresSuccessfulEmptyState() {
+        val repo = start(Repository(fixture()).apply { loadFailure = true })
+        compose.onNodeWithText("Resumen").performClick()
+        compose.onNodeWithText("No pudimos cargar tu avance").assertIsDisplayed()
+        compose.onNodeWithText("0 de 50 aprobadas").assertDoesNotExist()
+        screenshot("07-resumen-error")
+        compose.runOnIdle { repo.loadFailure = false }
+        compose.onNodeWithText("Reintentar").performClick()
+        compose.onNodeWithText("0 de 50 aprobadas").assertIsDisplayed()
+        screenshot("08-resumen-inicial")
+        assertEquals(0, repo.writes)
+    }
+
+    @Test fun summaryAccountChangeAndSignOutRemovePreviousProgress() {
+        val auth = Auth()
+        val initial = fixture().let { it.copy(estados = mapOf(it.materias.first().id to EstadoAcademico.APROBADA)) }
+        val repo = start(Repository(initial), auth = auth)
+        compose.onNodeWithText("Resumen").performClick()
+        compose.onNodeWithText("1 de 50 aprobadas").assertIsDisplayed()
+        compose.runOnIdle {
+            repo.data = fixture()
+            auth.uidChanges.value = "test-bob"
+        }
+        compose.onNodeWithText("Malla").assertIsSelected()
+        compose.onNodeWithText("Resumen").performClick()
+        compose.onNodeWithText("0 de 50 aprobadas").assertIsDisplayed()
+        compose.onNodeWithText("1 de 50 aprobadas").assertDoesNotExist()
+        compose.runOnIdle { auth.signOut() }
+        compose.onNodeWithText("Continuar con Google").assertIsDisplayed()
+        compose.onNodeWithTag("summary-screen").assertDoesNotExist()
+        assertEquals(0, repo.writes)
+    }
+
     @Test fun rendersApprovedCatalogAndSearchesWithoutAccents() {
         start()
         compose.onNodeWithText("50 materias · 9 semestres curriculares").assertIsDisplayed()
         screenshot("01-malla")
         find("algebra")
-        compose.onNodeWithText("Álgebra Lineal").assertIsDisplayed()
+        compose.onNodeWithText("Álgebra Lineal").performScrollTo().assertIsDisplayed()
         find("materia inexistente")
-        compose.onNodeWithText("No encontramos materias").assertIsDisplayed()
+        compose.onNodeWithText("No encontramos materias").performScrollTo().assertIsDisplayed()
         screenshot("02-sin-resultados")
         compose.onNodeWithText("Limpiar filtros").performScrollTo().performClick()
         compose.onNodeWithTag("curriculum-list").performScrollToNode(hasText("Introducción a las Matemáticas"))

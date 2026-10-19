@@ -1,5 +1,28 @@
 # RoadMap UTEPSA
 
+## Publicación de rama autorizada — 18/10/2026
+
+El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
+Esta autorización comprende commit y push normales de los 25 archivos auditados.
+La integración en main queda para una aprobación posterior. Las secciones siguientes
+registran la validación local previa: 258 JVM y 59 UI sintéticas correctas,
+compilación correcta y lint 0 errores/39 advertencias. No se vuelve a desplegar
+Firebase ni se modifican datos personales al publicar esta rama.
+
+
+## Auditoría final y corrección local — 18/10/2026
+
+Estado vigente: rama `audit/t1-integracion-final`, base `30685a6`, sin commit ni publicación.
+Resumen conserva GUARDADO_PENDIENTE aunque haya contradicciones; CONFIRMADO incoherente
+sigue mostrando revisión. Regresión JVM comprobada antes (falló) y después (pasó).
+Validación nueva: **258 JVM y 59 UI sintéticas distintas correctas**; APK principal y
+AndroidTest compiladas; lint **0 errores/39 advertencias**. Detalles, intentos y límites
+en CONTEXTO/VALIDACION.md. Repositorios, CAS, Historial, Oferta, motor y contratos preservados.
+Solo se corrigió producción en ResumenUiState; AcademicFlowTest ajusta teclado/scroll
+sin retirar aserciones. Sin Firebase productivo ni cuentas reales. Publicar requiere
+una autorización nueva expresa. Los apartados de integración siguientes son antecedentes.
+
+
 Aplicación Android con Kotlin, Jetpack Compose y Firebase para registrar el historial académico y orientar la elección de materias de Ingeniería de Sistemas (RM 615/2016). No inscribe ni sincroniza con SAE.
 
 ## Empezar aquí
@@ -12,7 +35,14 @@ El contexto necesario para continuar desde otra computadora está versionado:
 - [Trabajo pendiente y reparto propuesto](CONTEXTO/TRABAJO_EN_EQUIPO.md).
 - [Validación de esta publicación](CONTEXTO/VALIDACION.md).
 
-Implementados: acceso Google, Perfil, Malla, Historial con coherencia, persistencia, recuperación y conflictos; catálogo SAE con duración y guardado optimizado. T2 añade Oferta actual SAE con consulta, selección manual sin materias aprobadas y reemplazo transaccional en `feat/oferta-actual-sae`, cuya publicación autorizó el estudiante tras aprobar sus pruebas. Ver validación e instrucciones de integración en CONTEXTO. Para ti añade diseño Figma actualizado, motor de pendientes anteriores/desbloqueos/avances parciales, principal/secundaria/opcionales, consulta estable y pantalla en `feat/para-ti`; ver resultados y límites de validación en CONTEXTO/VALIDACION.md. Pendientes: integrar Resumen del compañero y funciones completas de Cuenta. Las reglas de Oferta ya fueron publicadas con autorización y relectura productiva verificada. Los mockups no prueban implementación.
+Implementados: acceso Google, Perfil, Malla, Historial con coherencia, persistencia, recuperación y conflictos; catálogo SAE con duración y guardado optimizado. T2 añade Oferta actual SAE con consulta, selección manual sin materias aprobadas y reemplazo transaccional en `feat/oferta-actual-sae`, cuya publicación autorizó el estudiante tras aprobar sus pruebas. Ver validación e instrucciones de integración en CONTEXTO. Para ti añade diseño Figma actualizado, motor de pendientes anteriores/desbloqueos/avances parciales, principal/secundaria/opcionales, consulta estable y pantalla en `feat/para-ti`; ver resultados y límites de validación en CONTEXTO/VALIDACION.md. Resumen del compañero está integrado en esta copia local sobre main `30685a6`, sin commit, con accesos a las cuatro pantallas. Cuenta completa sigue pendiente. Las reglas de Oferta ya fueron publicadas con autorización y relectura productiva verificada. Los mockups no prueban implementación.
+
+## Estado local de integración
+
+main actualizado por fast-forward a `30685a6`; PR #1 y #2 ya integrados.
+Los cambios de T1/login permanecen sin confirmar. Ver la sección inicial de
+CONTEXTO/VALIDACION.md para las comprobaciones y sus límites.
+No repetir despliegues ni migraciones al actualizar el código.
 
 ## Preparar el entorno
 

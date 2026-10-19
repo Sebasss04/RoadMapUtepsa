@@ -1,6 +1,40 @@
 # Trabajo pendiente y coordinación
 
-Coordinación actualizada el 18/10/2026, hora de Bolivia. El estudiante confirmó que su compañero tomó T1 (Resumen de avance), trabajando a distancia con su propia cuenta de Codex. El estudiante asignó expresamente motor y pantalla de Para ti al autor/Codex; el compañero conserva Resumen. No se acredita una rama de T1 por este acuerdo.
+## Publicación de rama autorizada — 18/10/2026
+
+El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
+Esta autorización comprende commit y push normales de los 25 archivos auditados.
+La integración en main queda para una aprobación posterior. Las secciones siguientes
+registran la validación local previa: 258 JVM y 59 UI sintéticas correctas,
+compilación correcta y lint 0 errores/39 advertencias. No se vuelve a desplegar
+Firebase ni se modifican datos personales al publicar esta rama.
+
+
+## Auditoría final y corrección local — 18/10/2026
+
+Estado vigente: rama `audit/t1-integracion-final`, base `30685a6`, sin commit ni publicación.
+Resumen conserva GUARDADO_PENDIENTE aunque haya contradicciones; CONFIRMADO incoherente
+sigue mostrando revisión. Regresión JVM comprobada antes (falló) y después (pasó).
+Validación nueva: **258 JVM y 59 UI sintéticas distintas correctas**; APK principal y
+AndroidTest compiladas; lint **0 errores/39 advertencias**. Detalles, intentos y límites
+en VALIDACION.md. Repositorios, CAS, Historial, Oferta, motor y contratos preservados.
+Solo se corrigió producción en ResumenUiState; AcademicFlowTest ajusta teclado/scroll
+sin retirar aserciones. Sin Firebase productivo ni cuentas reales. Publicar requiere
+una autorización nueva expresa. Los apartados de integración siguientes son antecedentes.
+
+
+## Integración local vigente — 18/10/2026
+
+Sebastián autorizó traer todos los cambios de Ale y unificarlos con T1. main avanzó
+de `96a400a` a `30685a6` por fast-forward; Oferta/Para ti ya están integrados en Git.
+Resumen está conectado localmente, sin confirmar ni publicar. Se conservaron los
+19 archivos anteriores mediante respaldo verificado y reconciliación de navegación.
+Ale conserva T2/T3/T4; esta intervención no rehace sus funciones ni altera contratos.
+Las cuatro pestañas comparten UID/sesión y conservan filtros/borrador/revisiones.
+Ver ESTADO_ACTUAL y VALIDACION para implementación, pruebas y pendientes reales.
+Los apartados siguientes sobre PR #2 abierto son registros anteriores al merge.
+
+Validación: 257 JVM y 38 Android sintéticos correctos; lint 0 errores/39 advertencias.
 
 ## Qué se entregó hasta ahora
 
@@ -16,7 +50,7 @@ Coordinación actualizada el 18/10/2026, hora de Bolivia. El estudiante confirm�
 
 | ID / propuesta | Trabajo | Se considera terminado cuando… |
 |---|---|---|
-| T1 / compañero, asignación confirmada | Resumen de avance | Usa datos académicos existentes; muestra cantidades PENDIENTE/EN_CURSO/APROBADA y `aprobadas / 50 × 100`; EN_CURSO no suma como aprobada; contempla carga, error, historial pendiente/incoherente y cambio de cuenta; respeta Figma y no crea escrituras ni listas paralelas de aprobadas. Incluye pruebas del cálculo/casos relevantes y evidencia visual. |
+| T1 / Sebastián, integrado en copia local sin commit | Resumen de avance conectado a main `30685a6` | Usa datos académicos existentes; muestra cantidades PENDIENTE/EN_CURSO/APROBADA y `aprobadas / 50 × 100`; EN_CURSO no suma como aprobada; contempla carga, error, historial pendiente/incoherente y cambio de cuenta; respeta Figma y no crea escrituras ni listas paralelas de aprobadas. Incluye pruebas del cálculo/casos relevantes y evidencia visual. |
 | T2 / autor, rama `feat/oferta-actual-sae` | Oferta actual SAE y exclusión de aprobadas verificadas. El estudiante aprobó sus pruebas en el teléfono y autorizó subir toda la entrega para que el compañero actualice su rama; sustituye la espera anterior de push/PR. Reglas ya publicadas con autorización independiente y relectura productiva verificada. | Selección manual por nombre/sigla sin aprobadas; una oferta editable por cuenta; guardar reemplaza la selección; diferencia ausente de guardada vacía; error conserva selección; sin horarios ni periodos. Validación y límites en VALIDACION.md. |
 | T3 / autor-Codex, `feat/para-ti` | Motor Kotlin puro implementado | Prioridad de pendientes anteriores, desbloqueos completos y avances parciales; principal/secundaria/opcionales, desempates y cero; requisitos dobles, cadenas y umbral 44→45 probados. Ver VALIDACION.md. |
 | T4 / autor-Codex, `feat/para-ti` | Diseño Figma y pantalla terminados; validación seleccionada correcta | Lecturas guardadas estables, gates explícitos, explicación, sesión, navegación y conservación de Oferta verificados. Cierre real en VALIDACION.md. |
@@ -80,7 +114,7 @@ actualizar `origin/main` en la rama propia, preservando antes los cambios locale
 5. Registrar resultados y límites en VALIDACION.md; actualizar las guías vigentes.
    Para ti tiene autorización de publicación del 18/10/2026; revisar su PR antes de integrar.
 
-## Incorporar Para ti mientras Resumen sigue en desarrollo
+## Registro anterior: incorporar Para ti mientras Resumen seguía en desarrollo
 
 Después de revisar el PR de `feat/para-ti`, el compañero puede incorporar esta
 rama a su rama de Resumen sin esperar al merge de `main`. Conservar primero sus

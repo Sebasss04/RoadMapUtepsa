@@ -42,6 +42,7 @@ fun LoginScreen(state: AuthUiState, onSignIn: () -> Unit) {
     var passwordVisible by remember { mutableStateOf(false) }
     var submitted by remember { mutableStateOf(false) }
     var pendingMessage by remember { mutableStateOf<Int?>(null) }
+    val errorMessage = state.errorMessageRes?.let { stringResource(it) } ?: state.errorMessage
     val focusManager = LocalFocusManager.current
     val invalidEmail = submitted && !Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
     val invalidPassword = submitted && password.isBlank()
@@ -72,7 +73,7 @@ fun LoginScreen(state: AuthUiState, onSignIn: () -> Unit) {
                 Text(stringResource(R.string.login_description), fontSize = 15.sp, lineHeight = 20.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                state.errorMessage?.let { message ->
+                errorMessage?.let { message ->
                     Surface(color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(18.dp)) {
                         Column(Modifier.fillMaxWidth().padding(14.dp).semantics { liveRegion = LiveRegionMode.Polite }, verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(stringResource(R.string.login_error_title), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.error)

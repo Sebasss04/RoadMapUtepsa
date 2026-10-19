@@ -33,7 +33,7 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                      onClose: () -> Unit, onDismissSaved: () -> Unit,
                      onReviewHistory: (() -> Unit)? = null, historyStatus: EstadoPreparacionUi = EstadoPreparacionUi.CONFIRMADO,
                      onReviewConflict: () -> Unit = {}, onOffer: (() -> Unit)? = null, signOutWarning: Int = R.string.academic_sign_out_detail,
-                     onRecommendations: (() -> Unit)? = null) {
+                     onRecommendations: (() -> Unit)? = null, onSummary: (() -> Unit)? = null) {
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf<String?>(null) }
     var semester by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -78,19 +78,8 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                 }
             }
         }, bottomBar = {
-            NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
-                val labels = listOf(R.string.academic_summary, R.string.academic_curriculum,
-                    R.string.academic_offer, R.string.academic_recommendations)
-                val icons = listOf(R.drawable.academic_summary, R.drawable.academic_curriculum,
-                    R.drawable.academic_offer, R.drawable.academic_recommendations)
-                labels.forEachIndexed { index, label ->
-                    NavigationBarItem(selected = index == 1, onClick = { if (index == 2) onOffer?.invoke() else if (index == 3) onRecommendations?.invoke() }, enabled = !saving && (index == 1 || (index == 2 && onOffer != null) || (index == 3 && onRecommendations != null)),
-                        colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedIconColor = MaterialTheme.colorScheme.primary, selectedTextColor = MaterialTheme.colorScheme.primary),
-                        icon = { Icon(painterResource(icons[index]), null, Modifier.size(21.dp)) },
-                        label = { Text(stringResource(label), fontSize = 11.sp) })
-                }
-            }
+            AcademicBottomBar(false, enabled = !saving, onSummary = onSummary,
+                onCurriculum = {}, onOffer = onOffer, onRecommendations = onRecommendations)
         }) { padding ->
         LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("curriculum-list"),
             contentPadding = PaddingValues(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
