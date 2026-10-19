@@ -1,5 +1,19 @@
 # RoadMap UTEPSA
 
+## Integración de Resumen en main — 18/10/2026
+
+Esta entrega incorpora T1 — Resumen académico junto con Malla, Historial,
+Oferta SAE y Para ti. El usuario autorizó expresamente integrar su rama en main.
+Implementación validada: `41ef94a`; la actualización posterior solo modifica
+estas guías para registrar la integración. Se preservan los avances previos de
+Alexandre y los contratos de datos, UID, revisión, CAS, diario y recuperación.
+Validación: 258 JVM y 59 casos UI sintéticos distintos correctos; compilación
+correcta; lint 0 errores/39 advertencias. Detalles y límites en CONTEXTO/VALIDACION.md.
+No hay nuevos cambios funcionales, despliegues Firebase ni pruebas personales.
+Las secciones siguientes conservan el historial de publicación y validación;
+las antiguas esperas de autorización para integrar main quedan sustituidas.
+
+
 ## Publicación de rama autorizada — 18/10/2026
 
 El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
