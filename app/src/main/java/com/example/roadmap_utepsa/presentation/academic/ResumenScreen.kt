@@ -22,39 +22,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.roadmap_utepsa.presentation.shared.components.AcademicBottomBar
 import com.example.roadmap_utepsa.R
-import com.example.roadmap_utepsa.presentation.viewmodel.*
-
-@Composable
-internal fun AcademicBottomBar(summary: Boolean, enabled: Boolean = true, onSummary: (() -> Unit)?, onCurriculum: () -> Unit,
-    onOffer: (() -> Unit)? = null, onRecommendations: (() -> Unit)? = null) {
-    NavigationBar(modifier = Modifier.height(84.dp), containerColor = MaterialTheme.colorScheme.surface,
-        windowInsets = WindowInsets(0, 0, 0, 0)) {
-        val labels = listOf(R.string.academic_summary, R.string.academic_curriculum, R.string.academic_offer, R.string.academic_recommendations)
-        val icons = listOf(R.drawable.academic_summary, R.drawable.academic_curriculum, R.drawable.academic_offer, R.drawable.academic_recommendations)
-        labels.forEachIndexed { index, label ->
-            val selected = index == if (summary) 0 else 1
-            NavigationBarItem(selected = selected,
-                onClick = { when (index) {
-                    0 -> onSummary?.invoke()
-                    1 -> onCurriculum()
-                    2 -> onOffer?.invoke()
-                    3 -> onRecommendations?.invoke()
-                } },
-                enabled = enabled && when (index) {
-                    0 -> onSummary != null
-                    1 -> true
-                    2 -> onOffer != null
-                    else -> onRecommendations != null
-                },
-                colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                    selectedIconColor = MaterialTheme.colorScheme.primary, selectedTextColor = MaterialTheme.colorScheme.primary),
-                icon = { Icon(painterResource(icons[index]), null, Modifier.size(21.dp)) },
-                label = { Text(stringResource(label), fontSize = 11.sp, lineHeight = 15.sp,
-                    letterSpacing = 0.sp, fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal) })
-        }
-    }
-}
+import com.example.roadmap_utepsa.presentation.history.EstadoPreparacionUi
 
 /** Figma 8:253/318/387/434; los datos y avisos proceden de la sesión académica. */
 @Composable
@@ -62,6 +32,8 @@ fun ResumenScreen(state: AcademicUiState, historyStatus: EstadoPreparacionUi,
                   onRetry: () -> Unit, onProfile: () -> Unit, onCurriculum: () -> Unit,
                   onHistory: (() -> Unit)?, onSignOut: () -> Unit,
                   onOffer: (() -> Unit)? = null, onRecommendations: (() -> Unit)? = null) {
+    val texts = androidx.compose.ui.platform.LocalResources.current
+
     BackHandler(onBack = onCurriculum)
     val summary = resumenState(state, historyStatus)
     ProvideTextStyle(MaterialTheme.typography.bodyLarge.copy(letterSpacing = 0.sp)) {
@@ -69,13 +41,13 @@ fun ResumenScreen(state: AcademicUiState, historyStatus: EstadoPreparacionUi,
             topBar = {
                 Row(Modifier.fillMaxWidth().height(56.dp).padding(start = 24.dp, end = 16.dp),
                     verticalAlignment = Alignment.CenterVertically) {
-                    Text("RoadMap", fontWeight = FontWeight.Bold, fontSize = 20.sp, lineHeight = 28.sp, modifier = Modifier.weight(1f))
+                    Text(texts.getString(R.string.academic_curriculum_screen_1), fontWeight = FontWeight.Bold, fontSize = 20.sp, lineHeight = 28.sp, modifier = Modifier.weight(1f))
                     IconButton(onProfile) {
                         Icon(painterResource(R.drawable.academic_account), stringResource(R.string.academic_profile),
                             Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
                     }
                 }
-            }, bottomBar = { AcademicBottomBar(true, onSummary = {}, onCurriculum = onCurriculum,
+            }, bottomBar = { AcademicBottomBar(0, onSummary = {}, onCurriculum = onCurriculum,
                 onOffer = onOffer, onRecommendations = onRecommendations) }) { padding ->
             val gap = if (summary is ResumenUiState.Ready) 16.dp else 20.dp
             Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState())

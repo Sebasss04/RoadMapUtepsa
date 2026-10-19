@@ -1,0 +1,12 @@
+{
+  "project": "roadmap-utepsa-c9409",
+  "updateMask": "signIn.email.enabled,signIn.email.passwordRequired",
+  "body": {
+    "signIn": {
+      "email": {
+        "enabled": true,
+        "passwordRequired": true
+      }
+    }
+  }
+}

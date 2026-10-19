@@ -14,6 +14,15 @@ contrato de revisión académica. No quitar CAS, conflictos, diario ni comprobac
 final desde servidor. No añadir Room, catálogo de producción en APK, dependencias
 o capas genéricas sin una necesidad acordada.
 
+Seguir el mapa de paquetes por función del README: contratos/modelos/reglas en
+domain; persistencia y adaptadores en data; pantallas/estados/ViewModels juntos
+en presentation; integraciones Android en platform y construcción en di.
+Dominio no importa Android/Firebase/presentación, datos no importa presentación
+y presentación no importa Firebase ni implementaciones de datos. Mantener el
+AcademicViewModel compartido entre Malla y Resumen. Texto visible en recursos;
+dominio devuelve categorías y los adaptadores traducen errores del proveedor.
+Verificar con scripts/check-architecture.py y los runners protegidos documentados.
+
 Trabajar con ramas por tarea y revisar diferencias antes de integrar. Respetar
 cambios locales ajenos. Ejecutar pruebas pertinentes y registrar límites reales.
 No ejecutar la suite Android completa contra una cuenta personal: hay pruebas

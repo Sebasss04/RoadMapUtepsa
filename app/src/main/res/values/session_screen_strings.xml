@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="session_lock_screen_1">Desbloquea RoadMap</string>
+    <string name="session_lock_screen_2">Tu sesión sigue iniciada. Confirma que eres tú para continuar.</string>
+    <string name="session_lock_screen_3">Cerrar sesión e ir al acceso</string>
+    <string name="session_lock_screen_4">Esta opción solo se solicita si la activaste en este dispositivo.</string>
+    <string name="session_lock_screen_5">Cerrar sesión</string>
+    <string name="session_lock_screen_6">Hay cambios sin guardar. Se descartarán al cerrar sesión.</string>
+    <string name="session_lock_screen_7">Tendrás que iniciar sesión de nuevo.</string>
+    <string name="session_lock_screen_8">Volver</string>
+    <string name="session_unlock">Desbloquear</string>
+</resources>

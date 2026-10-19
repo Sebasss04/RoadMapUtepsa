@@ -4,21 +4,25 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.example.roadmap_utepsa.data.AuthRepository
-import com.example.roadmap_utepsa.data.PreparacionRepository
+import com.example.roadmap_utepsa.domain.auth.AuthRepository
+import com.example.roadmap_utepsa.domain.history.PreparacionRepository
 import com.example.roadmap_utepsa.presentation.history.HistorialActions
 import com.example.roadmap_utepsa.presentation.history.HistorialScreen
-import com.example.roadmap_utepsa.presentation.viewmodel.HistorialUiState
-import com.example.roadmap_utepsa.presentation.viewmodel.HistorialViewModel
-import com.example.roadmap_utepsa.presentation.viewmodel.EstadoPreparacionUi
-import com.example.roadmap_utepsa.presentation.viewmodel.ModoHistorial
+import com.example.roadmap_utepsa.presentation.history.HistorialUiState
+import com.example.roadmap_utepsa.presentation.history.HistorialViewModel
+import com.example.roadmap_utepsa.presentation.history.EstadoPreparacionUi
+import com.example.roadmap_utepsa.presentation.history.ModoHistorial
+import com.example.roadmap_utepsa.domain.notification.ReminderRoute
+import com.example.roadmap_utepsa.domain.notification.ReminderKind
 
 /** Gate productivo de preparación; cargarlo no confirma, pospone ni recupera operaciones. */
 @Composable
 internal fun HistorialGate(uid: String, sessionVersion: Long, owner: ViewModelStoreOwner,
                            repository: PreparacionRepository, auth: AuthRepository,
                            onProfile: () -> Unit, onSignIn: () -> Unit, onEnterCurriculum: () -> Unit,
-                           curriculum: @Composable (onReview: () -> Unit, status: EstadoPreparacionUi) -> Unit) {
+                           curriculum: @Composable (onReview: () -> Unit, status: EstadoPreparacionUi) -> Unit,
+                           notificationRoute: ReminderRoute? = null,
+                           onNotificationDestination: (ReminderKind) -> Unit = {}) {
     val vm = remember(uid, sessionVersion, owner, repository, auth) {
         ViewModelProvider(owner, HistorialViewModel.Factory(uid, repository, auth))
             .get(HistorialViewModel.key(uid, sessionVersion), HistorialViewModel::class.java)
@@ -32,15 +36,28 @@ internal fun HistorialGate(uid: String, sessionVersion: Long, owner: ViewModelSt
     LaunchedEffect(inCurriculum) {
         if (inCurriculum) onEnterCurriculum()
     }
-    LaunchedEffect(ready?.lectura) {
-        if (!initialDecisionHandled && ready != null) {
+    LaunchedEffect(ready?.lectura, notificationRoute) {
+        if (notificationRoute == null && !initialDecisionHandled && ready != null) {
             initialDecisionHandled = true
             if (ready.lectura.registro != null && !ready.recuperacionPendiente) inCurriculum = true
         }
     }
-    if (inCurriculum) curriculum({
+    fun reviewPreservingDraft() {
+        if (ready?.modo != ModoHistorial.EDICION) vm.iniciarRevision()
         inCurriculum = false
-        vm.iniciarRevision()
+    }
+    LaunchedEffect(notificationRoute, ready?.guardando, ready?.recuperacionPendiente, ready != null) {
+        val route = notificationRoute ?: return@LaunchedEffect
+        if (route.uid != uid || ready == null || ready.guardando || ready.recuperacionPendiente) return@LaunchedEffect
+        if (route.kind == ReminderKind.OFFER && ready.lectura.registro == null) return@LaunchedEffect
+        initialDecisionHandled = true
+        if (route.kind == ReminderKind.HISTORY) {
+            if (inCurriculum) reviewPreservingDraft()
+        } else inCurriculum = true
+        onNotificationDestination(route.kind)
+    }
+    if (inCurriculum) curriculum({
+        reviewPreservingDraft()
     }, when {
         state == HistorialUiState.Loading -> EstadoPreparacionUi.CARGANDO
         ready == null -> EstadoPreparacionUi.ERROR
@@ -57,6 +74,7 @@ internal fun HistorialGate(uid: String, sessionVersion: Long, owner: ViewModelSt
         onPostpone = vm::posponer, onRecover = vm::recuperarResultado,
         onDiscard = { if (ready?.modo == ModoHistorial.EDICION) vm.cancelarEdicion() else { vm.iniciarRevision(); inCurriculum = true } },
         onExit = { if (ready?.guardando != true) inCurriculum = true },
-        onReadConflict = vm::leerConflicto, onResolveConflict = vm::resolverConflictoConSeleccion
+        onReadConflict = vm::leerConflicto, onCompareSelection = vm::compareSelection,
+                    onResolveConflict = vm::resolverConflictoConSeleccion
     ))
 }

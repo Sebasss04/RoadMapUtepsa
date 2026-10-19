@@ -1,8 +1,8 @@
 package com.example.roadmap_utepsa.presentation.academic
 
 import com.example.roadmap_utepsa.domain.academic.ResumenAcademico
-import com.example.roadmap_utepsa.presentation.viewmodel.AcademicUiState
-import com.example.roadmap_utepsa.presentation.viewmodel.EstadoPreparacionUi
+import com.example.roadmap_utepsa.presentation.academic.AcademicUiState
+import com.example.roadmap_utepsa.presentation.history.EstadoPreparacionUi
 
 sealed interface ResumenUiState {
     data object Loading : ResumenUiState
@@ -19,7 +19,7 @@ internal fun resumenState(state: AcademicUiState, history: EstadoPreparacionUi):
         EstadoPreparacionUi.CARGANDO -> ResumenUiState.Loading
         EstadoPreparacionUi.ERROR -> ResumenUiState.Error
         else -> try {
-            ResumenUiState.Ready(ResumenAcademico.calcular(state.data),
+            ResumenUiState.Ready(requireNotNull(state.resumen),
                 if (history != EstadoPreparacionUi.GUARDADO_PENDIENTE && state.coherencia.contradicciones.isNotEmpty())
                     EstadoPreparacionUi.REQUIERE_REVISION else history)
         } catch (_: IllegalArgumentException) { ResumenUiState.Error }

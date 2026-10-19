@@ -2,7 +2,10 @@ package com.example.roadmap_utepsa.domain.recommendation
 
 import com.example.roadmap_utepsa.domain.academic.ReglasAcademicas
 import com.example.roadmap_utepsa.domain.academic.ReglasHistorial
-import com.example.roadmap_utepsa.domain.model.*
+import com.example.roadmap_utepsa.domain.academic.AcademicData
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
+import com.example.roadmap_utepsa.domain.academic.Materia
+import com.example.roadmap_utepsa.domain.offer.Oferta
 
 data class AvanceParcial(val materia: Materia, val requisitosAprobados: List<Materia>,
     val requisitosPendientes: List<Materia>, val aprobadasFaltantes: Int)

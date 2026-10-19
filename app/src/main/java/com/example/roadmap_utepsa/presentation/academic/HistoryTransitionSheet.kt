@@ -1,5 +1,6 @@
 package com.example.roadmap_utepsa.presentation.academic
 
+import com.example.roadmap_utepsa.presentation.shared.text.quantityText
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,9 +13,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
+import com.example.roadmap_utepsa.presentation.shared.text.durationLabel
 import com.example.roadmap_utepsa.R
-import com.example.roadmap_utepsa.domain.model.EstadoAcademico
-import com.example.roadmap_utepsa.presentation.viewmodel.AcademicUiState
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
+import com.example.roadmap_utepsa.presentation.academic.AcademicUiState
 
 /** Paneles H21–H24/H26–H27: diagnóstico calculado, sin modificar dependientes. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +37,7 @@ internal fun HistoryTransitionSheet(ready: AcademicUiState.Ready, onSave: () -> 
         materia.minAprobadas > 0 && result.permitida
     val simpleUpdate = returningToPending || thresholdCourse
     val dependencias = result.dependientesAfectados.isNotEmpty()
-    val revisar: () -> Unit = { onReview?.invoke(); Unit }
+    val revisar: () -> Unit = { onReview?.invoke() }
     val requisitos = ready.data.prerrequisitos.filter { it.idObjetivo == materia.id }
         .map { byId.getValue(it.idRequisito) }.sortedBy { it.codigo }
     val diagnosticos = if (result.permitida) result.propuesto.contradicciones.filter { it.idMateria == materia.id }
@@ -74,7 +76,7 @@ internal fun HistoryTransitionSheet(ready: AcademicUiState.Ready, onSave: () -> 
                 }
                 if (thresholdCourse) TransitionCard(highlight = true) {
                     Text(stringResource(R.string.history_threshold_met_title), fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                    Text(stringResource(R.string.history_threshold_met_count,
+                    Text(quantityText(R.plurals.history_threshold_met_count,
                         ready.data.estados.count { (id, state) -> id != materia.id && state == EstadoAcademico.APROBADA }),
                         fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
@@ -88,14 +90,14 @@ internal fun HistoryTransitionSheet(ready: AcademicUiState.Ready, onSave: () -> 
                 diagnosticos.forEach { d ->
                     TransitionCard(highlight = true) {
                         Text(if (dependencias) stringResource(R.string.history_dependent, byId.getValue(d.idMateria).nombre)
-                            else if (d.aprobadasFaltantes > 0) stringResource(R.string.history_threshold, d.minAprobadas)
+                            else if (d.aprobadasFaltantes > 0) quantityText(R.plurals.history_threshold, d.minAprobadas)
                             else stringResource(R.string.history_missing_approved), fontWeight = FontWeight.Bold, fontSize = 16.sp)
                         if (d.requisitosSinAprobar.isNotEmpty()) Text(d.requisitosSinAprobar.sorted().joinToString("\n") {
                             val required = byId.getValue(it)
                             "${required.nombre}: ${etiquetas.getValue(ready.data.estados[it] ?: EstadoAcademico.PENDIENTE)}"
                         }, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         if (d.aprobadasFaltantes > 0) Text(stringResource(R.string.history_threshold_detail,
-                            d.aprobadasComputables, d.aprobadasFaltantes), fontSize = 14.sp,
+                            quantityText(R.plurals.history_have, d.aprobadasComputables), quantityText(R.plurals.history_missing_threshold, d.aprobadasFaltantes)), fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }

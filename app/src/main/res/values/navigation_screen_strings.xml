@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_app_navigation_1">Comprobando tu sesión</string>
+    <string name="navigation_app_navigation_2">Cerrar sesión</string>
+    <string name="navigation_app_navigation_3">Malla</string>
+    <string name="navigation_app_navigation_4">Resumen</string>
+    <string name="navigation_app_navigation_5">Oferta SAE</string>
+    <string name="navigation_app_navigation_6">Para ti</string>
+    <string name="navigation_app_navigation_7">Volver a Cuenta</string>
+    <string name="navigation_app_navigation_8">Hay cambios sin guardar. Se descartarán al cerrar sesión.</string>
+    <string name="navigation_app_navigation_9">Tendrás que iniciar sesión de nuevo para continuar.</string>
+</resources>

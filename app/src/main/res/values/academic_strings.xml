@@ -1,6 +1,10 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="academic_title">Tu malla curricular</string>
-    <string name="academic_subtitle">%1$d materias · 9 semestres curriculares</string>
+    <plurals name="academic_subtitle">
+        <item quantity="one">%1$d materia · 9 semestres curriculares</item>
+        <item quantity="other">%1$d materias · 9 semestres curriculares</item>
+        <item quantity="many">%1$d materias · 9 semestres curriculares</item>
+    </plurals>
     <string name="academic_search">Buscar materia o sigla</string>
     <string name="academic_all">Todas</string>
     <string name="academic_pending_plural">Pendientes</string>
@@ -17,8 +21,7 @@
     <string name="academic_error">No pudimos cargar tu malla</string>
     <string name="academic_error_detail">Revisa tu conexión y vuelve a intentarlo.</string>
     <string name="academic_refresh">Actualizar</string>
-    <string name="academic_profile">Editar perfil</string>
-    <string name="academic_open">Ver malla curricular</string>
+    <string name="academic_profile">Tu cuenta</string>
     <string name="academic_return">Volver a Malla</string>
     <string name="academic_expired">La sesión terminó. Vuelve a iniciar sesión.</string>
     <string name="academic_detail_title">Actualizar estado</string>
@@ -26,19 +29,27 @@
     <string name="academic_requirements">Requisitos: %1$s</string>
     <string name="academic_requirements_met">Requisitos cumplidos</string>
     <string name="academic_requirements_missing">Requisitos pendientes</string>
-    <string name="academic_minimum">Requiere %1$d materias aprobadas</string>
-    <string name="academic_missing_count">Te faltan %1$d materias aprobadas para este requisito.</string>
+    <plurals name="academic_minimum">
+        <item quantity="one">Requiere %1$d materia aprobada</item>
+        <item quantity="other">Requiere %1$d materias aprobadas</item>
+        <item quantity="many">Requiere %1$d materias aprobadas</item>
+    </plurals>
+    <plurals name="academic_missing_count">
+        <item quantity="one">Te falta %1$d materia aprobada para este requisito.</item>
+        <item quantity="other">Te faltan %1$d materias aprobadas para este requisito.</item>
+        <item quantity="many">Te faltan %1$d materias aprobadas para este requisito.</item>
+    </plurals>
     <string name="academic_history_hint">Puedes registrar tu historial aunque los requisitos todavía no estén marcados.</string>
     <string name="academic_choose_state">Selecciona el nuevo estado</string>
     <string name="academic_save">Guardar estado</string>
     <string name="academic_save_error">No pudimos confirmar el cambio. Conservamos tu selección para reintentar.</string>
-    <string name="academic_save_pending">Seguimos esperando confirmación del servidor. No vuelvas a enviar el cambio.</string>
+    <string name="academic_save_pending">Todavía no podemos confirmar que el cambio se guardó. No lo envíes de nuevo.</string>
     <string name="academic_saved">Estado guardado</string>
     <string name="academic_cancel">Cancelar</string>
     <string name="academic_discard_title">¿Descartar el cambio de estado?</string>
     <string name="academic_discard_detail">La selección que todavía no guardaste se perderá.</string>
     <string name="academic_sign_out_title">¿Cerrar sesión?</string>
-    <string name="academic_sign_out_detail">Podrás recuperar tus datos al volver a iniciar sesión.</string>
+    <string name="academic_sign_out_detail">Tendrás que iniciar sesión de nuevo para continuar.</string>
     <string name="academic_summary">Resumen</string>
     <string name="academic_curriculum">Malla</string>
     <string name="academic_offer">Oferta</string>
@@ -47,4 +58,23 @@
     <string name="academic_area_complementary">Complementaria</string>
     <string name="academic_area_specialty">Especialidad</string>
     <string name="academic_area_elective">Electiva</string>
+    <string name="summary_title">Tu camino académico</string>
+    <string name="summary_degree">Ingeniería de Sistemas</string>
+    <string name="summary_intro">Tu avance se calcula con las materias aprobadas.</string>
+    <string name="summary_progress">AVANCE DE LA CARRERA</string>
+    <string name="summary_approved_count">%1$d de 50 aprobadas</string>
+    <string name="summary_only_approved">Solo las aprobadas cuentan para el porcentaje.</string>
+    <string name="summary_loading">Cargando tu avance…</string>
+    <string name="summary_loading_detail">Estamos consultando tus estados académicos.</string>
+    <string name="summary_error">No pudimos cargar tu avance</string>
+    <string name="summary_error_detail">No pudimos consultar tus materias. Inténtalo de nuevo.</string>
+    <string name="summary_start">Empieza por tu malla</string>
+    <string name="summary_start_detail">Marca las materias que ya aprobaste o estás cursando.</string>
+    <string name="summary_update">Actualizar mi malla</string>
+    <string name="summary_view_curriculum">Ver malla curricular</string>
+    <string name="summary_history_notice">Estos conteos reflejan los estados guardados. Revisa tu historial antes de usarlos para planificar.</string>
+    <string name="summary_next">¿Qué cursar después?</string>
+    <string name="summary_next_detail">Registra tu oferta SAE y revisa las materias recomendadas para ti.</string>
+    <string name="summary_recommendations">Revisar recomendaciones</string>
+    <string name="summary_recommendations_unavailable">Disponible en una próxima entrega</string>
 </resources>

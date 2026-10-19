@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_sign_out">Cerrar sesión</string>
+    <string name="profile_title_create">Completa tu perfil</string>
+    <string name="profile_title_edit">Tu perfil</string>
+    <string name="profile_description_create">Un último paso para guardar tus datos personales.</string>
+    <string name="profile_description_edit">Mantén tus datos actualizados.</string>
+    <string name="profile_loading">Cargando tu perfil…</string>
+    <string name="profile_load_error">No pudimos cargar tu perfil</string>
+    <string name="profile_load_error_detail">Inténtalo de nuevo. No necesitas crear otra cuenta.</string>
+    <string name="profile_retry">Reintentar</string>
+    <string name="profile_names">Nombres</string>
+    <string name="profile_surnames">Apellidos</string>
+    <string name="profile_name_validation">Escribe entre 1 y 80 caracteres en una sola línea.</string>
+    <string name="profile_plan_label">TU PLAN DE ESTUDIOS</string>
+    <string name="profile_plan_resolution">UTEPSA · RM N.º %1$s</string>
+    <string name="profile_plan_assigned">50 materias · Plan asignado a tu perfil</string>
+    <string name="profile_incomplete">Tu perfil está incompleto. Guarda tus datos para completarlo con esta misma cuenta.</string>
+    <string name="profile_saved">Cambios guardados</string>
+    <string name="profile_saved_detail">Tu perfil se guardó correctamente.</string>
+    <string name="profile_save_error">No pudimos guardar los cambios</string>
+    <string name="profile_save_error_detail">Tu cuenta ya existe. Lo que escribiste sigue en este formulario. Puedes reintentar.</string>
+    <string name="profile_pending">Guardado sin confirmar</string>
+    <string name="profile_pending_detail">Todavía no podemos confirmar que el perfil se guardó. Mantén la app abierta y no lo envíes de nuevo.</string>
+    <string name="profile_saving">Guardando…</string>
+    <string name="profile_retry_save">Reintentar guardado</string>
+    <string name="profile_save_changes">Guardar cambios</string>
+    <string name="profile_save">Guardar perfil</string>
+    <string name="profile_discard">Descartar cambios</string>
+    <string name="profile_discard_title">¿Descartar los cambios?</string>
+    <string name="profile_discard_detail">Los cambios que todavía no guardaste se perderán.</string>
+    <string name="profile_discard_confirm">Descartar</string>
+    <string name="profile_keep_editing">Seguir editando</string>
+</resources>

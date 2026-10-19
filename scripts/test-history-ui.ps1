@@ -53,7 +53,7 @@ $historyMethods = if ($TestMethods) { $TestMethods } else { $historyAllMethods }
 if (@($historyMethods | Where-Object { $_ -notin $historyAllMethods }).Count -gt 0) { throw 'Caso de historial desconocido.' }
 $historyResults = @()
 foreach ($historyMethod in $historyMethods) {
-    $historyClass = "com.example.roadmap_utepsa.HistorialFlowTest#$historyMethod"
+    $historyClass = "com.example.roadmap_utepsa.history.HistorialFlowTest#$historyMethod"
     $historyOutput = & $AdbPath -s $Serial shell am instrument -w -r -e class $historyClass 'com.example.roadmap_utepsa.test/androidx.test.runner.AndroidJUnitRunner' 2>&1
     $historyExitCode = $LASTEXITCODE
     $historyLog = $historyOutput -join "`n"

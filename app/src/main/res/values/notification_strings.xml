@@ -1,8 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="notification_channel_name">Avisos de RoadMap</string>
-    <string name="notification_channel_description">Bienvenida y novedades de tu carrera</string>
-    <string name="notification_welcome_title">¡Bienvenido a RoadMap UTEPSA!</string>
-    <string name="notification_welcome_body">Tu próximo paso empieza aquí. Revisa tu malla y sigue avanzando en tu carrera.</string>
+    <string name="notification_channel_description">Avisos enviados por RoadMap UTEPSA</string>
     <string name="notification_default_body">Tienes un nuevo aviso de RoadMap UTEPSA.</string>
     <string name="notification_permission_denied">Puedes activar los avisos en Ajustes → Notificaciones → RoadMap UTEPSA.</string>
+    <string name="pending_setting">Avisos de pendientes</string>
+    <string name="pending_setting_detail">Recibe un aviso para completar tu historial o registrar tu oferta.</string>
+    <string name="pending_permission_context">Te avisaremos una vez cuando falte confirmar tu historial o registrar tu oferta SAE, al volver al contenido académico. Android te pedirá permiso si hace falta. Puedes desactivarlo en cualquier momento.</string>
+    <string name="pending_channel">Pendientes académicos</string>
+    <string name="pending_channel_detail">Avisos silenciosos para completar Historial u Oferta SAE</string>
+    <string name="pending_history_title">Completa tu historial</string>
+    <string name="pending_history_body">Confirma tus materias para preparar tus recomendaciones.</string>
+    <string name="pending_offer_title">Registra tu oferta SAE</string>
+    <string name="pending_offer_body">Añade las materias disponibles para consultar Para ti.</string>
 </resources>

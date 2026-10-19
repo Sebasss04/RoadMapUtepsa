@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_access_screens_1">Volver</string>
+    <string name="auth_access_screens_2">Ocultar contraseña</string>
+    <string name="auth_access_screens_3">Mostrar contraseña</string>
+    <string name="auth_access_screens_4">Crea tu cuenta</string>
+    <string name="auth_access_screens_5">Recupera tu acceso</string>
+    <string name="auth_access_screens_6">Acceso</string>
+    <string name="auth_access_screens_7">Tu avance académico, en un solo lugar.</string>
+    <string name="auth_access_screens_8">Te enviaremos un enlace para elegir una nueva contraseña.</string>
+    <string name="auth_access_screens_9">Correo electrónico</string>
+    <string name="auth_access_screens_10">Contraseña</string>
+    <string name="auth_access_screens_11">Confirmar contraseña</string>
+    <string name="auth_access_screens_12">Usa al menos ocho caracteres. Si la contraseña no se acepta, prueba con una más segura.</string>
+    <string name="auth_access_screens_13">Enviando…</string>
+    <string name="auth_access_screens_14">Crear cuenta</string>
+    <string name="auth_access_screens_15">Enviar enlace</string>
+    <string name="auth_access_screens_16">¿Ingresas con Google?</string>
+    <string name="auth_access_screens_17">No necesitas crear otra contraseña. Vuelve al acceso y elige Continuar con Google.</string>
+    <string name="auth_access_screens_18">Ya tengo una cuenta</string>
+    <string name="auth_access_screens_19">Volver al acceso</string>
+    <string name="auth_access_screens_20">Después de verificar el correo completarás tu perfil de estudiante.</string>
+    <string name="auth_access_screens_21">Verifica tu correo</string>
+    <string name="auth_access_screens_22">Abre el enlace que enviamos a tu correo. Luego vuelve aquí para comprobar la verificación.</string>
+    <string name="auth_access_screens_23">Ya verifiqué</string>
+    <string name="auth_access_screens_24">Reenviar correo</string>
+    <string name="auth_access_screens_25">Cerrar sesión</string>
+    <string name="auth_access_screens_26">Tu cuenta seguirá creada. Podrás volver a iniciar sesión para verificar el correo.</string>
+    <string name="auth_resend_seconds">Reenviar en %1$ds</string>
+</resources>

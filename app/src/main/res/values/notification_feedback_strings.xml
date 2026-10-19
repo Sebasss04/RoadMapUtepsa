@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_preference_read_failed">No se pudo leer el ajuste de avisos. Reintenta desde Cuenta.</string>
+    <string name="notification_preference_save_failed">No se pudo guardar el ajuste de avisos. Reintenta.</string>
+</resources>

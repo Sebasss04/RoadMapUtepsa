@@ -1,13 +1,17 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="history_dependencies_title">Revisa las dependencias</string>
     <string name="history_register_approval">Registrar aprobación</string>
     <string name="history_saved_state">Estado guardado: %1$s</string>
     <string name="history_selected_state">Seleccionaste: %1$s</string>
     <string name="history_dependent">%1$s depende de esta aprobación</string>
-    <string name="history_threshold">Necesitas %1$d aprobadas</string>
+    <plurals name="history_threshold">
+        <item quantity="one">Necesitas %1$d aprobada</item>
+        <item quantity="other">Necesitas %1$d aprobadas</item>
+        <item quantity="many">Necesitas %1$d aprobadas</item>
+    </plurals>
     <string name="history_missing_approved">Faltan requisitos aprobados</string>
-    <string name="history_threshold_detail">Tienes %1$d aprobadas distintas de esta materia. Faltan %2$d para cumplir el umbral.</string>
-    <string name="history_no_cascade">El cambio aislado está bloqueado. Revisa el conjunto y corrige los estados que corresponda; no se cambiarán en cascada.</string>
+    <string name="history_threshold_detail">%1$s %2$s</string>
+    <string name="history_no_cascade">No puedes hacer este cambio por separado. Revisa las materias relacionadas y corrige sus estados. No modificaremos otras materias automáticamente.</string>
     <string name="history_approval_warning">Puedes registrar esta aprobación, pero tendrás que revisar las omisiones antes de recibir recomendaciones. No se aprobarán requisitos automáticamente.</string>
     <string name="history_course_warning">Conservaremos el estado guardado. En curso no satisface requisitos ni cuenta como aprobación.</string>
     <string name="history_review_related">Revisar historial relacionado</string>
@@ -26,11 +30,19 @@
     <string name="history_three_states">Se conservan los tres estados: Pendiente, En curso y Aprobada. No se registran notas ni intentos.</string>
     <string name="history_save_pending">Guardar como Pendiente</string>
     <string name="history_save_course">Guardar como En curso</string>
-    <string name="history_threshold_met">Umbral cumplido: %1$d aprobadas distintas de esta materia. El cambio se hará únicamente cuando lo guardes; cumplir el umbral no cambia el estado automáticamente.</string>
+    <plurals name="history_threshold_met">
+        <item quantity="one">Umbral cumplido: %1$d aprobada distinta de esta materia. El cambio se hará únicamente cuando lo guardes; cumplir el umbral no cambia el estado automáticamente.</item>
+        <item quantity="other">Umbral cumplido: %1$d aprobadas distintas de esta materia. El cambio se hará únicamente cuando lo guardes; cumplir el umbral no cambia el estado automáticamente.</item>
+        <item quantity="many">Umbral cumplido: %1$d aprobadas distintas de esta materia. El cambio se hará únicamente cuando lo guardes; cumplir el umbral no cambia el estado automáticamente.</item>
+    </plurals>
     <string name="history_state_conflict_title">El historial cambió</string>
-    <string name="history_state_conflict_detail">Otro dispositivo guardó cambios. Revisa el estado actual y tu selección antes de volver a guardar.</string>
+    <string name="history_state_conflict_detail">Hay nuevos cambios guardados. Revisa el estado actual y tu selección antes de volver a guardar.</string>
     <string name="history_review_changes">Revisar cambios</string>
     <string name="history_threshold_met_title">Umbral cumplido</string>
-    <string name="history_threshold_met_count">%1$d aprobadas distintas de esta materia. Se han comprobado los requisitos de esta materia.</string>
+    <plurals name="history_threshold_met_count">
+        <item quantity="one">%1$d aprobada distinta de esta materia. Se han comprobado los requisitos de esta materia.</item>
+        <item quantity="other">%1$d aprobadas distintas de esta materia. Se han comprobado los requisitos de esta materia.</item>
+        <item quantity="many">%1$d aprobadas distintas de esta materia. Se han comprobado los requisitos de esta materia.</item>
+    </plurals>
     <string name="history_threshold_explicit_save">El cambio se hará únicamente cuando lo guardes. Cumplir el umbral no cambia el estado automáticamente.</string>
 </resources>

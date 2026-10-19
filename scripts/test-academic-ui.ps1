@@ -29,7 +29,7 @@ $methods = if ($TestMethods) { $TestMethods } else { $allMethods }
 if (@($methods | Where-Object { $_ -notin $allMethods }).Count -gt 0) { throw 'Caso de prueba desconocido.' }
 $results = @()
 foreach ($method in $methods) {
-    $testClass = "com.example.roadmap_utepsa.AcademicFlowTest#$method"
+    $testClass = "com.example.roadmap_utepsa.academic.AcademicFlowTest#$method"
     $output = & $AdbPath -s $Serial shell am instrument -w -r -e class $testClass 'com.example.roadmap_utepsa.test/androidx.test.runner.AndroidJUnitRunner' 2>&1
     $exitCode = $LASTEXITCODE
     $log = $output -join "`n"

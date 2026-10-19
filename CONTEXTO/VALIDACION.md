@@ -1,647 +1,700 @@
 # Validación de RoadMap UTEPSA
 
-## Integración de Resumen en main — 18/10/2026
+Consolidada el 19/10/2026, hora de Bolivia, sobre la base funcional publicada
+`0192056`. Este documento distingue pruebas locales, evidencia del compañero,
+servicios demo y comprobaciones productivas. Limpiar la documentación no ejecuta
+nuevamente esas pruebas ni amplía su alcance.
 
-Esta entrega incorpora T1 — Resumen académico junto con Malla, Historial,
-Oferta SAE y Para ti. El usuario autorizó expresamente integrar su rama en main.
-Implementación validada: `41ef94a`; la actualización posterior solo modifica
-estas guías para registrar la integración. Se preservan los avances previos de
-Alexandre y los contratos de datos, UID, revisión, CAS, diario y recuperación.
-Validación: 258 JVM y 59 casos UI sintéticos distintos correctos; compilación
-correcta; lint 0 errores/39 advertencias. Detalles y límites en VALIDACION.md.
-No hay nuevos cambios funcionales, despliegues Firebase ni pruebas personales.
-Las secciones siguientes conservan el historial de publicación y validación;
-las antiguas esperas de autorización para integrar main quedan sustituidas.
+## Conformidad final e integración · 19/10/2026
 
+Tras el cierre de verificaciones, el estudiante confirmó «está todo ok» y
+autorizó subir el avance al repositorio y actualizar las guías. Se integra en
+main desde la base `0192056`, preservando Cuenta, autenticación, avisos,
+reorganización, textos y documentación. La restricción anterior de commit/push
+deja de aplicar a esta entrega. No se ejecutan despliegues ni instalaciones.
 
-## Publicación de rama autorizada — 18/10/2026
+Es una conformidad final reportada por el estudiante, sin nueva matriz de casos
+ni hash de APK. Se mantiene la aceptación física previa satisfactoria, incluidos
+Google→contraseña y acceso por ambos métodos. El SDK demo sigue 6/7 y no exige
+repetir al estudiante ese recorrido ya comprobado. La PC limitada y el AVD
+personal inestable justifican priorizar pruebas físicas; no se declara reparado
+el emulador ni acreditado el push remoto por esta confirmación.
 
-El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
-Esta autorización comprende commit y push normales de los 25 archivos auditados.
-La integración en main queda para una aprobación posterior. Las secciones siguientes
-registran la validación local previa: 258 JVM y 59 UI sintéticas correctas,
-compilación correcta y lint 0 errores/39 advertencias. No se vuelve a desplegar
-Firebase ni se modifican datos personales al publicar esta rama.
+Se conservan los resultados automatizados y los intentos fallidos de las etapas
+siguientes como evidencia fechada. Los informes bajo app/build siguen siendo
+locales e ignorados por Git; los resultados resumidos y hashes finales quedan
+en estas guías para ambos integrantes:
 
+| APK final | SHA-256 |
+|---|---|
+| Debug | `8ae47cb817a07722da1edfd2b526b4dbf59e861424594bd2e5f16e63b2fabb0e` |
+| Release unsigned | `9f2d2c89b3d4d38619a0b455b332b93edfeadd48e978ba061bb98198e10e98f5` |
+| AndroidTest | `69bca23341b16e004b21ae8d90039fcfaf93095de0423bdf62a0c256b1cdc590` |
 
-## Auditoría final aprobada: corrección y validación local — 18/10/2026
+## Reorganización y lenguaje · 19/10/2026
 
-Rama `audit/t1-integracion-final`, HEAD/base `30685a6`. Fetch de solo lectura confirma
-origin/main en el mismo commit. No se hizo commit, push, merge, rebase ni despliegue.
-Respaldo externo: 260 archivos de la auditoría, ZIP extraído y cotejado por SHA-256.
+Trabajo sobre el checkout local de `feat/cuenta-autenticacion`, conservando Cuenta,
+avisos y documentación sin confirmar. No se reemplazó por main ni se añadieron
+dependencias/módulos. Sin publicación Firebase, instalación en el teléfono,
+pruebas personales, commit, push ni PR. El AVD sintético y los servicios demo
+ya estaban disponibles; no se utilizó Pixel_7 ni se borraron sus datos.
 
-- Regresión nueva: partialSaveKeepsRecoveryWarningEvenWithIncoherence falló antes
-  de corregir, esperando GUARDADO_PENDIENTE y recibiendo REQUIERE_REVISION. Después pasó.
-- Producción: cambio acotado en ResumenUiState; se conserva prioridad de guardado
-  parcial sin quitar la revisión de contradicciones de un historial confirmado.
-- Gradle desde Android Studio: `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
-  :app:assembleDebugAndroidTest --offline --max-workers=1 -Dorg.gradle.jvmargs=-Xmx768m`.
-  BUILD SUCCESSFUL, 6 min 32 s. 18 XML: **258 pruebas JVM, 0 fallos/errores/omitidas**.
-  Lint actualizado: **0 errores y 39 advertencias**. Ambas APK compiladas.
-- UI: **59 casos distintos correctos**, en ejecuciones dirigidas: ResumenVisual 7,
-  ResumenIntegration 3, AcademicFlow 11, HistorialFlow 20, OfertaFlow 9,
-  RecomendacionesFlow 6 y LoginFeedback 3. AVD RutaSistemas_Integration_API35,
-  serial emulator-5554 comprobado por nombre, boot completo y páginas de 4096 bytes.
-  Repositorios/datos sintéticos; nunca suite completa, pruebas personales ni login real.
-- Primer AcademicFlow: 9/11. Repetición aislada: 1/2; persistió la fila fuera del
-  viewport. Se ajustó solo el harness: cerrar teclado tras búsqueda y desplazarse
-  antes de afirmar visibilidad. Todas las aserciones y casos se conservaron.
-  Gradle completo repetido: BUILD SUCCESSFUL, 23 s, 7 tareas ejecutadas/75 al día;
-  JVM/lint reutilizados, mismo código de producción. APK androidTest recompilada.
-  AcademicFlow final completo 11/11. Después pasaron las otras cuatro suites.
-- Los 7 visuales y 3 de integración corresponden a la primera APK de pruebas;
-  el resto a la recompilación del harness. Producción y esas dos suites no cambiaron.
-  No se presenta como una sola ejecución de 59 sin intentos anteriores.
-- La prueba visual nueva verifica aviso parcial + contradicción, conteos 0/1/49
-  y callback Ver historial. Captura sintética revisada visualmente.
-- Conservación por hashes contra auditoría: solo cuatro archivos Kotlin cambiaron
-  durante esta fase (estado Resumen y tres archivos de pruebas), más estas seis guías.
-  Navegación integrada previa, AppContainer/MainActivity, modelos, repositorios,
-  ViewModels existentes, motor, UUID, reglas y Gradle se conservaron.
-- `git diff --check` correcto; siguen 14 modificados y 11 nuevos, sin eliminaciones.
-  Escaneo acotado de secretos sin coincidencias; no se incluyen build, APK ni logs en Git.
+| Comprobación de esta etapa | Resultado |
+|---|---|
+| JVM | 300/300, cero fallos/errores/omitidas. Las 299 anteriores más la evaluación independiente del borrador de comparación. |
+| APK debug, release y androidTest | Compiladas con la redacción final. Release es la variante unsigned del proyecto. |
+| Lint debug/release | 0 errores y 1 aviso en cada variante: disponibilidad de Gradle 9.8.2 frente al wrapper 9.6.0 conservado. Sin baseline ni supresiones nuevas. |
+| Regresión Android principal | 71/71 con la redacción final y el ajuste de teclado/desplazamiento de la prueba de Perfil. |
+| Avisos, permiso y persistencia | 18/18 UI, 1/1 con permiso denegado y 2/2 fases de persistencia entre procesos con la APK final. |
+| SDK Auth/Firestore demo | Nueva ejecución final 6/7: EMAIL_EXISTS en Google→contraseña; los otros seis casos pasan. El runner termina con error porque conserva el caso fallido. |
+| Dependencias y textos | `check-architecture.py`: 94 fuentes, 551 recursos, cero infracciones. Sin paquetes fuente vacíos, `.gitkeep` ni imports de ubicaciones retiradas. |
+| Diferencias y artefactos | `git diff --check` correcto; hashes SHA-256 y tamaños finales renovados en `artifacts.json`. |
 
-Evidencia regenerable: `app/build/reports/final-audit/`, `final-run/`, XML JVM y lint.
-Los intentos fallidos se conservan; el JSON final de la auditoría distingue intentos.
+Mapa y reglas en el README raíz y AGENTS.md. Contratos/modelos en dominio,
+adaptadores/transacciones/DataStore en datos, pantallas/estados/ViewModels por
+función y Credential Manager/biometría/avisos Android en plataforma. Se mantienen
+un único AcademicViewModel, UID/versiones, propietarios y alcance de corrutinas,
+CAS, diario, relecturas y descarte de respuestas tardías. La comparación de catorce
+archivos de reglas/motor/persistencia con la base, ignorando solo paquetes,
+imports y espacios, conserva sus cuerpos: `core-preservation.json`. Esto no
+certifica por sí solo todo el comportamiento ni sustituye las regresiones.
 
-Límites: terminal Gradle bloqueada por permisos Java del directorio; se ejecutó
-desde IDE. Emulador lanzado desde IDE tras fallo de aceleración en terminal.
-No se cambiaron ACL ni funciones de Windows. Firebase demo no estaba activo: SDK
-Firestore/Auth y reglas no se reejecutaron. No se acredita Google real, teléfono,
-producción ni reparación del AVD personal. Las 39 advertencias siguen pendientes.
-Los apartados siguientes conservan verificaciones anteriores con su alcance propio.
+Los textos están en recursos por función; los estados usan identificadores y las
+validaciones puras categorías. Los adaptadores convierten errores de acceso y
+conservan causas internas, propagando cancelaciones. Se retiraron detalles de
+Firebase, permisos internos, credenciales, servidor, oferta remota/revisiones de
+versión, caracteres de control y cambios «en cascada». EMAIL_EXISTS usa la
+explicación neutral solicitada. Se conservan recuperación neutral y acciones para
+reconciliar guardados inciertos. FCM conserva la recepción y ya no registra tokens.
 
+### Evidencia y correcciones verificadas
 
-## Validación de integración local T1 + main — 18/10/2026
+Informes locales ignorados por Git en `app/build/reports/reorganization/` y
+`app/build/reorganization-*.txt`. `reorganization-delivery-build.txt` contiene la
+compilación previa completa. La comprobación retomada está en
+`reorganization-resumed-checks.txt`: BUILD SUCCESSFUL, incluidas JVM, las tres
+APK y lint debug/release. `artifacts.json` registra los hashes renovados de las APK.
+`architecture.json`, `text-inventory.json` y `kotlin-literals.json` permiten revisar
+dependencias, recursos XML y los literales Kotlin restantes (claves, formato,
+anotaciones y diagnóstico interno). Los informes no viajan automáticamente en un clon.
 
-Base actual: `30685a6`, incorporada por fast-forward desde `96a400a`, más T1/login
-sin commit. Respaldo previo de los 19 archivos locales verificado mediante SHA-256.
-La autorización posterior al plan permitió integrar directamente en el clon original.
-Sin push, commits, escrituras GitHub, despliegues ni datos académicos personales.
+La pasada inicial de JVM estaba UP-TO-DATE. Lint falló durante su análisis y
+coincidió con renombrados: no es una base completa ni se atribuye como problema
+preexistente. Se compiló por etapas y se conservaron los intentos fallidos.
+La suite detectó un catálogo inválido evaluado demasiado pronto (298/299);
+se conservó su prueba y el tratamiento de error de Resumen. Se corrigieron
+imports, indentación y recursos sensibles a configuración con LocalResources.
+La primera UI terminó 66/70: tres simuladores aún entregaban excepciones SDK
+directamente a presentación y una prueba intentaba desplazar un botón sin
+contenedor desplazable. Se adaptó la frontera usando el clasificador real y se
+mantuvieron las aserciones de cancelación, red, configuración y no exposición del
+mensaje crudo. El diálogo de vinculación permite desplazar el contenido largo.
+Los fallos permanecen en `UI-first-66of70.txt`.
 
-- Gradle desde Android Studio: `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
-  :app:assembleDebugAndroidTest --offline --max-workers=1 -Dorg.gradle.jvmargs=-Xmx768m`:
-  BUILD SUCCESSFUL, 4 min 3 s. Los 18 XML acreditan **257 JVM**, cero fallos/errores.
-- Lint: **0 errores y 39 advertencias existentes**. APK principal y AndroidTest compiladas.
-- Android en AVD separado `RutaSistemas_Integration_API35`, páginas de 4096 bytes:
-  **38 casos distintos correctos** en ejecuciones dirigidas: 35 regresiones
-  (241.811 s: AcademicFlow 11, ResumenVisual 6, LoginFeedback 3, OfertaFlow 9,
-  RecomendacionesFlow 6) y los tres nuevos de integración (32.863 s).
-  Repositorios sintéticos, sin selector Google real ni escrituras académicas personales.
-- Los tres nuevos verifican las cuatro pestañas/CTA, filtros de Malla, borrador y
-  búsqueda de Oferta, revisión esperada al guardar, oferta guardada como entrada
-  de Para ti, retorno de Perfil, aviso de descarte y aislamiento al cambiar cuenta.
-- El primer intento de los tres casos dio 2/3: el harness pidió una acción IME que
-  Malla declara Default. Se corrigió a cerrar el teclado por Espresso y se eligió
-  un estado con avance para comprobar el CTA; no se cambió producción ni se
-  eliminaron aserciones de conservación. AndroidTest se recompiló correctamente
-  en 1 min 20 s. La repetición final de los tres pasó; JVM/lint corresponden al
-  mismo código de producción, sin cambios posteriores.
-- No se ejecutó toda la instrumentación, SDK/demo ni pruebas productivas. Pixel_7
-  y sus datos no se iniciaron ni alteraron. Este resultado no acredita teléfono
-  físico, Google real ni reparación del AVD personal de 16 KB.
+Después de la redacción final, una pasada terminó 70/71: al guardar Perfil, el
+nodo «Tu cuenta» existía pero quedaba fuera de la zona visible. Se conserva en
+`UI-wording-first-70of71.txt`. Se ajustó únicamente esa prueba para cerrar el
+teclado y desplazar el botón de guardado y el título; conserva la comprobación
+del nombre guardado y el retorno a Cuenta. La compilación iniciada después se
+interrumpió por petición del usuario: `reorganization-delivery-checks.txt` no
+acredita éxito. La comprobación retomada sí terminó correctamente y reutilizó
+los resultados JVM vigentes de 300 pruebas, sin fallos, errores ni omitidas.
+La regresión retomada terminó 71/71 en `reorganization-resumed-ui.txt` y
+`account/Regressions.txt`; no se retiraron aserciones para conseguir ese resultado.
+Avisos terminó con 18/18 UI, permiso denegado 1/1 y persistencia seed/check 1/1
+cada una. Evidencia en `reminders/UI.txt`, `PermissionDenied.txt`,
+`Persistence-seed.txt` y `Persistence-check.txt`; logs de los runners en
+`reorganization-resumed-reminders-*.txt`. Se usaron las guardas existentes y
+solo el AVD sintético autorizado.
 
-Evidencia local regenerable: `app/build/reports/integration-t1/`, XML JVM y lint.
-El runner externo comprueba nombre del AVD, boot completo y páginas de 4 KB antes
-de instalar; nunca instala en Pixel_7 por coincidencia de serial.
+El primer intento SDK retomado terminó 0/7 por conexión rechazada a Auth demo:
+los servicios que respondían al inicio dejaron de estar disponibles. Se conserva
+en `reorganization-resumed-sdk.txt` y `sdk-unavailable/`, sin atribuirlo al caso
+EMAIL_EXISTS. No había procesos escuchando en 9099/8089 al diagnosticarlo.
+La caché npx de CLI estaba incompleta (faltaba uuid); se reutilizó la CLI 15.34.0
+ya instalada en `app/build/account-tools/`, indicada por el log previo, sin instalar
+paquetes. Se iniciaron únicamente Auth/Firestore demo y se prepararon sus fixtures:
+`reorganization-resumed-demo-services.txt` y `reorganization-resumed-demo-fixtures.txt`.
+La repetición con servicios disponibles terminó 6/7 en
+`reorganization-resumed-sdk-final.txt`, `account/SDK.txt` y `account/SDK-results.json`.
+Google→contraseña falla durante link password con `AccessFailure: EMAIL_EXISTS`,
+conservando la causa SDK. Pasan verificación con acceso privado protegido,
+contraseña→Google con UID/perfil conservados y acceso por ambos métodos,
+recuperación neutral, reemplazo/conflicto de Oferta, lectura estable de
+recomendaciones y posposición persistida de Historial. Cada caso corrió en un
+proceso separado. No se cambió la vinculación ni se declaró resuelto el fallo.
+Al terminar se detuvieron los servicios demo iniciados para esta repetición;
+se comprobó que 9099/8089 ya no tenían procesos escuchando. El AVD se conservó.
 
-La terminal restringida falló antes de compilar por projectDirectory no escribible
-desde Java; la verificación se trasladó al ejecutor Gradle del IDE. Los registros
-anteriores de T1 y del autor conservados debajo no sustituyen los resultados nuevos.
-La configuración Google registrada en la sesión anterior y los límites del AVD
-personal están descritos en ESTADO_ACTUAL, sin reejecutar operaciones productivas.
+Las tres nuevas pruebas de Cuenta verifican mensaje neutral a fuente 1,5,
+validación/retorno del diálogo ampliado y envío de verificación aunque cambie la
+composición de entrada. Dos comprobaciones de recursos protegen lenguaje neutral
+y guardados inciertos. Las capturas de Cuenta, Historial y Oferta están en las
+subcarpetas de ese informe; se revisaron diálogos, conflicto, descarte y textos
+largos a fuente 1,5. El umbral, los datos y las acciones funcionales se conservan.
+Se renovaron las capturas con la APK final: ocho en
+`account/account-ui-captures/`, veinte en `history-final/` y diez en `offer-final/`.
+La revisión visual final comprobó EMAIL_EXISTS y el diálogo de vinculación a
+fuente 1,5, conflicto y selector ampliado de Oferta, consulta ampliada de Historial,
+conflictos de historial/estado y guardado sin confirmar. Los mensajes y acciones
+revisados son legibles, distinguen borrador y selección guardada y no anuncian
+éxito ante incertidumbre. Las carpetas anteriores conservan evidencia de pasadas previas.
 
-Arranque directo de MainActivity en el AVD sintético: Status ok, COLD, 5237 ms;
-login visible y proceso vivo después de las pruebas. No se inició sesión real.
-El AVD sintético se detuvo al terminar; Pixel_7 y sus datos permanecen intactos.
-
-## Registro previo de T1 y login, antes de integrar
-
-Resultados históricos; no sustituyen la verificación vigente anterior.
-
-### Resultado final después del acceso a Figma
-
-- Referencias leídas mediante get_design_context con screenshot: archivo
-  YCcVIGVjbSLOKygieTbEOt, nodos 8:253/318/387/434. El acceso fue concedido después
-  del primer rechazo; la limitación anterior de acceso a Figma queda resuelta.
-- Gradle desde Android Studio: `:app:assembleDebug :app:testDebugUnitTest
-  :app:lintDebug :app:assembleDebugAndroidTest`, ejecución correcta. El IDE mostró
-  188 pruebas JVM aprobadas; los 13 XML suman 188, cero fallos/errores/omitidas.
-- La primera ejecución offline falló por datastore-preferences-jvm:1.1.7 ausente en
-  caché. Se repitió sin --offline para descargar dependencias ya declaradas desde
-  los repositorios del proyecto. No se cambiaron versiones ni configuración.
-- Tras la revisión de capturas se corrigieron colores heredados y la advertencia
-  nueva ModifierParameter. Repetición final desde el ejecutor Gradle del IDE:
-  `:app:assembleDebug :app:lintDebug :app:assembleDebugAndroidTest --offline
-  --max-workers=1`, correcta. Lint final: **0 errores, 39 advertencias**; ninguna
-  nueva en Resumen. APK debug y AndroidTest generados y reinstalados con -r.
-- Instrumentación dirigida, sin ejecutar la suite completa:
-  `ResumenVisualTest` (6) + los 3 métodos summary* de `AcademicFlowTest`: **9 pruebas
-  verificadas** sobre la APK final en ejecuciones dirigidas. La ejecución inicial
-  completa pasó las 9 en 153.889 s; después de corregir colores y captura se
-  interrumpieron dos intentos por cierres nativos ART. En el segundo pasaron las
-  6 visuales y una integración; las dos restantes pasaron individualmente
-  (6.811 s y 7.525 s). No se afirma una suite final de 9 sin interrupciones.
-  Solo estados sintéticos/repositorios en memoria,
-  sin solicitar Google ni leer/escribir historial personal. No acreditan Firestore real.
-- Los 12 tests nuevos JVM cubren 0/1/5/50 aprobadas, EN_CURSO sin avance, todas las
-  combinaciones de conteos, catálogo inválido y estados ajenos, carga/error/sesión,
-  historial pendiente/parcial/incoherente. Las pruebas previas comprueban UID,
-  respuestas tardías, sesión, CAS, recuperación y concurrencia.
-- Android comprueba ejemplo 5 aprobadas + 2 en curso = 10%, primer ingreso exitoso,
-  carga sin conteos, error/reintento sin falso cero, avisos de historial, navegación
-  Malla/Resumen sin perder búsqueda, actualización tras guardar y cambio de cuenta/
-  cierre sin arrastrar progreso. Oferta/Para ti/CTA futuro permanecen deshabilitados.
-- Capturas finales de Compose revisadas frente a Figma: `01-ejemplo-figma`,
-  `02-primer-ingreso`, `03-carga`, `04-error`, `05-historial-pendiente` y
-  `06-historial-incoherente`. UIAutomation produjo un fotograma vacío transitorio
-  en el primer lote; se corrigió el capturador a onRoot().captureToImage y se
-  repitió. El reloj/barras del sistema se adaptan al dispositivo, no se simulan.
-- Assets: los cinco iconos existentes coinciden en geometría con Figma; summary y
-  curriculum difieren solo en el color base, aplicado mediante Icon. Advertencia
-  original SVG 48×48, renderizada con sharp a PNG 192×192 para xxxhdpi, colocada a
-  48dp. Todo está almacenado localmente y sin URLs temporales en la APK.
-
-Evidencia local regenerable: XML/JUnit en `app/build/test-results/testDebugUnitTest`,
-lint en `app/build/reports/lint-results-debug.*` y logs/capturas Android en
-`app/build/reports/t1-local/`. Estos archivos están ignorados; no son historial Git.
-
-### Límites e intentos anteriores de esta intervención
-
-La terminal restringida sigue devolviendo writable=false para el directorio del
-proyecto desde Java, aunque puede escribir archivos. Se reprodujo incluso en una
-copia temporal; Android Studio sí consiguió compilar. No se alteraron permisos de
-Windows ni configuración para evitarlo. La alternativa inicial compiló recursos con
-AAPT2 y todos los fuentes Kotlin/Compose; Kotlin/JUnit directos pasaron 188 pruebas.
-El primer intento directo tuvo 64 fallos por buscar fixtures desde otra carpeta;
-corregido el directorio, pasaron todos sin modificar pruebas para ocultarlos.
-
-Las pruebas Android pasaron en el AVD Pixel_7 API35 de 16KB, conservando datos. No
-se borró, restableció ni creó un AVD. Esto no resuelve ni aísla la causa histórica de
-ART/system_server: durante la repetición final hubo SIGSEGV de la app en libart
-(dirección 0x10, Espresso/IdlingResourceRegistry) y registros contemporáneos de
-Google Play/Google Search con cierres nativos. La causa exacta no se aisló. Se
-conservaron logs y se ejecutaron los casos restantes individualmente, sin
-reconfigurar ART, SDK o AVD. No se atribuye el cierre a lógica Kotlin sin evidencia.
-No se repitieron pruebas personales ni SDK/Firestore productivos. Durante T1 no hubo cambios Auth, reglas, catálogo, GitHub, ramas o commits.
-La intervención posterior de login se registra arriba.
-
-Git final consultado solo en lectura, con bloqueos opcionales deshabilitados:
-`main` / `96a400a`; 7 archivos modificados y 7 nuevos, sin confirmar. T2 a T5 siguen
-pendientes de autorización nueva. Dependencias de T3 y próximos pasos en
-TRABAJO_EN_EQUIPO. Ningún APK se publicó ni se inició integración remota.
-
-## Publicación de Para ti — 18/10/2026
-
-El estudiante autorizó subir todos los últimos cambios con documentación. Esta
-petición sustituye la espera previa de commit/push de T3/T4. Entrega en
-`feat/para-ti`, basada en `2f21871`, con PR hacia `main` para revisión del equipo;
-no implica merge automático. Fetch previo correcto: `origin/main` continúa en
-`2f21871`, sin cambios nuevos de Resumen. T1 sigue con el compañero.
-
-Incluye motor, consulta estable, ViewModel por sesión, pantalla, navegación,
-recursos, pruebas JVM/UI/SDK, runner protegido, dos exportaciones de diseño y
-guías actualizadas. No incluye APK, cachés, credenciales, logs ni informes bajo
-`app/build/`; esos informes son locales y regenerables.
-
-Comprobación de publicación: Gradle `:app:testDebugUnitTest :app:assembleDebug
-:app:lintDebug :app:assembleDebugAndroidTest --offline --max-workers=1`, JDK de
-Android Studio y heap de 768 MiB: **BUILD SUCCESSFUL**, 30 s, ocho tareas
-ejecutadas y 74 al día. La caché de configuración se reutilizó. Los informes JVM
-contienen **232 pruebas, cero fallos y errores**; no se forzó su reejecución.
-Lint: **cero errores y 39 advertencias**. La APK generada al publicar tiene
-SHA-256 `05ba5f841d5be597819b065228e9155a1a2c358f9a28c9cdfcb049785b102ead`;
-el hash del ajuste anterior se conserva debajo como evidencia de aquella ejecución.
-Se conserva la validación previa de **15 UI** y **1 SDK demo** con las fechas y
-límites detallados debajo; no se volvió a iniciar AVD ni Firebase demo para subir
-el código. Sin instalaciones, despliegues, migraciones ni escrituras personales.
-La primera ejecución restringida no accedió al bloqueo de la caché Gradle; la
-ejecución con acceso a esa caché completó correctamente.
-
-Evidencia local de esta comprobación:
-`app/build/reports/recommendations/publication-build-20261018.txt`.
-
-Publicación confirmada: commit `e13ef13`, push a `origin/feat/para-ti` con
-seguimiento remoto y [PR #2](https://github.com/Sebasss04/RoadMapUtepsa/pull/2)
-abierto hacia `main`. No se ejecutó merge. `git diff --cached --check` correcto
-antes del commit. El cierre posterior solo incorpora este resultado y el enlace
-a las guías, sin cambiar código ni ampliar los resultados de pruebas.
-
-## Ajustes de Para ti — 18/10/2026
-
-Petición posterior a la entrega inicial T3/T4: avances parciales por requisitos
-directos, secundaria con beneficio y opcionales sin favorita artificial, conservando
-prioridad de pendientes anteriores. Texto reducido, pendientes desplegables y
-tarjetas verde/azul/gris. Cambios internos, sin persistencia nueva ni cambios de
-Firestore/catálogo/reglas. No se ejecutan pruebas personales ni se instala en el teléfono.
-
-Diseño: sección existente de Figma `11:292`, principal `11:295` y explicación
-`11:362` actualizadas antes de Compose. Detalle ilustrativo de Calidad con 1/2
-requisitos de Proyecto Integrador; nueva exportación
-[08_PARA_TI_AJUSTES_20261018.png](DISENOS/08_PARA_TI_AJUSTES_20261018.png).
-Verificación estructural: 773 descendientes, 393 frames, 267 textos, 87 vectores,
-17 rectángulos y 9 instancias; sin imágenes que sustituyan la UI, familia Roboto
-comprobada. Revisión visual de composición y corrección de acentos residuales.
-Las exportaciones muestran el encuadre inicial; los contenidos largos son desplazables.
-
-La primera comprobación ejecutó 229 JVM correctamente y compiló la APK, pero lint
-falló al generar el informe (`Range ... out of bounds`) después de editar los
-recursos mientras la ejecución estaba activa. No cuenta como compilación completa
-aprobada. La repetición con código fijo terminó correctamente. Durante la revisión
-visual se reforzó el resumen por cantidades cuando hay beneficios mixtos y se fijó
-el nombre de las opcionales en texto oscuro; la verificación definitiva incluye
-estos cambios y las pruebas adicionales.
-Con Gradle y AVD concurrentes hubo poca memoria libre; se detuvo únicamente el
-AVD sintético de esta tarea para terminar la compilación antes de instrumentar.
-
-- Gradle final: `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
-  :app:assembleDebugAndroidTest --offline --max-workers=1`, heap 768 MiB,
-  **BUILD SUCCESSFUL**, 1 min 13 s. APK principal y APK de pruebas compiladas.
-- **232 JVM, cero fallos/errores**; 20 pruebas del motor (10 nuevas frente a la
-  entrega inicial). Incluyen Calidad/Proyecto Integrador con Análisis pendiente,
-  aprobado y en curso, transición parcial→completo, prioridad anterior, orden por
-  cantidad de avances, secundaria que salta opciones sin beneficio, cero/una/ninguna
-  candidata, umbrales, cadenas, no duplicación y conservación de entradas. El caso
-  de cinco ofertadas comprueba Inglés principal, Calidad secundaria y tres opcionales.
-  Los tests existentes de lectura estable y sesión siguen correctos.
-- Lint final: **cero errores, 39 advertencias existentes**. Se corrigieron las dos
-  advertencias nuevas de Modifier y pluralización; no quedan avisos en los archivos
-  de recomendaciones revisados.
-- Contraste calculado: principal 6,14:1, secundaria 7,67:1, opcional 14,78:1;
-  metadatos sobre verde/azul 4,99:1 y 4,95:1. Todos superan 4,5:1.
-- **UI final: 15/15 correctas**, 94,594 s: seis de Para ti y nueve de Oferta,
-  con repositorios sintéticos en memoria. Verifica beneficios mixtos resumidos
-  por cantidades, detalle con ambos tipos de objetivos, ejemplo Inglés/Calidad,
-  1/2 requisitos y Análisis de Datos faltante, opcionales sin secundaria artificial,
-  una sola candidata, pendientes desplegables y avisos, estados bloqueantes,
-  fuente 1,5, nombres largos y navegación conservando búsqueda/borrador/revisión
-  de Oferta. Capturas finales revisadas visualmente; 17 PNG bajo
-  `recommendations-ui-captures/` en el directorio de evidencia.
-  Se usó únicamente `RoadMap_Recommendations_Test_API35`, `emulator-5556`,
-  resolución 824×1784/densidad 320, sin modificar el teléfono ni Pixel_7.
-  La ejecución anterior 14/14 pasó antes del ajuste exclusivo de resumen mixto
-  y color del nombre; la final 15/15 corresponde a la APK cuyo hash figura abajo.
-- SDK demo no repetido: no cambió la lectura, adaptador, persistencia ni contrato
-  remoto. La evidencia SDK de la entrega inicial sigue documentada con su fecha.
-
-SHA-256 de APK final:
-`925c7a6dc851361e11730632e32174065d20eeddee49f1607cd135edb7ce9299`.
-
-Evidencia local regenerable: `app/build/reports/recommendations/adjustments-*`.
-Runner: `scripts/test-recommendations.ps1 -AdbPath <ruta-al-adb-local>` con el AVD
-sintético indicado iniciado. No ejecutar toda la suite Android ni tests personales.
-AVD de esta revisión detenido al terminar; no se iniciaron servicios demo Firebase.
-La entrega inicial y sus resultados históricos se conservan debajo; no sustituyen
-las verificaciones de este ajuste. Al cerrar esta revisión todo quedó local;
-la autorización posterior de publicación se registra en la sección inicial.
-
-## Para ti — T3/T4, 18/10/2026
-
-Responsable: autor/Codex por asignación expresa del estudiante; el compañero
-conserva Resumen. Rama local `feat/para-ti`, base actualizada a `2f21871` (merge
-del PR #1 de Oferta confirmado mediante fetch). No había cambios T1 en main.
-Los cambios locales previos de plan/coordinación se sustituyeron por el alcance
-vigente solicitado. Al cerrar la entrega inicial no se crearon commits, push ni
-PR; la publicación posterior se registra en la sección inicial.
-
-Cierre documental solicitado por el estudiante tras la entrega: continuará las
-correcciones en otro chat. Este cierre solo actualiza las guías; no modifica
-código, no ejecuta nuevamente las suites y no amplía los resultados siguientes.
-
-### Diseño terminado
-
-Figma se actualizó antes de crear la pantalla Compose. Se revisaron visualmente
-los 13 estados editables: principal/otras opciones, explicación, oferta ausente,
-oferta vacía, ninguna candidata, error, carga, pendientes anteriores, alternativa
-disponible, historial pendiente/incoherente, recuperación y detalle cero.
-[Diseño principal](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=11-295)
-y [captura versionada](DISENOS/08_PARA_TI_ESTADOS_20261018.png).
-Se conservan Roboto, paleta, navegación e iconos. Flecha (18×18), advertencia, Oferta y Malla de estado (48×48) se exportaron
-como SVG y se trasladaron sin cambiar paths/strokes a vectores Android; las barras
-conservan sus cinco iconos existentes. Ejemplos identificados como ilustrativos, sin datos personales.
-
-### Implementación terminada
-
-Motor Kotlin puro, lectura conjunta estable y ViewModel por UID/versión conectados
-a Compose. La consulta no expone escrituras. Prioriza pendientes de semestres
-inferiores al mayor con aprobadas/en curso, luego desbloqueos inmediatos; conserva
-ceros, excluye activas/cadenas/ya habilitadas e incluye umbrales y no ofertadas.
-La navegación reutiliza Historial/Malla/Oferta/Perfil; mantiene borrador, consulta
-y revisión esperada de Oferta. Resumen conserva su independencia y acceso actual.
-
-### Verificaciones realizadas
-
-- Gradle final: `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
-  :app:assembleDebugAndroidTest`, **BUILD SUCCESSFUL**, 2 min 28 s, un trabajador
-  y heap 768 MiB para compartir memoria con el AVD. APK principal y androidTest.
-- **222 JVM, cero fallos/errores**: 23 nuevas (10 motor, 7 lectura, 6 ViewModel).
-  Prioridad, mayor desbloqueo dentro/fuera del grupo anterior, alternativa,
-  desempates, ceros, doble requisito, cadena, umbral 44→45, entradas intactas,
-  historial incoherente/planes/IDs; ausencia/vacío/error, cambios en ambas lecturas,
-  límite de tres intentos, identidad, carga sustituida, respuesta no cancelable,
-  cambio de cuenta y de versión de sesión. Dobles fallan si se intenta escribir.
-- Lint final: **cero errores, 39 advertencias**; sin advertencias en los archivos
-  nuevos de recomendaciones después de resolver los dos avisos de plurales.
-- **SDK demo: 1/1 correcta**, 23,778 s. FirebaseApp secundaria, proyecto
-  `demo-roadmap-utepsa`, Auth 9099 y Firestore 8089, cuentas sintéticas, catálogo
-  SAE de 50 materias. Confirmación y selección inicial como fixture; consulta y
-  cálculo dejan snapshots de estados/preparación/diario/revisión/oferta iguales.
-  Tras cambios guardados fuera de la consulta, relee revisiones, excluye aprobada y
-  vuelve a comprobar snapshots intactos. Cambio de cuenta rechaza el UID anterior.
-  Ejecutada antes de los últimos ajustes visuales de tarjeta, plurales e iconos;
-  motor, repositorio y adaptador Firebase no cambiaron después de esa ejecución.
-- **UI final: 13/13 correctas**, 53,193 s: 4 nuevas de Recomendaciones y 9 de
-  regresión de Oferta. Estados y acciones de carga/error/historial/recuperación/
-  ausente/vacía/sin candidatas, prioridad y alternativa, explicación y cero,
-  nombres largos y fuente 1,5. Navegación Oferta → Para ti → Oferta conserva
-  búsqueda/borrador/revisión; solo calcula la selección guardada y vuelve a cargar
-  al reentrar y regresar de Perfil. Regresiones de Historial, Perfil, advertencia
-  de cierre, errores, conflictos, filtros y guardado de Oferta correctas.
-  Una ejecución anterior dio 11/13: se corrigieron el test que pulsaba navegación
-  antes de terminar Guardar y el capturador que suponía una sola raíz al abrir
-  el modal. Se esperó el estado guardado y se detectó el panel por contenido y se capturó su ventana Android separada; no se relajaron las aserciones funcionales.
-  Capturas de los estados y resultados revisadas frente a Figma; SVG y métricas
-  de tarjeta corregidos desde el diseño para mantener nitidez y jerarquía.
-  Tras el ajuste exclusivo del capturador, androidTest recompilado y el caso de
-  detalle/fuente 1,5 repetido: **1/1 correcta**, 12,781 s, con las capturas del
-  modal y cero desbloqueos revisadas limpias. No cambió producción ni se repitieron
-  JVM/lint tras esa modificación exclusiva de pruebas.
-- `git diff --check` correcto. No se modificaron reglas, Auth productivo ni catálogo.
-
-### Entorno, evidencia y límites
-
-Se creó `RoadMap_Recommendations_Test_API35` separado de Pixel_7, imagen API35 de
-4 KB ya instalada, puerto 5556, sin ventana y sin snapshots. Pixel_7 y datos
-personales conservados. El host mostró presión de memoria y el primer arranque
-conjunto de instrumentación terminó con ANR de inicio; una captura posterior
-mostró también diálogo de System UI, aunque el caso aislado prioridad/alternativa
-pasó (1/1). No se presenta ese primer intento como éxito ni el AVD como reparado.
-Se precompiló la APK, liberaron procesos de compilación de esta tarea y redujo la
-resolución del AVD sintético a 824×1784/densidad 320. Se intentó suprimir los diálogos nuevos de error solo en ese AVD, pero el aviso
-ya abierto persistió; reiniciar System UI no acreditó una reparación. El
-capturador pulsa «Wait» únicamente si la ventana activa contiene exactamente
-«System UI isn't responding», conservando el diagnóstico y permitiendo una
-captura limpia. No cierra la app ni cambia sus datos. Los errores de las pruebas
-siguen haciendo fallar la instrumentación. Las capturas de página usan el árbol Compose; las del detalle usan la ventana
-Android completa porque PixelCopy de la Activity no incluye el Dialog del panel.
-Las aserciones confirman el contenido y el desplazamiento del panel antes de capturarlo.
-
-Evidencia regenerable local: `app/build/reports/recommendations/` contiene
-`build-final.txt`, `sdk.txt`, `ui.txt`, diagnóstico de arranque, capturas Compose
-y copia del diseño; `verification.json` resume conteos, geometrías de los cuatro
-SVG y SHA-256 de la APK (`8d84ae45544d181f9ebade22618954e668f3a477e9e876d65fcac2d45697d37d`).
-El código de producción coincide con la ejecución UI de 13 casos; después solo
-se modificó el capturador androidTest y la documentación. El script `scripts/test-recommendations.ps1` rechaza dispositivos
-desconocidos y ejecuta únicamente las clases sintéticas seleccionadas; `-SdkDemo`
-exige los servicios y fixtures demo descritos abajo. No ejecutar la suite Android
-completa ni los tests personales para repetir esta entrega. Auth/Firestore demo y
-el AVD aislado se detuvieron al terminar; no se borró ningún AVD.
-
-Para repetir SDK: generar config con
-`node firebase/scripts/prepare-history-sdk-emulator.cjs --config-only`, iniciar
-`firebase emulators:start --only auth,firestore --project demo-roadmap-utepsa
---config app/build/reports/history-sdk-emulator/firebase.local.json`, preparar
-fixtures con el mismo script (variables `FIRESTORE_EMULATOR_HOST=127.0.0.1:8089`,
-`FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099`, `GCLOUD_PROJECT=demo-roadmap-utepsa`)
-y ejecutar `scripts/test-recommendations.ps1 -SdkDemo`.
-
-
-## T2 — Oferta actual SAE, 18/10/2026
-
-Rama `feat/oferta-actual-sae`, base `96a400a`. Se conserva la modificación local
-previa de coordinación y la asignación de T1 al compañero. Los resultados de desarrollo
-figuran aquí. El estudiante primero pidió mantener la entrega local; después de
-aprobar sus pruebas en el teléfono el 18/10/2026, autorizó subir toda la entrega
-para que el compañero actualice su rama. Esa instrucción sustituye la espera de
-push/PR. Se conserva `feat/oferta-actual-sae` y el commit inicial `269aa92`, añadiendo
-las correcciones verificadas y estas guías. Un rechazo automático a una publicación
-anterior pertenece a aquella sesión; no acredita una publicación de esta entrega.
-
-Comprobado hasta ahora:
-
-- JVM: 193 pruebas, cero fallos/errores (17 nuevas de Oferta): ausencia/vacío,
-  normalización, selección/reemplazo, cancelación, errores, duplicados, conservación en
-  ViewModelStore, conflictos con ambas decisiones, resultado incierto y cambios de sesión.
-- Compilación APK y APK de pruebas correctas. Lint final sobre la navegación y código
-  de entrega: **cero errores, 32 advertencias**; BUILD SUCCESSFUL. No es una ejecución
-  sin advertencias.
-- `offer-catalog.test.cjs`: igualdad exacta de los 50 UUID permitidos con catálogo técnico.
-- `offer-rules.test.cjs`: 35 comprobaciones correctas en Firestore demo local, incluida
-  la selección completa de 50, ausencia/vacío, revisión, tipos, campos, timestamp,
-  terceros, usuarios sin autenticar, proveedor anónimo, perfil incompleto, listados y borrados.
-- Regresiones existentes de Perfil/Malla (`run-rules-tests.cjs`), preparación
-  (`history-preparation-rules.test.cjs`, 94 comprobaciones) y revisión global
-  (`academic-revision-rules.test.cjs`) correctas contra el mismo servicio demo.
-  El runner completo confirmó códigos cero en sus seis etapas: Perfil 75 comprobaciones,
-  Malla 126, preparación 94, revisión 26, además de Oferta 35 e igualdad del catálogo.
-  Hash SHA-256 de las reglas locales validadas:
-  `4fc14fb7e06bf3de81b8791bf67db1942202c191868561a8bfbbe61da8ecfc02`.
-  Este hash no acredita un despliegue productivo.
-- `OfertaSdkEmulatorTest`: 1 prueba correcta, 38,501 s, SDK Android real con aplicación
-  Firebase secundaria y usuario sintético email/contraseña, Auth 9099 + Firestore 8089,
-  proyecto `demo-roadmap-utepsa`. Crear, reemplazar, vacío, recrear repositorio, 50 materias
-  y dos editores concurrentes (un éxito, un conflicto) sin modificar revisión académica.
-- AVD nuevo `RoadMap_Offer_Test_API35`, serial `emulator-5556`, imagen estándar API35
-  con páginas de 4096 bytes; userdata bajo `app/build/test-services/offer-avds`.
-  Dos primeros arranques de instrumentación murieron por ANR de inicio antes de casos.
-  Tras liberar Gradle, SDK pasó y UI ejecutó sus casos. Esto no prueba una reparación
-  del AVD personal Pixel_7 ni identifica por sí solo la causa de los ANR.
-- `OfertaFlowTest`: **7/7 correctas**, 128,522 s. Consulta ausente/vacía, editor,
-  guardando, error/éxito, conflicto, cancelación, carga, error de lectura, fuente 1,5
-  y búsqueda sin resultados. Navegación Oferta → Perfil → Malla → Oferta → Malla →
-  Historial → Malla → Oferta conserva el borrador. Se verifican avisos de descarte
-  al cerrar sesión desde Perfil/Malla. Perfil conserva su retorno a Malla.
-  Se corrigieron dos localizadores para filas fuera del viewport; la suite final
-  completa pasó después de esas correcciones.
-- [Diez capturas sintéticas versionadas](DISENOS/EVIDENCIA_OFERTA_T2/README.md),
-  revisadas visualmente sin recortes de nombres ni controles en la fuente ampliada.
-- Cinco SVG de Figma 15:431 comparados con los originales locales: geometrías y
-  dimensiones idénticas (cuenta 24×24; navegación 21×21). PNG existentes no vacíos,
-  callsites de Oferta a 24dp/21dp; Checkbox/Buttons/TextField de Material 3.
-
-Evidencia local regenerable: `app/build/reports/offer/` (reglas, SDK, UI, capturas y
-comparación de assets). El catálogo JSON solo se incorpora a la APK androidTest como
-fixture, nunca a la app de producción.
-
-### Repetir T2 sin datos personales
+### Repetir de forma segura
 
 ```powershell
-.\gradlew.bat :app:testDebugUnitTest :app:assembleDebug :app:lintDebug :app:assembleDebugAndroidTest
+python scripts/check-architecture.py
+.\gradlew.bat testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest lintDebug lintRelease --max-workers=1
+.\scripts\test-account.ps1 -Mode Regressions -OutputDirectory app/build/reports/reorganization/account
+.\scripts\test-reminders.ps1 -Mode UI -SkipInstall -OutputDirectory app/build/reports/reorganization/reminders
+.\scripts\test-reminders.ps1 -Mode PermissionDenied -SkipInstall -OutputDirectory app/build/reports/reorganization/reminders
+.\scripts\test-reminders.ps1 -Mode Persistence -SkipInstall -OutputDirectory app/build/reports/reorganization/reminders
+.\scripts\test-account.ps1 -Mode SDK -SkipInstall -OutputDirectory app/build/reports/reorganization/account
+```
+
+SDK exige preparar antes los fixtures Auth/Firestore demo mediante los comandos
+del apartado de entorno de esta guía. Los runners conservan guardas de AVD/proyecto
+y resuelven clases por función mediante `scripts/test-class-names.ps1`.
+No ejecutar la instrumentación completa. Esta etapa no vuelve a acreditar Google
+real, recepción push remota, biometría física ni producción; tampoco convierte la
+aceptación manual de la APK anterior en aceptación manual de esta reorganización.
+
+## Calidad y avisos de pendientes · actualización del 19/10/2026
+
+Esta ejecución nueva parte de los cambios locales de Cuenta, que se conservaron.
+No incluye despliegues Firebase, migraciones, pruebas personales, commit, push ni PR.
+Los resultados anteriores se mantienen debajo como evidencia fechada; no son resultados
+de esta actualización. Los informes nuevos están en `app/build/reports/quality-reminders/`
+y `app/build/quality-*.txt`, ignorados por Git.
+
+### Inventario de herramientas
+
+| Componente | Antes | Ahora |
+|---|---|---|
+| AGP / Gradle | 9.3.3 / 9.5.0 | 9.4.1 / 9.6.0 |
+| Kotlin integrado / plugin Compose | 2.2.10 | 2.4.21 alineados |
+| Compose BoM | 2026.02.01 | 2026.09.00 |
+| Firebase BoM | 34.3.0 | 35.0.2 |
+| Credentials / Play Services | 1.5.0 | 1.6.0 |
+| Google ID | 1.1.1 | 1.2.1 |
+| DataStore | 1.1.7 | 1.2.1 |
+| Coroutines producción / pruebas | 1.9.0 | 1.11.0 |
+
+Versiones explícitas. Se conserva la biometría ya existente, sin añadir versiones
+preliminares. Sin cambios de minSdk 35, compile/target 37, paquete, firma debug ni
+JVM 11. Se conserva Kotlin integrado: el classpath KGP y el plugin Compose comparten
+la versión del catálogo, sin aplicar kotlin-android.
+[Compatibilidad oficial AGP](https://developer.android.com/build/releases/agp-9-4-0-release-notes).
+Wrapper validado contra el [checksum oficial](https://services.gradle.org/distributions/gradle-9.6.0-bin.zip.sha256):
+`bbaeb2fef8710818cf0e261201dab964c572f92b942812df0c3620d62a529a01`.
+
+Los cuatro grupos se compilaron y pasaron la suite JVM entre actualizaciones.
+Evidencia: `quality-group1-tools-fixed.txt`, `quality-group2-compose.txt`,
+`quality-group3-storage.txt` y `quality-group4-firebase.txt`. El primer grupo falló
+antes de explicitar el tipo FirebaseAuth del listener: Kotlin 2.4 exponía una
+anotación Checker Framework inaccesible en el tipo inferido. No se añadió esa
+biblioteca ni se alteró la lógica de sesión. También se migró assets.srcDir a
+assets.directories y se retiraron expresiones redundantes señaladas por Kotlin.
+
+[Revisión SDK Firebase](https://firebase.google.com/support/release-notes/android):
+Auth 25.0.0 añade el error de política de contraseña, ahora reconocido por la app;
+Firestore 27.0.1 cambia transporte gRPC/Protobuf y corrige dependencias de pruebas
+publicadas accidentalmente. El mínimo de estos SDK es 24, inferior al 35 existente.
+Se mantienen linkWithCredential, recarga/token forzado y Source.SERVER/CAS.
+FCM 26 conserva la recepción mediante tokens actuales: hay excepciones de
+compilador limitadas a onNewToken y fetchTokenForDebug, documentadas en esos métodos.
+Son deprecaciones reales, no falsos positivos: migrar a register/FID cambiaría la
+identificación del destinatario, fuera de estos avisos locales. No se silencian
+categorías lint. [API oficial](https://firebase.google.com/docs/reference/android/com/google/firebase/messaging/FirebaseMessaging).
+
+### Inventario lint
+
+| Grupo original | Cantidad | Resolución |
+|---|---:|---|
+| Plurales | 13 | Diez recursos convertidos/compuestos con sus cantidades; tres textos sin referencias retirados. |
+| Recursos sin uso | 11 | Búsqueda en código, XML y pruebas; siete colores y cuatro textos eliminados. |
+| Versiones disponibles | 10 | Matriz explícita anterior, validada por grupos. |
+| Iconos duplicados | 2 | Diez WebP alternativos retirados; se conservan los dos iconos adaptativos y sus vectores. |
+| Modifier | 1 | Primer opcional de HistoryCard; llamadas posicionales usan accent nombrado. |
+| Etiqueta redundante | 1 | Activity hereda app_name de application. |
+| Ortografía | 1 | tools:locale=es; «momento» conservado. |
+
+Declarar español detectó cantidades `many` ausentes: se completaron también en
+los plurales anteriores de Oferta, Historial y Para ti. Primera pasada nueva:
+**lint debug y release sin incidencias**. No se añadió baseline ni exclusiones lint.
+Los avisos de compilación sobre .so sin strip indican que AGP empaqueta las
+bibliotecas recibidas tal cual; ambas APK compilan. No se eliminaron bibliotecas
+ni se cambiaron sus binarios para ocultar esos mensajes.
+
+Se migraron los entornos Compose de pruebas a los imports v2; las aserciones
+funcionales se conservan. [Guía oficial de migración](https://developer.android.com/develop/ui/compose/testing/migrate-v2).
+Las pruebas personales solo recibieron el import para seguir compilando; no se ejecutaron.
+
+### Regresión final y dispositivo
+
+Confirmación manual adicional del estudiante el 19/10/2026, después de ejecutar
+la app en su dispositivo físico: cuenta creada únicamente con Google → añadir
+contraseña correctamente → cerrar sesión → acceder con correo/contraseña →
+acceder nuevamente con Google. Reporta los mismos datos conservados y funcionamiento
+satisfactorio. Se acepta manualmente ese recorrido productivo; no se inspeccionó
+el UID por instrumentación ni se registró el hash de la APK usada en esta prueba.
+No acredita por sí solo los avisos nuevos ni todos los escenarios de hardware.
+El fallo demo EMAIL_EXISTS permanece registrado por separado; este reporte no
+convierte la suite automatizada 6/7 en 7/7 ni requiere modificar linkWithCredential.
+
+Aceptación manual final reportada por el estudiante después de ejecutar todos los
+pasos entregados en este chat: «todas funcionaron bien», sin anomalías registradas.
+Incluye bloqueo antes de verificar correo, reenvío y acceso después de verificar;
+avisos de Historial y Oferta con navegación, prioridad y deduplicación; cancelación
+al desactivar, conservación de deduplicación al reactivar y permiso bloqueado con
+acceso a ajustes; biometría correcta, cancelación sin acceso y bloqueo al regresar
+del segundo plano o del bloqueo de pantalla. Quedan aceptados esos escenarios
+en el dispositivo físico. Es reporte manual, sin capturas ni hash adicional de APK;
+no constituye una auditoría exhaustiva ni acredita recepción push remota.
+
+Resultados finales automatizados de calidad: **299 JVM**, **68 pruebas Android
+existentes** y **19 comprobaciones Android nuevas** aprobadas (16 UI/recursos/rutas,
+una de permiso denegado y dos fases de persistencia con force-stop intermedio).
+APK debug, release y androidTest compiladas; lint debug/release **0 errores/0 avisos**.
+Evidencia: `quality-reminders-visual-final-build.txt`, `quality-base68-runner.txt`
+y `quality-reminders/UI.txt`, `PermissionDenied.txt`, `Persistence-seed.txt` y
+`Persistence-check.txt`, bajo las carpetas de informes indicadas arriba.
+
+SDK actualizado: **6/7**, confirmado en `account-auth/SDK-results.json` y `SDK.txt`.
+El único fallo es Google→contraseña con EMAIL_EXISTS, contrastado con éxito manual
+productivo conservando datos. La ejecución agrupada inicial falló también por
+«FirebaseApp was deleted» después del teardown de una FirebaseApp secundaria.
+El runner ahora ejecuta cada caso en un proceso de instrumentación separado y
+force-stop entre casos; eliminó los seis fallos de preparación sin retirar
+aserciones y conserva salida de error si falla cualquier caso. Evidencia por caso:
+`account-auth/SDK-1.txt` a `SDK-7.txt`; intento agrupado conservado en
+`quality-reminders/SDK-grouped-first-0of7.txt`.
+
+Los intentos de UI previos 9/16 y 15/16 se conservan en `quality-reminders/UI-first-9of16.txt`,
+`UI-second-15of16.txt` y `UI-third-15of16.txt`: se corrigieron expectativas de etiquetas
+para Oferta vacía, seguimiento de Activity tras setIntent y sincronización de
+NotificationManager. La primera fase de persistencia no ejecutó por firma JUnit
+no void; se corrigió con Unit explícito antes de aprobar ambas fases.
+
+Los runners
+`test-account.ps1` y `test-reminders.ps1` exigen el AVD sintético conocido. Este último
+separa UI, permiso denegado y persistencia con cierre real del proceso entre fases.
+
+### Reporte general de seguridad: alcance conservado
+
+Se mantiene el reporte previo de reglas demo: aislamiento por propietario/UID,
+verificación de correo, perfil completo, esquemas exactos y contratos académicos
+(CAS, revisión, diario y Oferta). Incluye las 13 comprobaciones de Cuenta registradas
+abajo. **Esta etapa no vuelve a ejecutar esa auditoría automatizada de reglas**;
+no equivale a un pentest ni a certificar producción. La nueva regresión de avisos
+cubre puertas locales, UID esperado, respuestas tardías y aislamiento de preferencias;
+los siete casos SDK demo se registran por separado. Sigue pendiente la revisión
+antes de distribución amplia. Sin publicaciones remotas en esta actualización.
+
+## Cuenta y autenticación: validación de la rama local
+
+Rama `feat/cuenta-autenticacion`, con aceptación manual de los escenarios acordados
+completada por el estudiante. Los resultados siguientes son la etapa anterior de
+Cuenta; los resultados actualizados de calidad y aceptación están arriba.
+Se conservaron las modificaciones documentales previas. La APK de main instalada
+antes de esta continuación no acreditaba estas funciones; las actualizaciones de
+Cuenta y el reporte manual posterior están documentados en esta guía.
+
+- JVM: **283 pruebas, cero fallos/errores** en la continuación del 19/10.
+  Incluye validación compartida, verificación, espera monotónica de 60 s, error de lectura de DataStore,
+  proveedores, sesión estable, conflictos, respuestas tardías y máquina de bloqueo.
+  Incluye la regresión de EMAIL_EXISTS: ese código no demuestra que la credencial
+  pertenezca a otra identidad; el mensaje conserva el acceso actual y permite revisar métodos.
+  La regresión `backgroundDuringPreferenceLoadingRevokesInteractiveUnlock` falló
+  antes de corregir SessionLock: salir al segundo plano durante la lectura de
+  DataStore no revocaba la entrada interactiva y podía dejar abierta una sesión
+  protegida. Ahora la revoca aunque la preferencia siga cargando; cuando llega
+  habilitada, exige desbloqueo. Rotación y selector externo conservan sus excepciones.
+  Evidencia antes/después: `continuation-lock-race-before.txt` y
+  `continuation-lock-final-build.txt`, sin simular hardware biométrico.
+- Compilación final de ambas APK correcta (`continuation-lock-final-build.txt`),
+  más comprobación del harness (`continuation-final-harness-check.txt`);
+  lint **0 errores/39 advertencias**.
+- UI final del 19/10: **68/68 aprobadas**, una ejecución completa de 175,051 s con
+  la APK que incluye la corrección de SessionLock. Nueve de Cuenta más 59
+  regresiones de Resumen, Malla, Historial, Oferta, Para ti y errores de acceso.
+  Verifica la recarga exacta de Para ti tras Perfil/Cuenta, guardado/cancelación
+  de Perfil, conservación de filtros/borradores/revisión y bloqueo sintético.
+  Log: `account-auth/Regressions.txt` y `continuation-ui-complete-runner.txt`.
+  No fue un primer intento verde: quedaron dos repeticiones de 67/68, por fila
+  fuera del viewport en Resumen y touch sobre fila retirada en Oferta con fuente 1,5.
+  Se cerró explícitamente el teclado, materializó la fila mediante su LazyColumn,
+  desplazó hasta ella y ejecutó su acción accesible tras afirmar visibilidad.
+  Se conservaron las aserciones de selección, guardado, revisión y recargas;
+  estas selecciones sintéticas ya no acreditan inyección táctil de esas filas.
+  Evidencia fallida: `continuation-ui-first-result.txt` y `continuation-ui-second-result.txt`.
+  El 67/68 anterior a la pausa había detectado la doble recarga de Para ti;
+  el informe actual sí acredita su corrección. No acredita Firebase real ni hardware.
+- Reglas demo: regresiones Perfil, Malla, Historial, revisión y Oferta correctas
+  con el runner existente. **13 comprobaciones nuevas** deniegan lectura de las
+  ocho rutas privadas y escritura de perfil sin verificar; admiten consulta propia
+  verificada/Google y rechazan anónimo/otro UID.
+- SDK demo final del 19/10: **6/7 correctos**, ejecución de 20,437 s. Cuenta pasa
+  3/4; Oferta, Recomendaciones y posposición de Historial pasan sus tres regresiones.
+  Log: `account-auth/SDK.txt` y `continuation-sdk-runner.txt`; el runner devuelve
+  error por la prueba fallida y no la ignora. Se acredita registro/verificación mediante OOB real del
+  emulador y token forzado, recuperación y nueva contraseña mediante OOB, y
+  correo→Google con acceso posterior por ambos métodos al mismo UID/perfil.
+  Se amplió esta última prueba para comprobar también estados académicos guardados.
+  **Google→contraseña falla con EMAIL_EXISTS**. Se reprodujo también por REST
+  local: el emulador comprueba correo existente en accounts:signUp antes de
+  resolver idToken. Existe un [reporte histórico con síntoma similar](https://github.com/firebase/firebase-android-sdk/issues/5659).
+  Esto no prueba que producción falle igual, ni acredita éxito de ese sentido.
+  La prueba permanece fallida, sin ignorarla, cambiar dependencias Android,
+  fusionar identidades o reemplazar linkWithCredential por otro contrato.
+- Figma: nueve estados editables añadidos en `73:813`; tipografía Roboto, controles
+  existentes, cero capas con capturas de UI. Se corrigió el ajuste de etiquetas y
+  se revisó la exportación final del índice visual. Ayuda mínima de ocho caracteres
+  actualizada en Registro y Añadir contraseña.
+- Biometría: máquina JVM y pantalla sintética; en V2529 actualizado el estudiante
+  respondió a la solicitud de probar activación/cancelación/reintento, regreso del
+  segundo plano, rotación y conservación de borrador: «funciona bien aparentemente»
+  y solo tiene huella configurada. Es aceptación manual reportada hasta ahora,
+  sin resultados enumerados por escenario. No acredita rostro, indisponibilidad,
+  bloqueo temporal ni recreación del proceso; tampoco simular callbacks los acredita.
+
+### Aceptación manual reportada en producción (19/10/2026)
+
+Tras la activación remota, el estudiante reportó que creó una cuenta nueva con
+correo/contraseña y completó el flujo académico: registro de historial, registro
+de Oferta, consulta de Resumen y uso general sin fallos observados. También
+recuperó/cambió la contraseña y vinculó Google conservando el progreso visible.
+Es evidencia manual productiva de **correo → Google**, además del reporte previo
+de huella en V2529. No se volvieron a ejecutar pruebas automatizadas por actualizar
+esta documentación: permanecen 283 JVM, 68/68 UI y SDK demo 6/7.
+
+No describió por separado el envío/enlace/reenvío de verificación ni intentos de
+acceso sin verificar, aunque sí reportó entrada al contenido tras el alta normal.
+Posteriormente confirmó haber completado satisfactoriamente los puntos 1 y 2:
+Google→contraseña desde una cuenta inicialmente solo Google y nuevo acceso con
+ambos métodos conservando la información. Es aceptación manual reportada en
+producción; no se midió el UID mediante API ni se inspeccionaron cuentas personales.
+
+Ambos sentidos de vinculación y el nuevo acceso por ambos métodos ya tienen
+aceptación manual productiva satisfactoria. El fallo del emulador sigue documentado
+y no se convierte en 7/7 por estas pruebas manuales; su limitación local queda
+contrastada con el reporte de éxito productivo. Completar la comprobación explícita de verificación
+obligatoria y los escenarios de hardware aún no enumerados (recreación de proceso,
+cancelación/rechazo e indisponibilidad cuando se puedan reproducir).
+
+### Producción: publicación autorizada y verificada
+
+Consulta previa de configuración real de solo lectura, repetida el 19/10 antes de activar: correo/contraseña deshabilitado,
+política adicional no configurada, privacidad de correo activada y plantillas de
+verificación/recuperación existentes con handler web Firebase. No se exportaron
+usuarios, secretos ni cuerpos de plantillas. La app exige ocho caracteres; Firebase
+conserva su política remota actual hasta que se revise su configuración.
+
+Reglas candidatas compiladas en servidor con **dry-run correcto**. Comparación:
+solo cambia `isOwner`; el resto conserva exactamente sus tokens (CAS, revisión,
+diario y Oferta incluidos). El comparador histórico genérico marca ese bloque
+como distinto por diseño; `prepare-account-rollout.cjs` comprueba de forma específica
+que los demás bloques sean iguales. Remoto leído SHA-256
+`4fc14fb7e06bf3de81b8791bf67db1942202c191868561a8bfbbe61da8ecfc02`;
+candidato `06702f203f93a60a485188407cbecae7705038facb74c10e495c67a3342fd870`.
+Propuesta exacta en `firebase/account-auth-config.proposed.json`.
+Tras la consulta previa y la revisión, el estudiante autorizó explícitamente
+publicar esas reglas y habilitar correo. El 19/10 se ejecutó con
+`publish-account-auth.cjs --out app/build/reports/account-auth/production-rollout-20261019-final --apply`.
+Resultado **verified-published-and-enabled**, deploy código 0 y relecturas correctas:
+reglas remotas con hash candidato exacto y `enabled=true,passwordRequired=true`.
+Release: `projects/roadmap-utepsa-c9409/rulesets/0a9adb3d-42ab-4482-93d8-3c39a81c2430`,
+actualizada a `2026-10-19T12:23:51.942502Z` (08:23:51 Bolivia).
+El hash de todos los campos Auth fuera de los dos autorizados se conservó:
+`4167bfbdf198d088a77fd47f459c6a3242d85cf07d00ddac2f3c99ce2eb87356`.
+No se leyeron/escribieron documentos ni se modificaron cuentas de usuario.
+La aceptación real posterior de correo/recuperación/correo→Google está reportada
+arriba, junto con Google→contraseña y nuevos accesos por ambos métodos. Falta
+completar verificación explícita y escenarios restantes de hardware.
+
+El primer intento (`production-rollout-20261019`) abortó antes de publicar porque
+la API omite campos de email cuando está deshabilitado. Se adaptó únicamente la
+precondición a ese formato y se volvió a releer todo antes de ejecutar el intento
+final. El publicador no repite publicaciones si cambia el hash/release/configuración
+y deja resultados inciertos como `requires-reconciliation` para relectura.
+
+Evidencia local: `app/build/reports/account-auth/`, `account-final-build.txt`,
+`account-ui.txt`, `account-academic-regressions.txt`, `account-sdk-first.txt` y
+`account-rest-diagnosis.cjs`. Informes ignorados por Git. CLI Firebase 15.34.0
+preparada aisladamente en `app/build/account-tools`; no cambia dependencias de la APK.
+Auth/Firestore demo en 9099/8089 y AVD aislado
+`RoadMap_Recommendations_Test_API35`, serial `emulator-5556`.
+
+Repetir con `scripts/test-account.ps1 -Mode UI|Regressions|SDK` tras compilar ambas
+APK. El runner exige el AVD aislado y devuelve error si hay una sola prueba fallida;
+SDK requiere los servicios/fixtures demo y añade los opt-in de cada clase. Nunca
+incluye PersonalAcademicPersistenceTest ni pruebas personales.
+
+### Diagnóstico preciso de Google → contraseña (19/10/2026)
+
+Android usa Firebase BoM 34.3.0 y Auth 24.0.1; el emulador local es Firebase CLI
+15.34.0. No se cambiaron esas dependencias. El diagnóstico versionado
+`node firebase/scripts/diagnose-account-link-demo.cjs` solo contacta
+`127.0.0.1:9099`; comprueba proyecto demo en el token y nunca imprime tokens ni
+contraseñas. Devuelve código 1 si la vinculación falla, sin convertirla en éxito esperado.
+
+Reproducción nueva: acceso Google y reautenticación conservan UID;
+`accounts:signUp` con idToken/correo/contraseña devuelve HTTP 400 EMAIL_EXISTS.
+La relectura conserva el UID y solo `google.com`; volver a acceder con Google
+recupera ese UID y acceder con la contraseña nueva sigue rechazado.
+Informe local: `account-auth/link-demo-diagnosis.json`.
+
+En el [código oficial de CLI 15.34.0](https://github.com/firebase/firebase-tools/blob/v15.34.0/src/emulator/auth/operations.ts),
+`signUp` comprueba `getUserByEmail` antes de `parseIdToken`. Por ello el correo
+de la propia identidad Google dispara el rechazo en esta reproducción local.
+Esto explica el fallo del emulador; no prueba el comportamiento del backend real.
+El [reporte Android #5659](https://github.com/firebase/firebase-android-sdk/issues/5659)
+describe un síntoma similar con Auth 22.3.0 y está cerrado; no acredita una solución
+ni el resultado de Auth 24.0.1 en este proyecto. La advertencia de incidencia en
+la [guía de vinculación](https://firebase.google.com/docs/auth/android/account-linking)
+enlaza otro caso (#7675, usuario anónimo/JS), que tampoco demuestra equivalencia.
+
+Se conserva `linkWithCredential`, la reautenticación y la prueba SDK fallida.
+No usar accounts:update, recuperación de contraseña, fusión, downgrade ni un
+emulador parcheado para declarar satisfecha la prueba demo. El estudiante confirmó
+Google→contraseña y ambos accesos en producción sin fallos, conservando datos.
+Si aparece una regresión, conservar código de error y métodos releídos para
+decidir una solución justificada; la prueba demo fallida permanece visible.
+
+### Revisión del paso productivo
+
+`prepare-account-rollout.cjs` se repitió el 19/10 con el snapshot remoto conservado:
+solo cambia isOwner y conserva tokens de todos los contratos académicos. No es una
+consulta remota nueva ni una publicación. La propuesta continúa limitada a
+`signIn.email.enabled,signIn.email.passwordRequired`; no cambia Google, plantillas,
+privacidad, política remota de contraseñas ni datos personales.
+
+Antes de ejecutar: obtener autorización explícita, releer release y configuración,
+comparar hashes revisados y detenerse si cambiaron; publicar reglas y verificar su
+relectura antes de habilitar correo con la máscara exacta. Registrar la configuración
+anterior para poder revertir solo el proveedor si la aceptación falla; no retirar
+la protección de verificación de las reglas con cuentas de correo ya creadas.
+Aceptar correo/verificación/recuperación, ambos proveedores al mismo UID e historial
+y biometría real antes de cerrar T5. La publicación y activación ya se ejecutaron
+con esas comprobaciones y autorización; no repetirlas. Sigue pendiente la
+verificación explícita y escenarios restantes de hardware. Registro, recuperación,
+ambos sentidos de vinculación y nuevos accesos con ambos métodos ya tienen
+reporte manual productivo satisfactorio.
+El método de actualización con máscara exacta sigue la
+[API oficial projects.updateConfig](https://docs.cloud.google.com/identity-platform/docs/reference/rest/v2/projects/updateConfig).
+
+## Versión integrada: comprobación en esta computadora
+
+Gradle `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug
+:app:assembleDebugAndroidTest --offline --max-workers=1`, JDK de Android Studio,
+heap 768 MiB: **BUILD SUCCESSFUL**, 3 min 19 s, 30 tareas ejecutadas/52 al día,
+caché de configuración reutilizada.
+
+- Informes JVM: **258 pruebas, cero fallos/errores**; se ejecutó testDebugUnitTest.
+- APK principal y androidTest compiladas.
+- Lint: **cero errores y 39 advertencias** pendientes.
+- Log local: `app/build/reports/recommendations/review-resumen-20261018.txt`.
+
+No se repitieron aquí UI, SDK demo ni suites de reglas para revisar/instalar
+esta versión. La evidencia Android de la integración corresponde al compañero.
+
+## Integración: evidencia entregada por el compañero
+
+Implementación `41ef94a`, publicada en main; cierre documental `0192056`.
+La auditoría final reportó 258 JVM correctas, ambas APK compiladas y lint con
+0 errores/39 advertencias. Corrigió la prioridad del aviso GUARDADO_PENDIENTE
+cuando también hay incoherencia: la regresión falló antes y pasó después.
+
+**59 casos UI sintéticos distintos correctos**, en ejecuciones dirigidas:
+
+| Suite | Casos |
+|---|---:|
+| ResumenVisualTest | 7 |
+| ResumenIntegrationTest | 3 |
+| AcademicFlowTest | 11 |
+| HistorialFlowTest | 20 |
+| OfertaFlowTest | 9 |
+| RecomendacionesFlowTest | 6 |
+| LoginFeedbackTest | 3 |
+
+AVD aislado `RutaSistemas_Integration_API35`, páginas de 4096 bytes y repositorios
+en memoria. Cubre las cuatro pestañas, conteos/avisos, cambio de cuenta, filtros
+de Malla, borrador/búsqueda/revisión de Oferta, entrada guardada de Para ti,
+retorno de Perfil y aviso de descarte.
+
+No fue una única ejecución sin fallos previos: AcademicFlow dio 9/11 y luego
+1/2 al repetir los fallidos. Se corrigió únicamente el harness (cerrar teclado
+y desplazar filas antes de afirmar visibilidad); el final completo pasó 11/11.
+Los 7 visuales y 3 de integración corresponden a la primera APK de pruebas; el
+resto a su recompilación. Producción y esas dos suites no cambiaron entre ambas.
+
+Evidencia local del equipo: `app/build/reports/final-audit/`, `final-run/` e
+`integration-t1/`. No está incluida en un clon nuevo. Se utilizó el IDE cuando
+la terminal de aquella computadora no pudo ejecutar Gradle/AVD; no se cambiaron
+ACL ni funciones Windows. No se acreditan con esta suite Google real, Firebase
+productivo, teléfono ni reparación del AVD personal; SDK/reglas no se repitieron.
+
+## Teléfono del estudiante
+
+V2529, API 36: APK principal de `0192056` instalada con
+`adb install --no-streaming -r`, resultado Success, sin desinstalar ni borrar datos.
+SHA-256: `616bc683e96ee5bc0ffc58e3ec1afed19701af675698a01dd411264a2954a5e4`.
+MainActivity abrió con Status ok, COLD de 2910 ms y proceso presente al terminar
+el comando. No se instaló androidTest ni se ejecutaron guardados personales por
+la automatización durante esta actualización.
+
+Después, el estudiante confirmó pruebas manuales y uso satisfactorios de la app.
+No enumeró cada escenario: es aceptación manual reportada, no comprobación
+exhaustiva de concurrencia, desconexiones o casos extremos.
+
+Actualización de Cuenta el 19/10/2026: V2529 identificado por modelo antes de
+instalar, solo APK principal mediante `adb install --no-streaming -r`, **Success**.
+SHA-256: `051f90ff8a9c84a2dbbc16ff4b58336289eaea10500555438d460f3599036290`.
+MainActivity abrió con Status ok, COLD de 1561 ms. Sin desinstalar, borrar datos,
+instalar androidTest ni ejecutar guardados personales automatizados. Evidencia:
+`account-auth/continuation-device-install.txt`. La prueba manual de huella está
+descrita arriba; correo real sigue pendiente de activación autorizada.
+
+Tras corregir la carrera de SessionLock, segunda actualización `--no-streaming -r`,
+**Success**, apertura Status ok y COLD de 2688 ms. APK final SHA-256:
+`f71b2f1034486a55a9cafc021281b8901d2ebd1f22c254f17ae375a071a4d1d5`.
+Log: `account-auth/continuation-device-lock-fix-install.txt`. Se conservaron datos.
+El reporte manual de huella corresponde a la APK inmediatamente anterior; el
+ajuste posterior tiene regresión JVM reproducida y no añade pantallas ni prompts.
+
+## Evidencia previa que sigue siendo relevante
+
+| Entrega | Comprobación conservada | Límite |
+|---|---|---|
+| Para ti inicial | 222 JVM, 13 UI seleccionadas y 1 SDK demo correctas. | Antes de los ajustes visuales y de avances parciales. |
+| Ajustes de Para ti | 232 JVM, 15 UI (6 Para ti + 9 Oferta), lint 0/39 y capturas con fuente 1,5 correctos. Contraste mínimo de textos revisados superior a 4,5:1. | SDK no repetido: lectura/adaptador/contratos no cambiaron. |
+| SDK de Para ti | 1 caso, FirebaseApp secundaria, Auth/Firestore demo, cuentas sintéticas; lecturas/cálculo conservan snapshots y cambio de UID rechaza la cuenta anterior. | No es Firebase productivo; no escribe durante la consulta bajo prueba. |
+| Oferta inicial | 193 JVM, 7 UI y 1 SDK demo correctas; reglas: 35 comprobaciones más regresiones Perfil 75/Malla 126/Historial 94/Revisión 26 e igualdad de 50 UUID. | Guardados y concurrencia con datos demo. |
+| Filtro de aprobadas en Oferta | 199 JVM, 9 UI y lectura productiva de solo consulta correctas. | Apertura/cancelación y búsqueda en teléfono no prueban un guardado personal automatizado. |
+| Revisión académica optimizada | 176 JVM, reglas y siete casos SDK aislados correctos desde teléfono con Auth/Firestore demo; 50 cambios, recuperación, conflictos y caché. | La ejecución conjunta esperó; los casos pasaron aislados. Tiempos demo no son benchmarks por Internet. |
+| Catálogo SAE | 17 Python y 18 Node correctas; migración productiva atómica verificada, lectura posterior y huellas personales conservadas. | Resultados anteriores; no se repitió la migración en estas revisiones. |
+
+Evidencia local, no versionada: `app/build/reports/recommendations/` (incluidos
+`adjustments-*`), `offer/`, `offer-approved-filter/`, `optimization-*`,
+`sae-history-ui-final/` y `sae-rollout/`. Exportaciones visuales versionadas en
+[el índice](DISENOS/INDICE_Y_ESPECIFICACIONES.md) y
+[las capturas de Oferta](DISENOS/EVIDENCIA_OFERTA_T2/README.md).
+
+En los AVD sintéticos hubo intentos fallidos por ANR/presión de memoria y avisos
+System UI. El capturador de Para ti pulsa Wait solo ante el diálogo exacto de
+System UI; no oculta fallos de instrumentación. Las capturas de modales usan
+la ventana Android porque la captura de Activity no incluye el diálogo.
+Estos resultados no reparan ni explican completamente ART/system_server de
+Pixel_7 API35 de 16 KB. No borrar su userdata para repetir comprobaciones.
+
+La rotación de Oferta está cubierta por ViewModelStore en JVM; la UI comprueba
+navegación de la sesión, no una rotación física adicional. Esta distinción sigue
+vigente pese a las pruebas manuales satisfactorias.
+
+## Publicaciones Firebase ya realizadas
+
+El catálogo SAE y las reglas de revisión académica/Oferta ya fueron publicados
+con autorización y relectura posterior. No quedan como pasos de instalación.
+
+- Catálogo SAE: 50 materias, 28 relaciones y umbral Taller 45. Se preservaron UUID
+  y huellas personales en auditorías de solo lectura antes/después de la migración.
+- Reglas de Oferta: despliegue `verified-published`, código cero y SHA-256 remoto
+  `4fc14fb7e06bf3de81b8791bf67db1942202c191868561a8bfbbe61da8ecfc02`.
+  Al retirar los cuatro bloques de Oferta, los demás permisos conservaron sus tokens.
+- Lecturas productivas posteriores en V2529 comprobaron catálogo/selector, exclusión
+  de aprobadas, sesión y snapshots intactos; no invocaron guardar selección personal.
+
+Evidencia local: `offer-production-rollout-20261018/`,
+`offer-device-diagnosis-20261018-remote/`, `optimization-rollout/` y `sae-rollout/`,
+bajo `app/build/reports/`. Son verificaciones fechadas, no una consulta remota
+nueva. No reutilizar publicadores antiguos ni reinstalar clientes incompatibles
+con la revisión académica/catálogo SAE. Las reglas requieren revisión antes de
+una distribución amplia; publicar código no vuelve a desplegarlas.
+
+## Repetir comprobaciones
+
+Desde la raíz del clon, con JDK/SDK configurados:
+
+```powershell
+.\gradlew.bat :app:testDebugUnitTest :app:assembleDebug :app:lintDebug :app:assembleDebugAndroidTest --max-workers=1 '-Dorg.gradle.jvmargs=-Xmx768m -Dfile.encoding=UTF-8'
+python -B -m unittest discover -s firebase/tests -p test_academic_catalog.py -v
+node --test firebase/tests/academic-catalog-loader.test.cjs firebase/tests/academic-catalog-command.test.cjs firebase/tests/sae-catalog-migration.test.cjs firebase/tests/sae-catalog-migration-command.test.cjs
 node --test firebase/tests/offer-catalog.test.cjs
-# Solo con Firestore demo local configurado y reglas actuales cargadas:
+```
+
+Añadir `--offline` solo si la caché está lista. No repetir toda la compilación por
+ediciones documentales: comprobar enlaces, consistencia y `git diff --check`.
+
+### Android con datos sintéticos
+
+Compilar androidTest antes de instalar. Ejecutar solo clases elegidas y verificar
+nombre del AVD, no solo su serial. Los runners existentes rechazan dispositivos
+ajenos; adaptar `AdbPath` al equipo sin eliminar esas guardas.
+
+- `scripts/test-offer.ps1`: AVD `RoadMap_Offer_Test_API35`, serial `emulator-5556`;
+  UI de Oferta, o `-SdkDemo` para su SDK.
+- `scripts/test-recommendations.ps1`: AVD `RoadMap_Recommendations_Test_API35`,
+  mismo serial reservado; seis UI de Para ti más nueve de Oferta, o `-SdkDemo`.
+- No iniciar esos dos AVD simultáneamente en el mismo puerto.
+- Las otras clases UI de integración figuran en la tabla de 59 casos; ejecutar
+  por clase con repositorios sintéticos, nunca la suite Android completa a ciegas.
+
+`PersonalAcademicPersistenceTest` y `scripts/test-personal-history.ps1` escriben
+datos reales y requieren autorización específica; no forman parte de la rutina.
+
+### SDK y reglas en demo
+
+Generar configuración local:
+
+```powershell
+node firebase/scripts/prepare-history-sdk-emulator.cjs --config-only
+firebase emulators:start --only auth,firestore --project demo-roadmap-utepsa --config app/build/reports/history-sdk-emulator/firebase.local.json
+```
+
+Con los servicios listos, desde otra terminal:
+
+```powershell
 $env:FIRESTORE_EMULATOR_HOST = '127.0.0.1:8089'
 $env:FIREBASE_AUTH_EMULATOR_HOST = '127.0.0.1:9099'
 $env:GCLOUD_PROJECT = 'demo-roadmap-utepsa'
 node firebase/scripts/prepare-history-sdk-emulator.cjs
 node firebase/tests/run-offer-rules-tests.cjs
-# AVD sintético de Oferta ya iniciado; el runner valida nombre y serial antes de instalar:
-.\scripts\test-offer.ps1
-.\scripts\test-offer.ps1 -SkipInstall -SdkDemo
 ```
 
-`run-offer-rules-tests.cjs` ejecuta regresiones, prepara las reglas finales y valida
-Oferta, guardando cada salida y abortando ante cualquier subproceso fallido. La suite
-académica antigua se actualizó únicamente para permitir comprobar la ausencia de
-Oferta actual del propietario (antes toda Oferta estaba denegada); documentos anidados,
-campos inválidos y rutas desconocidas siguen denegados.
+El runner de reglas incorpora las regresiones; los runners Android con `-SdkDemo`
+requieren esos servicios/fixtures y el opt-in que añaden sus scripts. No sustituir
+el proyecto demo por producción. Detener los servicios/AVD de la tarea al terminar.
 
-El preparador existente `--config-only` genera configuración local para iniciar
-Firebase CLI con `--project demo-roadmap-utepsa --only auth,firestore`; no usar deploy.
-Los runners no ejecutan suites personales. Ajustar `AdbPath` a cada computadora;
-la guarda exige el AVD aislado nombrado, nunca Pixel_7.
+## Límites de la base y continuación
 
-### Cierre de desarrollo
+La revisión de la base integrada no detectó divergencias funcionales en los
+bloques académicos contrastados. La consolidación documental previa conservó
+la evidencia y los contratos. La solicitud anterior de Cuenta autorizó nueva
+implementación; su evidencia se separa de la base histórica de arriba.
 
-T2 cumple el criterio de desarrollo: flujo completo con Firebase demo, comprobaciones
-correctas y navegación integrada con Malla/Historial. Resumen no había llegado a
-`origin/main` en las dos consultas de esta tarea (`96a400a`); no se reescribió T1.
-Se detuvieron el AVD aislado y los servicios demo después de validar. Persisten
-únicamente sus artefactos de prueba bajo `app/build`, ignorados por Git.
+Siguen abiertos el diagnóstico del AVD personal, la recepción push remota,
+la medición productiva necesaria; las 39 advertencias de esa base se resolvieron en la etapa de calidad descrita arriba. No borrar datos
+ni ejecutar pruebas personales a partir de informes antiguos.
 
-La conservación por rotación se valida en JVM mediante ViewModelStore y claves de
-sesión; la instrumentación cubre navegación de la misma sesión, no una rotación
-física adicional del AVD. Los ANR de inicio descritos no se presentan como reparados.
+## Continuación de la pausa
 
-### Pendiente de producción e integración
+La pausa anterior quedó sin instalación en V2529; ya se actualizó el 19/10 y se
+conserva el reporte manual de huella en esta guía. Después se autorizó y verificó
+la publicación productiva de Cuenta descrita arriba. Siguen sin commit/push ni PR.
+No se borraron datos ni se usó el AVD personal.
 
-Diagnóstico del error de lectura reportado en dispositivo físico: inspección nueva
-de metadatos y reglas productivas con `compare-history-rules.cjs`, sin leer ni
-escribir documentos. Evidencia local:
-`app/build/reports/offer-device-diagnosis-20261018-remote/`.
-Resultado `compared`, release estable durante la consulta. Reglas remotas SHA-256
-`7b70043cfb047d57009062fa1f3ebdd8b87f6cc444e90464855cdb37327479dd`,
-sin permiso de Oferta; candidato local
-`4fc14fb7e06bf3de81b8791bf67db1942202c191868561a8bfbbe61da8ecfc02`.
-El diff contiene las funciones y el bloque nuevos de Oferta más comentarios;
-no se publicó nada. El comparador histórico marca `existingBlocksPreserved=false`
-porque su extracción del prefijo de estudiantes incluye el nuevo bloque de Oferta;
-no interpretar ese booleano como validación completa para desplegar ni como cambio
-en los permisos de perfil. Los demás bloques enumerados tienen tokens iguales.
-La primera consulta restringida falló al leer metadatos; la repetición de solo
-lectura con acceso ampliado completó la comparación. ADB no pudo iniciar su
-servidor en el intento restringido: no se obtuvo Logcat ni se ejecutaron pruebas
-en el teléfono en ese primer diagnóstico. La evidencia confirmó el bloqueo de reglas.
-La prueba posterior a la publicación se detalla debajo; no cambió código Android
-de producción.
+La evidencia anterior permanece en `account-navigation-fix-build.txt`,
+`account-preference-error-build.txt` y `account-auth/final-targeted-ui.txt`.
+Este último log terminó 16/18: además de touch sobre la fila de Recomendaciones,
+falló una fila no compuesta de Oferta en Resumen. No fue una validación del
+contador corregido. Los informes SDK/Regressions anteriores se conservaron como
+`account-auth/SDK-before-continuation.txt` y `Regressions-before-continuation.txt`.
 
-El estudiante autorizó explícitamente publicar las reglas tras este diagnóstico.
-`publish-offer-rules.cjs --apply` terminó `verified-published`, deploy exit 0.
-Evidencia: `app/build/reports/offer-production-rollout-20261018/`.
-Validación de compilación remota previa, comprobación de los 50 UUID y comparación
-de reglas inmediatamente antes y después del despliegue. Hash remoto final idéntico
-al candidato local `4fc14fb7e06bf3de81b8791bf67db1942202c191868561a8bfbbe61da8ecfc02`.
-La comparación por tokens retirando únicamente `offerOwner`, `offerSubjectIds`,
-`validOffer` y `match /ofertas/actual` confirma que el resto de las reglas se conserva.
-El publicador no leyó ni escribió documentos, no migró catálogo ni cambió Auth.
-Las comprobaciones demo anteriores siguen siendo demo; no prueban un guardado
-personal productivo. La publicación autorizada no implica push ni PR.
-
-Validación posterior en el teléfono físico V2529: nueva prueba opt-in
-`ProductionOfferReadOnlyTest`, compilada con `:app:assembleDebugAndroidTest`
-(BUILD SUCCESSFUL). Se instaló únicamente la APK de pruebas con `-r`.
-Resultado **1/1 correcto**, 58,98 s: repositorio productivo lee 50 materias desde
-servidor, oferta aún ausente, pantalla muestra primera oferta sin error, selector
-se abre y se cancela sin cambios. Snapshots anteriores/posteriores de estados,
-preparación, diario, revisión académica y oferta iguales; misma sesión Firebase.
-La pantalla estaba bloqueada durante el inicio; el estudiante la desbloqueó y
-la misma ejecución terminó correctamente, sin repetir la prueba.
-Evidencia saneada: `device-read-only.txt` y `device-evidence/` dentro del directorio
-de rollout. App reabierta en MainActivity. No se invocó guardar oferta ni se
-cambiaron materias personales para fabricar una prueba de escritura. El guardado
-productivo de la selección que el estudiante decida registrar no está acreditado
-por esta comprobación; creación/reemplazo/conflictos tienen la evidencia demo previa.
-
-Integración con Resumen pendiente si T1 todavía no llegó a `main`: incorporar `main`
-y conservar ambas funciones en los puntos de navegación/contenedor. No se calcularon
-recomendaciones. La integración final se hará mediante PR revisado, sin merge automático.
-
-## Ajuste del selector de Oferta — 18/10/2026
-
-Petición posterior del estudiante: mostrar como opciones solo materias aún no
-aprobadas. `FirestoreOfertaRepository.load` entrega los estados reales del historial
-en `DatosOferta`; selector y búsqueda excluyen APROBADA y conservan EN_CURSO y
-pendientes, incluidas bloqueadas. Al regresar desde Malla se refrescan estados
-sin perder borrador/búsqueda ni sustituir la revisión esperada de Oferta.
-Las aprobadas de una oferta guardada se retiran del borrador con aviso; solo Guardar
-persiste la sustitución, Cancelar conserva el documento previo. Antes de enviar se
-relee el historial: nuevas aprobaciones en la selección detienen el envío y exigen
-revisar/guardar de nuevo. Se conserva la reconciliación de resultados inciertos.
-No se cambian reglas, contrato remoto ni escritores de Malla/Historial.
-
-Verificación local: 199 pruebas JVM, cero fallos/errores (seis nuevas de filtrado,
-selección anterior, refresco, error, revisión previa al guardado y conflictos).
-APK principal y de pruebas compiladas; lint de producción: cero errores y 32
-advertencias. La APK de pruebas se recompiló después de ampliar las verificaciones
-de solo lectura para búsqueda y listas largas; no se repitió lint tras esos cambios
-exclusivos de androidTest.
-
-Instalación con `-r` en el teléfono físico V2529 conservando datos. `OfertaFlowTest`:
-**9/9 correctas**, 36,494 s, con repositorios sintéticos en memoria, sin escrituras
-personales. Incluye dos nuevas pruebas: búsqueda de aprobada sin resultados y
-selección de EN_CURSO; aviso al retirar una aprobada guardada, cancelación sin
-escrituras, selector sin opciones al aprobar todo y guardado vacío explícito con
-fuente 1,5. Regresiones de navegación, borrador, conflictos, carga/error y búsqueda
-correctas. Evidencia local: `app/build/reports/offer-approved-filter/ui.txt`.
-
-`ProductionOfferReadOnlyTest`: **1/1 correcta**, 14,167 s, con la APK nueva y
-sesión real existente. Verificó lectura desde servidor, búsqueda de una aprobada
-sin resultados, búsqueda de una no aprobada disponible, apertura/cancelación del
-editor y snapshots académicos/oferta idénticos antes/después, misma sesión.
-Evidencia saneada: `production-read-only.txt` y el JSON más reciente de
-`device-evidence/` en el mismo directorio de la revisión. No se guardó ninguna
-selección personal para probar; los guardados del nuevo selector son sintéticos
-en las pruebas UI. App final reabierta en MainActivity. Sin nuevos despliegues,
-commits, push ni PR durante la revisión del filtro. Posteriormente el estudiante
-aprobó sus pruebas manuales y autorizó la publicación de toda la entrega.
-
-### Publicación y continuidad del compañero
-
-La publicación autorizada incluye Oferta completa, exclusión de aprobadas,
-prueba opt-in de solo lectura y publicador protegido de reglas, junto con el
-contrato y las instrucciones del equipo. No incluye APK, cachés, credenciales,
-logs personales ni informes locales bajo `app/build/`. Los resultados anteriores
-corresponden al código entregado; los cambios finales de publicación son de
-documentación. `git diff --check` correcto.
-
-Consulta remota previa a publicar: `origin/main` sigue en `96a400a`, sin commits
-nuevos que integrar; la rama remota de Oferta no existía. El compañero puede
-incorporar `origin/feat/oferta-actual-sae` antes de subir T1 según TRABAJO_EN_EQUIPO.md.
-La publicación de código no vuelve a desplegar Firebase ni modifica cuentas.
-
-Push confirmado de `feat/oferta-actual-sae` con seguimiento de `origin` y commits
-`269aa92` + `18056b0`. [PR #1](https://github.com/Sebasss04/RoadMapUtepsa/pull/1)
-abierto hacia `main`, pendiente de revisión del compañero; no se ejecutó merge.
-El último ajuste de esta publicación registra el enlace y las instrucciones,
-sin cambiar el código ya verificado.
-
-## Registro anterior — actualización del 17/10/2026
-
-Esta publicación reúne cambios locales desde el commit `1d5f9dd` y añade contexto portable para el equipo. No implementa las tareas nuevas de Resumen/Oferta/Recomendador propuestas en el tablero.
-
-## Comprobaciones de esta entrega
-
-- Gradle `:app:testDebugUnitTest :app:assembleDebug :app:lintDebug`: BUILD SUCCESSFUL. La primera ejecución reutilizó tareas al día; la ejecución JVM adicional con `--rerun-tasks` también terminó BUILD SUCCESSFUL (25 tareas ejecutadas).
-- Pruebas JVM: 176, cero fallos/errores en los reportes del proyecto. Resultado comprobado tras la ejecución forzada. Se observó una advertencia Kotlin existente en AcademicStateConcurrencyTest sobre una propiedad delegada; no impidió las pruebas.
-- Lint: cero errores y 39 advertencias existentes; no se presenta como una ejecución sin advertencias.
-- Python: 17 pruebas del catálogo correctas.
-- Node: 18 pruebas del catálogo, publicador y migración correctas, con transporte administrativo simulado; no accedieron a Firebase.
-- Contexto: documentos, fuentes curriculares, diagramas y exportaciones visuales incorporados; README y AGENTS utilizan rutas dentro del clon.
-
-## Repetir comprobaciones locales
-
-Configurar Java/SDK según README. Desde la raíz:
-
-```powershell
-# Ajustar JAVA_HOME al JDK 25 de la propia máquina si el wrapper no encuentra Java.
-.\gradlew.bat :app:testDebugUnitTest :app:assembleDebug :app:lintDebug
-python -B -m unittest discover -s firebase/tests -p test_academic_catalog.py -v
-node --test firebase/tests/academic-catalog-loader.test.cjs firebase/tests/academic-catalog-command.test.cjs firebase/tests/sae-catalog-migration.test.cjs firebase/tests/sae-catalog-migration-command.test.cjs
-```
-
-Usar `--offline` solo cuando las dependencias estén en caché. Las pruebas Node crean sus fixtures temporales bajo `app/build/`, que está ignorado. Python solo necesita su biblioteca estándar.
-
-## Límites
-
-No se repitieron en esta publicación las pruebas UI/SDK Android ni las suites de reglas con servicios demo. Sus resultados previos, despliegues y auditorías de solo lectura se describen con sus límites en ESTADO_ACTUAL. No se volvió a consultar Firebase productivo ni se guardaron datos personales, publicaron reglas o migraron catálogos. Un push de código no ejecuta esas operaciones.
-
-El problema de ART/`system_server` del emulador sigue sin causa exacta aislada. Compilación y pruebas locales correctas no acreditan que ese AVD esté reparado, recepción push remota ni estabilidad completa de producción.
+Nueva evidencia local bajo `account-auth/`: compilación final y del harness,
+regresión UI, diagnóstico REST con fallo conservado, 13 comprobaciones de reglas,
+regresiones de reglas existentes, preparación del paso remoto e instalación del
+teléfono. Los resultados vigentes y sus límites están al inicio de esta guía.
+Al terminar se cerraron el AVD sintético y Auth/Firestore demo de esta tarea;
+se verificaron sus puertos sin listeners. ADB conserva el V2529 conectado. No se
+tocó Pixel_7 ni se realizaron commit, push o PR. La publicación productiva de
+Cuenta se realizó después, en el paso expresamente autorizado descrito arriba.

@@ -1,6 +1,6 @@
 package com.example.roadmap_utepsa.domain.academic
 
-import com.example.roadmap_utepsa.domain.model.EstadoAcademico
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
 
 /** Explica una contradicción sin inferir fechas ni modificar estados. */
 data class DiagnosticoMateriaHistorial(

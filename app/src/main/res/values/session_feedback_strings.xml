@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="session_preference_read_failed">No se pudo leer la preferencia. Mantendremos esta sesión protegida; reintenta o cierra sesión.</string>
+    <string name="session_preference_save_failed">No se pudo guardar la preferencia. Reintenta.</string>
+    <string name="session_disable_failed">No se pudo desactivar. Reintenta.</string>
+</resources>

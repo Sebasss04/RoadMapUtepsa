@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="history_flow_preparation">PREPARACIÓN DEL HISTORIAL</string>
     <string name="history_flow_before_starting">ANTES DE EMPEZAR</string>
     <string name="history_flow_welcome">Preparemos tu historial</string>
@@ -16,7 +16,6 @@
     <string name="history_flow_approved_title">Tus materias aprobadas</string>
     <string name="history_flow_approved_detail">Marca solo las que ya aprobaste. Puedes seleccionarlas en cualquier orden. Las selecciones guardadas aparecen marcadas.</string>
     <string name="history_flow_search">Buscar materia o sigla</string>
-    <string name="history_flow_approved_count">%1$d aprobadas seleccionadas</string>
     <string name="history_flow_continue_zero">Continuar sin aprobadas</string>
     <string name="history_flow_continue">Continuar</string>
     <string name="history_flow_back">Volver</string>
@@ -24,10 +23,12 @@
     <string name="history_flow_course_title">¿Qué estás cursando?</string>
     <string name="history_flow_course_detail">Marca las materias que cursas ahora. Puedes continuar sin seleccionar ninguna.</string>
     <string name="history_flow_missing_requirements">Faltan aprobadas: %1$s</string>
-    <string name="history_flow_missing_approved">Faltan %1$d materias aprobadas.</string>
+    <plurals name="history_flow_missing_approved">
+        <item quantity="one">Falta %1$d materia aprobada.</item>
+        <item quantity="other">Faltan %1$d materias aprobadas.</item>
+        <item quantity="many">Faltan %1$d materias aprobadas.</item>
+    </plurals>
     <string name="history_flow_can_select">Cumple los requisitos · Puedes seleccionarla</string>
-    <string name="history_flow_counts">%1$d aprobadas · %2$d en curso</string>
-    <string name="history_flow_pending_count">%1$d pendientes</string>
     <string name="history_flow_review">Revisar historial</string>
     <string name="history_flow_review_zero_course">Revisar sin materias en curso</string>
     <string name="history_flow_skip_course">Continuar sin materias en curso</string>
@@ -38,13 +39,13 @@
     <string name="history_flow_step_review">PASO 3 DE 3 · REVISIÓN</string>
     <string name="history_flow_review_title">Revisa tu historial</string>
     <string name="history_flow_review_detail">Comprueba tus aprobadas y materias en curso antes de confirmar.</string>
-    <string name="history_flow_zero_review_detail">Confirma cero aprobadas solo si refleja tu situación. Esta decisión no se deduce de un error de lectura.</string>
+    <string name="history_flow_zero_review_detail">Confirma cero aprobadas solo si refleja tu situación. Si faltan materias, vuelve y selecciónalas.</string>
     <string name="history_flow_no_approved">No tengo materias aprobadas</string>
-    <string name="history_flow_no_approved_detail">He revisado el historial leído y confirmo que corresponde empezar sin aprobadas.</string>
+    <string name="history_flow_no_approved_detail">He revisado mis materias y confirmo que corresponde empezar sin aprobadas.</string>
     <string name="history_flow_state_semester">%1$s · Semestre %2$d</string>
     <string name="history_flow_coherent">Historial coherente</string>
     <string name="history_flow_coherent_detail">Las materias seleccionadas cumplen sus requisitos.</string>
-    <string name="history_flow_finish_after_reading">Finaliza tras confirmar y releer el guardado.</string>
+    <string name="history_flow_finish_after_reading">Podrás continuar cuando confirmemos que tu historial se guardó.</string>
     <string name="history_flow_review_before_confirm">Revisa antes de confirmar</string>
     <string name="history_flow_confirm">Confirmar historial</string>
     <string name="history_flow_confirm_zero">Confirmar cero aprobadas</string>
@@ -53,7 +54,7 @@
     <string name="history_flow_review_data">Hay datos por revisar</string>
     <string name="history_flow_review_data_detail">Conservamos tus estados. Corrige las omisiones antes de confirmar el historial o pedir recomendaciones.</string>
     <string name="history_flow_missing_title">Faltan requisitos aprobados</string>
-    <string name="history_flow_threshold">Necesita %1$d aprobadas distintas de esta materia. Hay %2$d computables; faltan %3$d.</string>
+    <string name="history_flow_threshold">%1$s %2$s %3$s</string>
     <string name="history_flow_correct_missing">Corrige lo que falta</string>
     <string name="history_flow_correct_missing_detail">Si ya aprobaste los requisitos, añádelos. Si el estado de la materia es incorrecto, corrígelo. No hay cambios automáticos.</string>
     <string name="history_flow_not_confirmed">Revisa los requisitos antes de guardar</string>
@@ -61,14 +62,14 @@
     <string name="history_flow_back_curriculum">Volver a Malla</string>
     <string name="history_flow_loading">Cargando tu historial</string>
     <string name="history_flow_loading_detail">Estamos consultando los datos de tu cuenta.</string>
-    <string name="history_flow_reading">Lectura en curso</string>
-    <string name="history_flow_reading_detail">Espera a que termine la lectura antes de revisar tus materias.</string>
+    <string name="history_flow_reading">Consultando tu historial</string>
+    <string name="history_flow_reading_detail">Espera un momento antes de revisar tus materias.</string>
     <string name="history_flow_loading_footer">Todavía no podemos mostrar el resumen de aprobadas o materias en curso.</string>
     <string name="history_flow_read_error">No pudimos leer tu historial</string>
     <string name="history_flow_read_error_detail">No podemos saber todavía qué materias tienes registradas.</string>
     <string name="history_flow_connection">Revisa tu conexión y reintenta</string>
     <string name="history_flow_connection_detail">No se ha cargado un historial vacío ni se han borrado tus estados.</string>
-    <string name="history_flow_read_error_footer">Retomaremos la preparación cuando la lectura termine correctamente.</string>
+    <string name="history_flow_read_error_footer">Reintenta para consultar tu historial y continuar.</string>
     <string name="history_flow_no_results">No encontramos coincidencias</string>
     <string name="history_flow_no_results_detail">Prueba otra palabra o sigla. La búsqueda no modifica lo que ya seleccionaste.</string>
     <string name="history_flow_clear_search">Limpiar búsqueda</string>
@@ -76,7 +77,7 @@
     <string name="history_flow_saving">Guardando tu historial</string>
     <string name="history_flow_saving_detail">Estamos enviando los cambios que revisaste.</string>
     <string name="history_flow_not_yet_confirmed">Todavía no está confirmado</string>
-    <string name="history_flow_wait_result">Espera la confirmación y la lectura del resultado antes de continuar.</string>
+    <string name="history_flow_wait_result">Espera a que podamos confirmar qué cambios se guardaron antes de continuar.</string>
     <string name="history_flow_saving_footer">Espera mientras comprobamos el guardado.</string>
     <string name="history_flow_saving_action">Guardando…</string>
     <string name="history_flow_waiting">Seguimos esperando</string>
@@ -87,9 +88,9 @@
     <string name="history_flow_waiting_action">Esperando confirmación…</string>
     <string name="history_flow_unconfirmed">GUARDADO SIN CONFIRMAR</string>
     <string name="history_flow_save_error">No pudimos confirmar</string>
-    <string name="history_flow_save_error_detail">Conservamos tu selección en esta revisión para que puedas recuperarte del error.</string>
+    <string name="history_flow_save_error_detail">Tu selección sigue en este borrador. Comprueba qué cambios se guardaron antes de continuar.</string>
     <string name="history_flow_check_first">Comprobaremos el resultado primero</string>
-    <string name="history_flow_check_first_detail">Al reintentar, leeremos lo guardado antes de continuar. Algunos cambios podrían haber llegado al servidor.</string>
+    <string name="history_flow_check_first_detail">Al reintentar, comprobaremos qué cambios se guardaron antes de continuar.</string>
     <string name="history_flow_draft_footer">No se ha confirmado la preparación. Mantén abierta esta revisión para conservar el borrador.</string>
     <string name="history_flow_check_retry">Comprobar y reintentar</string>
     <string name="history_flow_preview_selection">Revisar selección</string>
@@ -104,7 +105,11 @@
     <string name="history_flow_recover_title">RECUPERAR GUARDADO</string>
     <string name="history_flow_partial">Faltan cambios por confirmar</string>
     <string name="history_flow_partial_detail">Hay cambios cuyo guardado debemos comprobar. Conservamos los estados ya guardados.</string>
-    <string name="history_flow_progress">%1$d de %2$d cambios confirmados</string>
+    <plurals name="history_flow_progress">
+        <item quantity="one">%1$d de %2$d cambio confirmado</item>
+        <item quantity="other">%1$d de %2$d cambios confirmados</item>
+        <item quantity="many">%1$d de %2$d cambios confirmados</item>
+    </plurals>
     <string name="history_flow_progress_detail">Tu historial estará listo cuando termine la comprobación del guardado.</string>
     <string name="history_flow_confirmed_preserved">Conservamos los cambios confirmados</string>
     <string name="history_flow_confirmed_preserved_detail">Comprobaremos el estado actual antes de continuar con los cambios restantes. No se borrará lo ya guardado por este fallo.</string>
@@ -167,13 +172,41 @@
     <plurals name="history_approved_subject_count">
         <item quantity="one">%d aprobada</item>
         <item quantity="other">%d aprobadas</item>
+        <item quantity="many">%d aprobadas</item>
     </plurals>
     <plurals name="history_selected_approved_count">
         <item quantity="one">%d aprobada seleccionada</item>
         <item quantity="other">%d aprobadas seleccionadas</item>
+        <item quantity="many">%d aprobadas seleccionadas</item>
     </plurals>
     <plurals name="history_pending_subject_count">
         <item quantity="one">%d pendiente</item>
         <item quantity="other">%d pendientes</item>
+        <item quantity="many">%d pendientes</item>
+    </plurals>
+    <plurals name="history_needed">
+        <item quantity="one">Necesita %1$d aprobada distinta de esta materia.</item>
+        <item quantity="other">Necesita %1$d aprobadas distintas de esta materia.</item>
+        <item quantity="many">Necesita %1$d aprobadas distintas de esta materia.</item>
+    </plurals>
+    <plurals name="history_computable">
+        <item quantity="one">Hay %1$d computable;</item>
+        <item quantity="other">Hay %1$d computables;</item>
+        <item quantity="many">Hay %1$d computables;</item>
+    </plurals>
+    <plurals name="history_missing">
+        <item quantity="one">falta %1$d.</item>
+        <item quantity="other">faltan %1$d.</item>
+        <item quantity="many">faltan %1$d.</item>
+    </plurals>
+    <plurals name="history_have">
+        <item quantity="one">Tienes %1$d aprobada distinta de esta materia.</item>
+        <item quantity="other">Tienes %1$d aprobadas distintas de esta materia.</item>
+        <item quantity="many">Tienes %1$d aprobadas distintas de esta materia.</item>
+    </plurals>
+    <plurals name="history_missing_threshold">
+        <item quantity="one">Falta %1$d para cumplir el umbral.</item>
+        <item quantity="other">Faltan %1$d para cumplir el umbral.</item>
+        <item quantity="many">Faltan %1$d para cumplir el umbral.</item>
     </plurals>
 </resources>

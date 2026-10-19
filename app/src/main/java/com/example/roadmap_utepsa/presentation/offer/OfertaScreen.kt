@@ -19,9 +19,10 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
+import com.example.roadmap_utepsa.presentation.shared.components.AcademicBottomBar
 import com.example.roadmap_utepsa.R
-import com.example.roadmap_utepsa.presentation.viewmodel.OfertaUiState
-import com.example.roadmap_utepsa.presentation.academic.durationLabel
+import com.example.roadmap_utepsa.presentation.offer.OfertaUiState
+import com.example.roadmap_utepsa.presentation.shared.text.durationLabel
 
 @Composable
 fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
@@ -29,6 +30,8 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
     onCancel: () -> Unit, onConflict: (Boolean) -> Unit, onMalla: () -> Unit,
     onProfile: () -> Unit, onSignOut: () -> Unit, onRecommendations: (() -> Unit)? = null,
     onSummary: (() -> Unit)? = null) {
+    val texts = androidx.compose.ui.platform.LocalResources.current
+
     val focus = androidx.compose.ui.platform.LocalFocusManager.current
     var discard by remember { mutableStateOf(false) }
     var signOut by remember { mutableStateOf(false) }
@@ -38,7 +41,7 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
         topBar = {
             Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically) {
-                Text("RoadMap", Modifier.weight(1f), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(texts.getString(R.string.offer_oferta_screen_1), Modifier.weight(1f), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 IconButton(onProfile, enabled = !state.saving) {
                     Icon(painterResource(R.drawable.academic_account), stringResource(R.string.academic_profile),
                         Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
@@ -58,20 +61,7 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                         Text(stringResource(R.string.offer_cancel))
                     }
                 }
-                NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
-                    val labels = listOf(R.string.academic_summary, R.string.academic_curriculum,
-                        R.string.academic_offer, R.string.academic_recommendations)
-                    val icons = listOf(R.drawable.academic_summary, R.drawable.academic_curriculum,
-                        R.drawable.academic_offer, R.drawable.academic_recommendations)
-                    labels.forEachIndexed { index, label ->
-                        NavigationBarItem(selected = index == 2, onClick = { if (index == 0) onSummary?.invoke() else if (index == 1) onMalla() else if (index == 3) onRecommendations?.invoke() },
-                            enabled = !state.saving && (index in 1..2 || index == 0 && onSummary != null || index == 3 && onRecommendations != null),
-                            colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                                selectedIconColor = MaterialTheme.colorScheme.primary, selectedTextColor = MaterialTheme.colorScheme.primary),
-                            icon = { Icon(painterResource(icons[index]), null, Modifier.size(21.dp)) },
-                            label = { Text(stringResource(label), fontSize = 11.sp) })
-                    }
-                }
+                AcademicBottomBar(2, enabled = !state.saving, onSummary = onSummary, onCurriculum = onMalla, onOffer = {}, onRecommendations = onRecommendations, compact = true)
             }
         }) { padding ->
         LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("offer-list"),

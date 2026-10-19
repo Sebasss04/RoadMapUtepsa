@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_method_linked">Método vinculado. Conservas tu cuenta y tu historial.</string>
+    <string name="account_link_unconfirmed">No se pudo confirmar. Actualiza los métodos antes de reintentar.</string>
+</resources>

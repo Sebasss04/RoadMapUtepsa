@@ -2,7 +2,7 @@
 
 El estado vigente está en [ESTADO_ACTUAL.md](../ESTADO_ACTUAL.md) y los requisitos en [PRODUCTO_Y_PLAN.md](../PRODUCTO_Y_PLAN.md). Esta carpeta conserva los diseños; un mockup no acredita implementación.
 
-El índice anterior y sus estados fechados están preservados en ARCHIVO/2026-10-17_antes_revision/DISENOS. Historial B1 y B2 son referencias visuales en sus subcarpetas; sus README históricos no son planes de ejecución.
+Historial B1 y B2 son referencias visuales en sus subcarpetas; sus README históricos no son planes de ejecución. Cuenta, Registro, Recuperación y Desbloqueo tienen implementación local en la rama de autenticación; la validación vigente está en las guías compartidas.
 
 ## Pantallas y exportaciones
 
@@ -20,3 +20,27 @@ El índice anterior y sus estados fechados están preservados en ARCHIVO/2026-10
 | Desbloqueo opcional | [Abrir](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=13-343) | [PNG](10_DESBLOQUEO_ESTADOS.png) | Sesión bloqueada; intento cancelado; biometría no disponible. |
 
 El primer Acceso también se conserva como [exportación individual](01_ACCESO_PROPUESTA_A.png). Las exportaciones muestran el encuadre inicial de cada pantalla; los catálogos largos siguen dentro de áreas desplazables en Figma, con sus filas editables. Las vistas reducidas de la tabla se inspeccionan mejor ampliándolas en Figma.
+
+## Cuenta: estados completados para esta entrega
+
+[09B · Verificación y reautenticación](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=73-813)
+y [exportación local](09B_CUENTA_VERIFICACION_REAUTENTICACION.png): correo pendiente,
+envío, comprobación, error de envío, todavía pendiente, reautenticación por
+contraseña/Google, vinculación en curso y resultado incierto. Capas editables,
+componentes Material existentes, Roboto y variables del archivo. Se corrigió la
+ayuda de Registro y Añadir contraseña a ocho caracteres. Cuenta representa nombres
+persistidos y correo de la identidad en lugar de Andrea y datos ilustrativos.
+Los SVG originales de retorno, correo y huella están en CUENTA_ASSETS; Compose
+usa sus vectores locales. El interruptor usa el control interactivo Material.
+
+## Avisos de pendientes · 19/10/2026
+
+Cuenta existente actualizada antes de Compose: [Figma](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=12-315)
+y [exportación](09_CUENTA_AVISOS_20261019.png). Tarjeta editable `77:855` bajo
+biometría, interruptor inicialmente desactivado, texto de utilidad y tipografía/control
+existentes. El contenido sigue dentro del área desplazable.
+
+La [captura Android con fuente 1,5](09_CUENTA_AVISOS_FUENTE_15.png) corresponde a
+repositorios sintéticos y la APK final de avisos. Se comprobó el texto completo y
+el control dentro del desplazamiento; no es una captura de datos personales ni
+una prueba de hardware biométrico.

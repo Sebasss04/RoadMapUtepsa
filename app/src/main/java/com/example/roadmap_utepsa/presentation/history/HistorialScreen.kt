@@ -1,5 +1,7 @@
 package com.example.roadmap_utepsa.presentation.history
 
+import androidx.compose.ui.res.pluralStringResource
+import com.example.roadmap_utepsa.presentation.shared.text.quantityText
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.horizontalScroll
@@ -16,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.liveRegion
@@ -26,16 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.roadmap_utepsa.R
 import com.example.roadmap_utepsa.domain.academic.DiagnosticoMateriaHistorial
-import com.example.roadmap_utepsa.domain.academic.ReglasAcademicas
-import com.example.roadmap_utepsa.domain.academic.ReglasHistorial
-import com.example.roadmap_utepsa.domain.model.EstadoAcademico
-import com.example.roadmap_utepsa.domain.model.EstadoAcademico.*
-import com.example.roadmap_utepsa.domain.model.Materia
-import com.example.roadmap_utepsa.presentation.academic.filterCurriculum
-import com.example.roadmap_utepsa.presentation.viewmodel.HistorialUiState
-import com.example.roadmap_utepsa.presentation.viewmodel.PasoHistorial
-import com.example.roadmap_utepsa.presentation.viewmodel.ModoHistorial
-import com.example.roadmap_utepsa.presentation.academic.durationLabel
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico.*
+import com.example.roadmap_utepsa.domain.academic.Materia
+import com.example.roadmap_utepsa.domain.academic.filterCurriculum
+import com.example.roadmap_utepsa.presentation.history.HistorialUiState
+import com.example.roadmap_utepsa.presentation.history.PasoHistorial
+import com.example.roadmap_utepsa.presentation.history.ModoHistorial
+import com.example.roadmap_utepsa.presentation.shared.text.durationLabel
 
 data class HistorialActions(
     val onEdit: () -> Unit = {},
@@ -54,6 +53,7 @@ data class HistorialActions(
     val onDiscard: () -> Unit = {},
     val onExit: () -> Unit = {},
     val onReadConflict: () -> Unit = {},
+    val onCompareSelection: (Map<String, EstadoAcademico>) -> Unit = {},
     val onResolveConflict: (Map<String, EstadoAcademico>) -> Unit = {}
 )
 
@@ -62,6 +62,8 @@ private enum class Vista { NORMAL, CONSULTA, LOADING, ERROR, EXPIRED, SAVING, WA
 /** H01–H07 / H09–H20 / H31–H32: estados de un mismo recorrido, sin destinos extra. */
 @Composable
 fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
+    val texts = androidx.compose.ui.platform.LocalResources.current
+
     val ready = state as? HistorialUiState.Ready
     val uid = ready?.borrador?.uid
     var query by rememberSaveable(uid) { mutableStateOf("") }
@@ -70,7 +72,7 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
     var previewDraft by rememberSaveable(uid) { mutableStateOf(false) }
     var comparing by remember(ready?.conflicto) { mutableStateOf(false) }
     var comparisonStep by remember(ready?.conflicto) { mutableStateOf(PasoHistorial.APROBADAS) }
-    var reviewed by remember(ready?.conflicto) { mutableStateOf(ready?.borrador?.seleccion.orEmpty()) }
+    val reviewed = ready?.comparisonDraft ?: ready?.borrador?.seleccion.orEmpty()
     val saving = ready?.guardando == true
     val editing = ready?.modo == ModoHistorial.EDICION
     var summaryFilter by rememberSaveable(uid) { mutableStateOf<String?>(null) }
@@ -89,7 +91,7 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
         state == HistorialUiState.Loading -> Vista.LOADING
         state == HistorialUiState.Error -> Vista.ERROR
         state == HistorialUiState.SessionExpired -> Vista.EXPIRED
-        saving && ready?.esperando == true -> Vista.WAITING
+        saving && ready.esperando -> Vista.WAITING
         saving -> Vista.SAVING
         discard -> Vista.DISCARD
         ready?.conflicto != null && !comparing -> Vista.CONFLICT
@@ -101,7 +103,7 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
         else -> Vista.NORMAL
     }
     val diagnostics = if (comparing && ready != null) {
-        ReglasHistorial(materias, ready.lectura.academic.prerrequisitos).validar(selection).contradicciones
+        ready.comparisonDiagnostics
     } else ready?.diagnosticos.orEmpty()
     val contradictoryReview = step == PasoHistorial.REVISION && diagnostics.isNotEmpty()
     fun openStep(value: PasoHistorial) {
@@ -120,7 +122,7 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
         topBar = {
             Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically) {
-                Text("RoadMap", fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                Text(texts.getString(R.string.history_historial_screen_1), fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
                 IconButton(actions.onProfile, enabled = !saving && vista != Vista.EXPIRED && vista != Vista.LOADING) {
                     Icon(painterResource(R.drawable.academic_account), stringResource(R.string.academic_profile),
                         Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
@@ -176,9 +178,9 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
                                 Secondary(if (course == 0) R.string.history_flow_back_approved else R.string.history_flow_skip_course,
                                     { if (course == 0) openStep(PasoHistorial.APROBADAS)
                                       else if (comparing) {
-                                          reviewed = reviewed.mapValues { (id, value) ->
+                                          actions.onCompareSelection(reviewed.mapValues { (id, value) ->
                                               if (value == EN_CURSO && ready?.borrador?.base?.get(id) != EN_CURSO) PENDIENTE else value
-                                          }
+                                          })
                                           comparisonStep = PasoHistorial.REVISION
                                       } else actions.onSkipCourse() })
                             }
@@ -186,8 +188,8 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
                                 Caption(stringResource(if (contradictoryReview) R.string.history_flow_not_confirmed else R.string.history_flow_review_before_confirm))
                                 Primary(when {
                                     contradictoryReview -> R.string.history_flow_correct
-                                    editing && !comparing && ready?.borrador?.cambios()?.isEmpty() == true && ready.lectura.registro?.decision == com.example.roadmap_utepsa.domain.history.DecisionPreparacion.CONFIRMADO -> R.string.history_view
-                                    editing && !comparing && ready?.borrador?.cambios()?.isEmpty() == true -> if (approved == 0) R.string.history_flow_confirm_zero else R.string.history_flow_confirm
+                                    editing && !comparing && ready.borrador.cambios().isEmpty() && ready.lectura.registro?.decision == com.example.roadmap_utepsa.domain.history.DecisionPreparacion.CONFIRMADO -> R.string.history_view
+                                    editing && !comparing && ready.borrador.cambios().isEmpty() -> if (approved == 0) R.string.history_flow_confirm_zero else R.string.history_flow_confirm
                                     editing && !comparing -> R.string.history_save_edits
                                     comparing -> R.string.history_flow_review
                                     approved == 0 -> R.string.history_flow_confirm_zero
@@ -195,7 +197,7 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
                                 }, {
                                     if (contradictoryReview) openStep(PasoHistorial.APROBADAS)
                                     else if (comparing) { actions.onResolveConflict(reviewed.toMap()); comparing = false }
-                                    else if (editing && ready?.borrador?.cambios()?.isEmpty() == true && ready.lectura.registro?.decision == com.example.roadmap_utepsa.domain.history.DecisionPreparacion.CONFIRMADO) actions.onCancel()
+                                    else if (editing && ready.borrador.cambios().isEmpty() && ready.lectura.registro?.decision == com.example.roadmap_utepsa.domain.history.DecisionPreparacion.CONFIRMADO) actions.onCancel()
                                     else actions.onConfirm()
                                 })
                                 Secondary(if (contradictoryReview) R.string.history_flow_back_curriculum else R.string.history_flow_edit_selection,
@@ -354,15 +356,16 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
                             item(key = "semester-$number") { Strong(stringResource(R.string.academic_semester, number), 18) }
                             items(rows, key = { it.id }) { materia ->
                                 val checked = selection[materia.id] == if (isCourse) EN_CURSO else APROBADA
-                                val eligibility = if (isCourse && ready != null) ReglasAcademicas(materias, ready.lectura.academic.prerrequisitos).evaluar(materia.id, selection) else null
+                                val eligibility = if (isCourse && ready != null)
+                                    (if (comparing) ready.comparisonEligibility else ready.eligibility)[materia.id] else null
                                 val allowed = !previewDraft && (!isCourse || checked || eligibility?.habilitada == true)
                                 val requirements = eligibility?.requisitosSinAprobar.orEmpty().mapNotNull { byId[it]?.nombre }.sorted()
                                 SubjectChoice(materia, checked, allowed,
                                     if (requirements.isNotEmpty()) stringResource(R.string.history_flow_missing_requirements, requirements.joinToString(" · "))
-                                    else if ((eligibility?.aprobadasFaltantes ?: 0) > 0) stringResource(R.string.history_flow_missing_approved, eligibility!!.aprobadasFaltantes)
+                                    else if ((eligibility?.aprobadasFaltantes ?: 0) > 0) quantityText(R.plurals.history_flow_missing_approved, eligibility!!.aprobadasFaltantes)
                                     else if (isCourse) stringResource(R.string.history_flow_can_select) else null) { value ->
                                     if (previewDraft) return@SubjectChoice
-                                    if (comparing) reviewed = reviewed + (materia.id to if (value) { if (isCourse) EN_CURSO else APROBADA } else PENDIENTE)
+                                    if (comparing) actions.onCompareSelection(reviewed + (materia.id to if (value) { if (isCourse) EN_CURSO else APROBADA } else PENDIENTE))
                                     else if (isCourse) actions.onCourse(materia.id, value) else actions.onApproved(materia.id, value)
                                 }
                             }
@@ -420,7 +423,7 @@ private fun Heading(step: Int, title: Int, detail: Int) {
 }
 
 @Composable
-private fun HistoryCard(accent: Boolean = false, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null,
+private fun HistoryCard(modifier: Modifier = Modifier, accent: Boolean = false, onClick: (() -> Unit)? = null,
                         content: @Composable ColumnScope.() -> Unit) {
     val color = if (accent) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
     if (onClick != null) Surface(onClick, modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = color) {
@@ -434,12 +437,12 @@ private fun HistoryCard(accent: Boolean = false, modifier: Modifier = Modifier, 
 @Composable private fun Body(value: String) { Text(value, fontSize = 14.sp, lineHeight = 18.9.sp, color = MaterialTheme.colorScheme.onSurfaceVariant) }
 @Composable private fun Body(value: Int) = Body(stringResource(value))
 @Composable private fun Caption(value: String) { Text(value, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-@Composable private fun Info(title: Int, detail: Int, accent: Boolean = false) = HistoryCard(accent) { Strong(stringResource(title)); Body(detail) }
-@Composable private fun Summary(approved: Int, course: Int, pending: Int, accent: Boolean = false) = HistoryCard(accent) {
+@Composable private fun Info(title: Int, detail: Int, accent: Boolean = false) = HistoryCard(accent = accent) { Strong(stringResource(title)); Body(detail) }
+@Composable private fun Summary(approved: Int, course: Int, pending: Int, accent: Boolean = false) = HistoryCard(accent = accent) {
     Strong(historyCounts(approved, course)); Body(pluralStringResource(R.plurals.history_pending_subject_count, pending, pending))
 }
 @Composable private fun Progress(applied: Int, total: Int) = HistoryCard {
-    Strong(stringResource(R.string.history_flow_progress, applied, total)); Body(R.string.history_flow_progress_detail)
+    Strong(pluralStringResource(R.plurals.history_flow_progress, total, applied, total)); Body(R.string.history_flow_progress_detail)
 }
 @Composable private fun Primary(label: Int, onClick: () -> Unit, enabled: Boolean = true) {
     Button(onClick, Modifier.fillMaxWidth().heightIn(min = 56.dp).testTag("history-primary"), enabled = enabled) { Text(stringResource(label)) }
@@ -474,7 +477,7 @@ private fun Diagnostic(diagnostic: DiagnosticoMateriaHistorial, materias: Map<St
             diagnostic.requisitosSinAprobar.mapNotNull { materias[it] }.sortedBy { it.codigo }.forEach { Body("${it.nombre} · ${it.codigo}") }
         }
         if (diagnostic.aprobadasFaltantes > 0) {
-            Body(stringResource(R.string.history_flow_threshold, diagnostic.minAprobadas, diagnostic.aprobadasComputables, diagnostic.aprobadasFaltantes))
+            Body(stringResource(R.string.history_flow_threshold, quantityText(R.plurals.history_needed, diagnostic.minAprobadas), quantityText(R.plurals.history_computable, diagnostic.aprobadasComputables), quantityText(R.plurals.history_missing, diagnostic.aprobadasFaltantes)))
         }
     }
 }

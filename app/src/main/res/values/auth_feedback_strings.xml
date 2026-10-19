@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_verification_sent">Revisa tu correo y la carpeta de spam.</string>
+    <string name="auth_email_not_verified">El correo todavía no está verificado.</string>
+    <string name="auth_recovery_neutral">Si ese correo admite recuperación, recibirás un enlace. Revisa también spam.</string>
+</resources>

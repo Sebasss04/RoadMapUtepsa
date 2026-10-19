@@ -2,7 +2,7 @@ package com.example.roadmap_utepsa.domain.history
 
 import com.example.roadmap_utepsa.domain.academic.ReglasHistorial
 import com.example.roadmap_utepsa.domain.academic.ResultadoCoherenciaHistorial
-import com.example.roadmap_utepsa.domain.model.EstadoAcademico
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
 
 enum class DecisionPreparacion { POSPUESTO, CONFIRMADO }
 

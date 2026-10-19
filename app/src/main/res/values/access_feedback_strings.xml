@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="access_cancelled">Vinculación cancelada. Tu sesión sigue iniciada.</string>
+    <string name="access_different_email">Elige la cuenta Google con el mismo correo. Tu sesión no ha cambiado.</string>
+    <string name="access_network">No se pudo conectar. Comprueba tu conexión y reintenta.</string>
+    <string name="access_email_exists">No pudimos añadir este método de acceso. Puedes seguir entrando como antes. Actualiza tus métodos antes de volver a intentarlo.</string>
+    <string name="access_method_in_use">Ese método de acceso ya está asociado a otra cuenta. Vuelve o elige otra cuenta.</string>
+    <string name="access_weak_password">Usa al menos ocho caracteres. Si la contraseña no se acepta, prueba con una más segura.</string>
+    <string name="access_recent_login">Confirma de nuevo tu acceso antes de vincular.</string>
+    <string name="access_unavailable">Este método de acceso no está disponible ahora. Inténtalo más tarde.</string>
+    <string name="access_failed">No se pudo completar la operación. Revisa los datos y vuelve a intentarlo.</string>
+    <string name="access_invalid_email">Introduce un correo válido.</string>
+    <string name="access_password_mismatch">Las contraseñas no coinciden.</string>
+    <string name="access_current_password">Introduce tu contraseña actual.</string>
+</resources>

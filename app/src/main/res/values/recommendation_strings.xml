@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="rec_title">Recomendadas para ti</string>
     <string name="rec_subtitle">Elige tu próximo paso.</string>
     <string name="rec_loading">Preparando recomendaciones…</string>
@@ -31,6 +31,7 @@
     <plurals name="rec_count">
         <item quantity="one">Al aprobarla, habilitas %1$d materia</item>
         <item quantity="other">Al aprobarla, habilitas %1$d materias</item>
+        <item quantity="many">Al aprobarla, habilitas %1$d materias</item>
     </plurals>
     <string name="rec_explain">Ver detalle</string>
     <string name="rec_why">Detalle de la recomendación</string>
@@ -40,6 +41,7 @@
     <plurals name="rec_threshold">
         <item quantity="one">Umbral satisfecho: %1$d materia aprobada, sin contar esta materia.</item>
         <item quantity="other">Umbral satisfecho: %1$d materias aprobadas, sin contar esta materia.</item>
+        <item quantity="many">Umbral satisfecho: %1$d materias aprobadas, sin contar esta materia.</item>
     </plurals>
     <string name="rec_unlocks">Si la apruebas, habilitarías:</string>
     <string name="rec_read_only">Orientación basada en tus datos guardados. Cada opción se evalúa por separado; no realiza una inscripción.</string>
@@ -56,16 +58,19 @@
     <plurals name="rec_partial_count">
         <item quantity="one">Avanzas requisitos de %1$d materia</item>
         <item quantity="other">Avanzas requisitos de %1$d materias</item>
+        <item quantity="many">Avanzas requisitos de %1$d materias</item>
     </plurals>
     <string name="rec_partial_title">Si la apruebas, avanzas hacia:</string>
     <plurals name="rec_partial_progress">
         <item quantity="one">Cumplirías %1$d de %2$d requisito.</item>
         <item quantity="other">Cumplirías %1$d de %2$d requisitos.</item>
+        <item quantity="many">Cumplirías %1$d de %2$d requisitos.</item>
     </plurals>
     <string name="rec_after_approved">Quedarían aprobados:</string>
     <string name="rec_still_needed">También necesitas aprobar:</string>
     <plurals name="rec_remaining_threshold">
         <item quantity="one">Además, faltaría %1$d materia aprobada para alcanzar el mínimo.</item>
         <item quantity="other">Además, faltarían %1$d materias aprobadas para alcanzar el mínimo.</item>
+        <item quantity="many">Además, faltarían %1$d materias aprobadas para alcanzar el mínimo.</item>
     </plurals>
 </resources>

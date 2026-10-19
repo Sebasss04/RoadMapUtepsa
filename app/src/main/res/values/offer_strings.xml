@@ -1,9 +1,10 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="offer_title">Mi oferta actual</string>
     <string name="offer_subtitle">Registra las materias que SAE te ofrece.</string>
     <plurals name="offer_count">
         <item quantity="one">%1$d materia seleccionada</item>
         <item quantity="other">%1$d materias seleccionadas</item>
+        <item quantity="many">%1$d materias seleccionadas</item>
     </plurals>
     <string name="offer_saving">Guardando…</string>
     <string name="offer_save">Guardar oferta</string>
@@ -13,15 +14,16 @@
     <string name="offer_read_error">No pudimos leer tu oferta. Reintenta para conocer su estado.</string>
     <string name="offer_save_error">No pudimos guardar tu oferta</string>
     <string name="offer_save_error_detail">Tu selección sigue aquí. Revisa tu conexión y reintenta.</string>
-    <string name="offer_uncertain">El resultado está pendiente de confirmar. Al reintentar comprobaremos el servidor antes de enviar de nuevo.</string>
+    <string name="offer_uncertain">Todavía no podemos confirmar que la oferta se guardó. Al reintentar comprobaremos el resultado antes de enviarla de nuevo.</string>
     <string name="offer_conflict">La oferta cambió en otra sesión</string>
-    <string name="offer_conflict_detail">Revisa la oferta remota. Tu borrador sigue aquí. Decide qué selección conservar.</string>
+    <string name="offer_conflict_detail">La oferta cambió desde que empezaste a editar. Tu borrador sigue aquí. Revisa ambas selecciones antes de guardar.</string>
     <plurals name="offer_remote_count">
-        <item quantity="one">Oferta remota: %1$d materia</item>
-        <item quantity="other">Oferta remota: %1$d materias</item>
+        <item quantity="one">Oferta guardada: %1$d materia</item>
+        <item quantity="other">Oferta guardada: %1$d materias</item>
+        <item quantity="many">Oferta guardada: %1$d materias</item>
     </plurals>
-    <string name="offer_load_remote">Cargar oferta remota</string>
-    <string name="offer_keep_draft">Guardar mi borrador contra esta revisión</string>
+    <string name="offer_load_remote">Usar la oferta guardada</string>
+    <string name="offer_keep_draft">Guardar mi borrador</string>
     <string name="offer_search">Buscar materia o sigla</string>
     <string name="offer_select_help">Marca las materias que SAE te ofrece. Las que ya aprobaste no aparecen.</string>
     <string name="offer_all_approved">Ya aprobaste todas las materias del plan. No quedan materias para seleccionar.</string>

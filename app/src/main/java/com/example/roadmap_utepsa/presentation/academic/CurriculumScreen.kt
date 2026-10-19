@@ -1,5 +1,8 @@
 package com.example.roadmap_utepsa.presentation.academic
 
+import com.example.roadmap_utepsa.domain.academic.filterCurriculum
+
+import com.example.roadmap_utepsa.presentation.shared.text.quantityText
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,9 +25,14 @@ import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.roadmap_utepsa.presentation.shared.components.AcademicBottomBar
+import com.example.roadmap_utepsa.presentation.shared.text.durationLabel
 import com.example.roadmap_utepsa.R
-import com.example.roadmap_utepsa.domain.model.*
-import com.example.roadmap_utepsa.presentation.viewmodel.*
+import com.example.roadmap_utepsa.domain.academic.AcademicData
+import com.example.roadmap_utepsa.domain.academic.AreaMateria
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
+import com.example.roadmap_utepsa.domain.academic.Materia
+import com.example.roadmap_utepsa.presentation.history.EstadoPreparacionUi
 
 @Composable
 fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () -> Unit,
@@ -34,6 +42,8 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                      onReviewHistory: (() -> Unit)? = null, historyStatus: EstadoPreparacionUi = EstadoPreparacionUi.CONFIRMADO,
                      onReviewConflict: () -> Unit = {}, onOffer: (() -> Unit)? = null, signOutWarning: Int = R.string.academic_sign_out_detail,
                      onRecommendations: (() -> Unit)? = null, onSummary: (() -> Unit)? = null) {
+    val texts = androidx.compose.ui.platform.LocalResources.current
+
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf<String?>(null) }
     var semester by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -42,7 +52,7 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
     val ready = state as? AcademicUiState.Ready
     val saving = ready?.editor?.saving == true
     val status = if (ready != null && historyStatus !in listOf(EstadoPreparacionUi.CARGANDO, EstadoPreparacionUi.ERROR, EstadoPreparacionUi.GUARDADO_PENDIENTE) &&
-        com.example.roadmap_utepsa.domain.academic.ReglasHistorial(ready.data.materias, ready.data.prerrequisitos).validar(ready.data.estados).contradicciones.isNotEmpty())
+        ready.coherencia.contradicciones.isNotEmpty())
         EstadoPreparacionUi.REQUIERE_REVISION else historyStatus
     val statusTitle = when (status) {
         EstadoPreparacionUi.CONFIGURACION_PENDIENTE -> R.string.history_pending_title
@@ -70,7 +80,7 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
         topBar = {
             Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically) {
-                Text("RoadMap", fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.weight(1f))
+                Text(texts.getString(R.string.academic_curriculum_screen_1), fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.weight(1f))
                 TextButton(onRetry, enabled = !saving && state != AcademicUiState.Loading) { Text(stringResource(R.string.academic_refresh)) }
                 IconButton(onProfile, enabled = !saving) {
                     Icon(painterResource(R.drawable.academic_account), stringResource(R.string.academic_profile),
@@ -78,7 +88,7 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                 }
             }
         }, bottomBar = {
-            AcademicBottomBar(false, enabled = !saving, onSummary = onSummary,
+            AcademicBottomBar(1, enabled = !saving, onSummary = onSummary,
                 onCurriculum = {}, onOffer = onOffer, onRecommendations = onRecommendations)
         }) { padding ->
         LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("curriculum-list"),
@@ -97,7 +107,7 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                 }
                 AcademicUiState.SessionExpired -> item { Text(stringResource(R.string.academic_expired)) }
                 is AcademicUiState.Ready -> {
-                    item { Text(stringResource(R.string.academic_subtitle, state.data.materias.size), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 15.sp) }
+                    item { Text(quantityText(R.plurals.academic_subtitle, state.data.materias.size), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 15.sp) }
                     if (onReviewHistory != null) item {
                         Surface(color = when (status) {
                             EstadoPreparacionUi.ERROR -> MaterialTheme.colorScheme.errorContainer
@@ -145,7 +155,7 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             (1..9).forEach { number -> FilterChip(semester == number, { semester = if (semester == number) null else number },
                                 shape = RoundedCornerShape(16.dp), border = null, colors = chipColors,
-                                modifier = Modifier.weight(1f).semantics { contentDescription = "Semestre $number" },
+                                modifier = Modifier.weight(1f).semantics { contentDescription = texts.getString(R.string.academic_semester, number) },
                                 label = { Text("$number", fontSize = 11.sp) }) }
                         }
                     }
@@ -203,12 +213,14 @@ private fun areaLabel(area: AreaMateria) = when (area) {
     Text("$mark ${stringResource(stateLabel(state))}", color = color, fontSize = 12.sp)
 }
 @Composable private fun requirementSummary(materia: Materia, data: AcademicData): String {
+    val texts = androidx.compose.ui.platform.LocalResources.current
+
     val byId = data.materias.associateBy { it.id }
     val codes = data.prerrequisitos.filter { it.idObjetivo == materia.id }.map { byId.getValue(it.idRequisito).nombre }.sorted()
     return when {
-        materia.minAprobadas > 0 -> stringResource(R.string.academic_minimum, materia.minAprobadas)
+        materia.minAprobadas > 0 -> quantityText(R.plurals.academic_minimum, materia.minAprobadas)
         codes.isEmpty() -> stringResource(R.string.academic_no_requirements)
-        else -> stringResource(R.string.academic_requirements, codes.joinToString(" y "))
+        else -> stringResource(R.string.academic_requirements, codes.joinToString(texts.getString(R.string.academic_curriculum_screen_2)))
     }
 }
 
@@ -261,7 +273,7 @@ private fun areaLabel(area: AreaMateria) = when (area) {
                         Text("${required.nombre} · ${required.codigo}", fontSize = 13.sp)
                         StateLabel(ready.data.estados[required.id] ?: EstadoAcademico.PENDIENTE)
                     }
-                    if (result.aprobadasFaltantes > 0) Text(stringResource(R.string.academic_missing_count, result.aprobadasFaltantes), fontSize = 13.sp)
+                    if (result.aprobadasFaltantes > 0) Text(quantityText(R.plurals.academic_missing_count, result.aprobadasFaltantes), fontSize = 13.sp)
                 }
             }
             if (!result.habilitada) Text(stringResource(R.string.academic_history_hint), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -275,7 +287,7 @@ private fun areaLabel(area: AreaMateria) = when (area) {
                 }
             }
             if (materia.minAprobadas > 0 && result.habilitada && editor.selected == EstadoAcademico.EN_CURSO) {
-                Text(stringResource(R.string.history_threshold_met, ready.data.estados.count { (id, state) ->
+                Text(quantityText(R.plurals.history_threshold_met, ready.data.estados.count { (id, state) ->
                     id != materia.id && state == EstadoAcademico.APROBADA
                 }), fontSize = 14.sp)
             }
@@ -315,11 +327,4 @@ private fun areaLabel(area: AreaMateria) = when (area) {
         title = { Text(stringResource(R.string.academic_discard_title)) }, text = { Text(stringResource(R.string.academic_discard_detail)) },
         confirmButton = { TextButton({ confirmDiscard = false; onClose() }) { Text(stringResource(R.string.profile_discard_confirm)) } },
         dismissButton = { TextButton({ confirmDiscard = false }) { Text(stringResource(R.string.profile_keep_editing)) } })
-}
-
-internal fun durationLabel(materia: Materia): Int = when (materia.duracion) {
-    DuracionMateria.MODULAR -> R.string.subject_modular
-    DuracionMateria.BIMODULAR -> R.string.subject_bimodular
-    DuracionMateria.ESPECIAL -> R.string.subject_special
-    null -> R.string.subject_duration_unavailable
 }

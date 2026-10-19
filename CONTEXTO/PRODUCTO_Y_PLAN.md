@@ -1,63 +1,29 @@
-# RoadMap UTEPSA: producto y plan
+# RoadMap UTEPSA: producto y reglas
 
-## Integración de Resumen en main — 18/10/2026
-
-Esta entrega incorpora T1 — Resumen académico junto con Malla, Historial,
-Oferta SAE y Para ti. El usuario autorizó expresamente integrar su rama en main.
-Implementación validada: `41ef94a`; la actualización posterior solo modifica
-estas guías para registrar la integración. Se preservan los avances previos de
-Alexandre y los contratos de datos, UID, revisión, CAS, diario y recuperación.
-Validación: 258 JVM y 59 casos UI sintéticos distintos correctos; compilación
-correcta; lint 0 errores/39 advertencias. Detalles y límites en VALIDACION.md.
-No hay nuevos cambios funcionales, despliegues Firebase ni pruebas personales.
-Las secciones siguientes conservan el historial de publicación y validación;
-las antiguas esperas de autorización para integrar main quedan sustituidas.
-
-
-## Publicación de rama autorizada — 18/10/2026
-
-El usuario autorizó publicar la entrega revisada en `audit/t1-integracion-final`.
-Esta autorización comprende commit y push normales de los 25 archivos auditados.
-La integración en main queda para una aprobación posterior. Las secciones siguientes
-registran la validación local previa: 258 JVM y 59 UI sintéticas correctas,
-compilación correcta y lint 0 errores/39 advertencias. No se vuelve a desplegar
-Firebase ni se modifican datos personales al publicar esta rama.
-
-
-## Auditoría final y corrección local — 18/10/2026
-
-Estado vigente: rama `audit/t1-integracion-final`, base `30685a6`, sin commit ni publicación.
-Resumen conserva GUARDADO_PENDIENTE aunque haya contradicciones; CONFIRMADO incoherente
-sigue mostrando revisión. Regresión JVM comprobada antes (falló) y después (pasó).
-Validación nueva: **258 JVM y 59 UI sintéticas distintas correctas**; APK principal y
-AndroidTest compiladas; lint **0 errores/39 advertencias**. Detalles, intentos y límites
-en VALIDACION.md. Repositorios, CAS, Historial, Oferta, motor y contratos preservados.
-Solo se corrigió producción en ResumenUiState; AcademicFlowTest ajusta teclado/scroll
-sin retirar aserciones. Sin Firebase productivo ni cuentas reales. Publicar requiere
-una autorización nueva expresa. Los apartados de integración siguientes son antecedentes.
-
-
-Documento vigente, actualizado el 18/10/2026 para Para ti (T3/T4). El estado de implementación y las pruebas están en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md). Los documentos de ARCHIVO son registros históricos: sus pendientes, pausas y autorizaciones describen sesiones anteriores.
+Vigente al 19/10/2026, hora de Bolivia. Este documento define el alcance y los
+contratos que deben conservarse. Estado de implementación en
+[ESTADO_ACTUAL.md](ESTADO_ACTUAL.md); tareas en
+[TRABAJO_EN_EQUIPO.md](TRABAJO_EN_EQUIPO.md).
 
 ## Propósito y alcance
 
 Ayudar a estudiantes de Ingeniería de Sistemas de UTEPSA a registrar su situación académica, introducir manualmente su oferta SAE y elegir materias mediante recomendaciones explicadas. La aplicación orienta; no inscribe ni sincroniza con la universidad.
 
-Primera versión: una carrera y un plan, RM 615/2016, 50 materias, 9 semestres curriculares y 28 relaciones de prerrequisito según el [pénsum SAE del 17/10/2026](Pensum%20Ingenieria%20de%20Sistemas.pdf). La [malla anterior](REFERENCIAS/ing.-de-sistemas-mallas-pensum-2.pdf) conserva evidencia de nombres completos, áreas y siglas recortadas en la impresión SAE. El catálogo técnico validado está en `../firebase/catalogo/sistemas-rm-615-2016.json`; Android lee Firestore, sin catálogo alternativo de producción dentro de la APK. Catálogo SAE v2 publicado y relectura verificada el 17/10/2026; se conservan las identidades y estados personales. La evidencia de despliegue está en ESTADO_ACTUAL.md.
+Primera versión: una carrera y un plan, RM 615/2016, 50 materias, 9 semestres curriculares y 28 relaciones de prerrequisito según el [pénsum SAE del 17/10/2026](Pensum%20Ingenieria%20de%20Sistemas.pdf). La [malla anterior](REFERENCIAS/ing.-de-sistemas-mallas-pensum-2.pdf) conserva evidencia de nombres completos, áreas y siglas recortadas en la impresión SAE. El catálogo técnico validado está en `../firebase/catalogo/sistemas-rm-615-2016.json`; Android lee Firestore, sin catálogo alternativo de producción dentro de la APK. Catálogo SAE v2 publicado y relectura verificada el 17/10/2026; se conservan las identidades y estados personales. La evidencia de despliegue está en [VALIDACION.md](VALIDACION.md).
 
 ## Funciones y decisiones que deben conservarse
 
 | Función | Requisito |
 |---|---|
-| Acceso | Google y, en una entrega futura, correo/contraseña, registro y recuperación. |
+| Acceso | Google y correo/contraseña, registro con verificación obligatoria y recuperación neutral. Integrado en main; reglas y proveedor de correo publicados y releídos con autorización el 19/10. Escenarios manuales acordados aceptados por el estudiante; evidencia en VALIDACION.md. |
 | Identidad | UID Firebase como identidad estable; vincular proveedores debe conservarlo, sin fusionar cuentas por coincidencia de correo. |
 | Perfil | Nombres, apellidos, carrera y plan asignados. Alta y edición comparten formulario. Perfil completo antes del contenido académico. Error de lectura no equivale a perfil ausente. |
 | Historial | Primera preparación: bienvenida, aprobadas, en curso, revisión y confirmación; permite configurar después. Accesos posteriores: consulta → edición precargada → diferencias → guardar/cancelar. Consultar o cancelar nunca pospone una confirmación anterior. |
 | Malla | Nombre principal; sigla secundaria; clasificación Modular/Bimodular/Duración especial, semestre, área, requisitos y estado. Búsqueda por nombre/sigla sin distinguir tildes o mayúsculas, filtros y edición. Semestre curricular no determina habilitación. |
-| Avance | Conteos por estado y porcentaje `aprobadas / 50 × 100`, calculados. En curso no suma como aprobada. Resumen está implementado e integrado en esta copia local; usa el AcademicViewModel existente. |
+| Avance | Conteos por estado y porcentaje `aprobadas / 50 × 100`, calculados. En curso no suma como aprobada. Resumen está publicado en main (`0192056`); usa el AcademicViewModel existente. |
 | Oferta SAE | Una sola oferta actual editable por cuenta. Selección manual por nombre/sigla; guardar reemplaza la selección. Distinguir ausente de guardada vacía. Sin periodos ni horarios. |
 | Recomendaciones | Primero pendientes anteriores candidatas; luego desbloqueos completos y avances parciales. Principal, secundaria con beneficio y opcionales sin favorita artificial. Cálculo reproducible descrito abajo. |
-| Cuenta | Edición de perfil, proveedores y biometría opcional. Pantalla completa futura. Cerrar sesión retira contenido privado. |
+| Cuenta | Edición de perfil, proveedores y biometría opcional. Pantalla integrada y escenarios manuales acordados aceptados. Cerrar sesión retira contenido privado. |
 | Biometría | Opcional por cuenta/dispositivo; desbloquea una sesión existente con el prompt Android. Permitir reintentar o cerrar sesión. No sustituye Firebase Auth. |
 
 Los datos académicos son autodeclarados. No registrar notas, intentos ni una lista paralela de aprobadas. No inventar matrícula, teléfono, semestre personal obligatorio ni validación institucional.
@@ -74,7 +40,7 @@ Los datos académicos son autodeclarados. No registrar notas, intentos ni una li
 
 ## Oferta actual SAE: contrato T2
 
-Implementación en `feat/oferta-actual-sae`, independiente de T1. `OfertaRepository`,
+Contrato vigente de Oferta, integrado con las otras pantallas académicas. `OfertaRepository`,
 `FirestoreOfertaRepository`, `OfertaViewModel` y `OfertaScreen` tienen archivos propios;
 `AcademicData` y `AcademicRepository` conservan sus contratos. Se reutiliza el catálogo
 remoto validado por el repositorio académico, sin un segundo catálogo en producción.
@@ -118,29 +84,16 @@ remoto validado por el repositorio académico, sin un segundo catálogo en produ
   Lista permitida de 50 UUID, verificada contra JSON técnico por `offer-catalog.test.cjs`;
   es una validación de identidades del servidor, no contenido académico en la APK.
 
-Las reglas de Oferta son un prototipo validado en demo que debe revisar el equipo
-antes de una distribución amplia. Tras el error reportado en el teléfono, el
-estudiante autorizó su publicación: ya están activas en producción, con relectura
-remota verificada y sin cambios a documentos personales. Ver VALIDACION.md.
-Publicar código por sí solo no despliega reglas, migra datos ni instala aplicaciones.
+Las reglas de Oferta ya están publicadas según la evidencia de VALIDACION.md; requieren revisión antes de distribución amplia. No repetir despliegues al actualizar código.
 
-## Para ti — alcance vigente del 18/10/2026
+## Para ti: reglas del recomendador
 
-Motor y pantalla corresponden al autor/Codex en `feat/para-ti`, por asignación
-expresa del estudiante. Sustituye el plan anterior y la propuesta de T3 para el
-compañero; él conserva T1 (Resumen). Resumen no bloquea esta entrega.
+Motor y pantalla implementados. El reparto y los siguientes trabajos se mantienen en TRABAJO_EN_EQUIPO.md.
 
-### Diseño terminado antes de Compose
+### Referencia visual
 
-Se actualizó la sección existente de [Recomendaciones](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=11-295),
-con 13 estados editables revisados visualmente: principal, detalle, oferta ausente,
-oferta vacía, ninguna candidata, error, carga, pendientes anteriores, alternativa
-disponible, historial pendiente, incoherente, recuperación pendiente y detalle
-con cero desbloqueos. Roboto, colores, botones e iconos proceden del diseño existente.
-Los datos de las tarjetas están identificados como ejemplos ilustrativos.
-[Evidencia conjunta](DISENOS/08_PARA_TI_ESTADOS_20261018.png).
-Nodos nuevos: prioridad `63:800`, alternativa `63:869`, historial `63:938`,
-incoherencia `63:988`, recuperación `63:1038`, detalle cero `65:811`.
+Diseños, nodos y exportaciones en [el índice visual](DISENOS/INDICE_Y_ESPECIFICACIONES.md).
+Las pruebas y sus límites se registran únicamente en [VALIDACION.md](VALIDACION.md).
 
 ### Cálculo y datos
 
@@ -179,7 +132,7 @@ incoherencia `63:988`, recuperación `63:1038`, detalle cero `65:811`.
 
 ### Pantalla y navegación
 
-Revisión posterior del 18/10: principal verde (#EAF5EF/#21664A), secundaria azul
+Jerarquía visual: principal verde (#EAF5EF/#21664A), secundaria azul
 (#EAF2FF/#244B87), opcionales gris (#F7F8FA/#20232B), siempre con etiquetas.
 Las tarjetas muestran nombre, sigla/duración/semestre, motivo breve y «Ver detalle».
 Los requisitos y el orden quedan en el panel; los pendientes anteriores se despliegan
@@ -194,18 +147,7 @@ revisar Historial, visitar Perfil y cerrar sesión con el aviso de borrador de O
 Oferta conserva ViewModel, búsqueda, borrador y revisión esperada al navegar.
 Solo la selección guardada participa en el cálculo. Entrar de nuevo o regresar de
 Perfil vuelve a consultar; Historial y Malla mantienen sus flujos existentes.
-T1 ya está conectado localmente a las cuatro pantallas sobre main `30685a6`, sin commit; no modifica el motor ni la lectura estable.
-
-### Verificación de la entrega inicial
-
-Los ajustes posteriores de avances parciales, categorías y contenido tienen su
-propia sección vigente en VALIDACION.md. Los siguientes conteos corresponden a
-la entrega inicial, antes de esas correcciones.
-
-Diseño terminado y código implementado. Compilación APK principal/androidTest,
-222 JVM (23 nuevas), 13 UI seleccionadas (4 nuevas y 9 de Oferta) y 1 SDK demo
-correctas. Lint: cero errores y 39 advertencias. Revisar evidencia y límites del
-AVD en VALIDACION.md. No se requieren despliegues de reglas, migraciones ni datos personales.
+T1 está publicado en main (`0192056`) y conectado a las cuatro pantallas; no modifica el motor ni la lectura estable.
 
 ## Bimodulares y límites
 
@@ -224,15 +166,80 @@ no se suman a las 50 materias obligatorias. No contactar a SAE por iniciativa pr
 
 Fuera de v1: otras carreras/planes/roles, horarios completos, historial de notas/intentos/ofertas, integración automática con SAE, scraping, importación de fotos o audio, Storage, administración institucional e IA generativa en el recomendador. Sin Room, Supabase ni capas genéricas adicionales sin necesidad.
 
-## Diseño y orden de continuación
+## Diseño y siguiente etapa
 
-[Archivo Figma de interfaces](https://www.figma.com/design/YCcVIGVjbSLOKygieTbEOt?node-id=17-482). Exportaciones originales en [DISENOS](DISENOS/). Sus informes contienen estados históricos; no prueban qué está implementado hoy. Nuevas pantallas o cambios visuales sustanciales deben partir de los diseños y del acuerdo con el estudiante. Las correcciones de lógica no requieren rediseñar pantallas.
+Las nuevas pantallas y los cambios visuales sustanciales deben partir del Figma
+y del acuerdo con el estudiante. Las correcciones de lógica no requieren rediseño.
+Consultar el [índice de diseños](DISENOS/INDICE_Y_ESPECIFICACIONES.md).
 
-El PR #2 ya fue integrado en main mediante `30685a6`; no volver a fusionarlo.
-La copia local incorpora T1 sin confirmar y requiere su validación de integración.
-Registro del cierre anterior: revisar el [PR #2 de Para ti](https://github.com/Sebasss04/RoadMapUtepsa/pull/2),
-publicado por autorización del 18/10/2026, e integrar Resumen cuando el compañero lo entregue, preservando
-Oferta y Para ti. Cuenta/proveedores/correo/biometría requiere una petición propia
-del estudiante. La clasificación de duración ya cuenta con fuente SAE; verificar
-el estado de publicación en ESTADO_ACTUAL.md. No interpretar esta lista como
-autorización para implementar todas las unidades en una revisión de errores.
+La reorganización entregada conserva MVVM y separación práctica por función
+en un único módulo, con revisión de todos los textos visibles.
+Conservar Cuenta, avisos, reglas académicas, algoritmo, esquema y concurrencia.
+Dominio sin Android/Firebase/presentación; datos sin presentación; presentación sin
+Firebase ni implementaciones de datos. Contratos, modelos y errores propios en dominio;
+estados/pantallas/ViewModels juntos por función. Mapa vigente en el README.
+No añadir dependencias ni inyección por framework sin necesidad acordada. El
+estudiante autorizó integrar y publicar esta entrega en main el 19/10; esa
+autorización no incluye rediseños, despliegues ni instalaciones. La evidencia
+pendiente nunca se considera satisfecha por compilar; resultados en VALIDACION.
+
+Los textos de interfaz se resuelven en presentación desde recursos por función.
+Dominio devuelve categorías de validación; adaptadores convierten fallos de acceso
+en categorías propias y conservan causas para diagnóstico sin secretos. Cancelación
+de corrutina se propaga. No mostrar excepciones crudas ni atribuir todo a la conexión.
+El guardado incierto conserva sus acciones de relectura y no anuncia éxito.
+EMAIL_EXISTS al vincular usa una explicación neutral y exige actualizar los métodos
+antes de reintentar; no demuestra otra identidad.
+
+## Contrato de cuenta y protección de sesión
+
+- Entrada: autenticación → verificación requerida → desbloqueo local → Perfil →
+  preparación académica. Contraseña no verificada no puede leer/escribir datos
+  privados; las reglas locales lo exigen también en servidor.
+- UID estable; refrescar verificación o proveedores no cambia versión de sesión.
+  Cambiar identidad o cerrar sesión sí la cambia; descartar respuestas anteriores.
+- Registro y añadir contraseña comparten correo válido, coincidencia y mínimo de
+  ocho caracteres. Firebase valida además su política configurada. No persistir
+  contraseñas ni incluirlas en logs; formularios secretos únicamente en memoria.
+- Verificación: envío separado del registro, reenvío máximo una vez por minuto,
+  recarga de usuario y token forzado. Enviar/abrir enlace no abre por sí solo Perfil.
+- Recuperación mediante enlace web Firebase y respuesta neutral, también ante
+  correo inexistente. Ayuda para quien solo usa Google.
+- Vincular requiere reautenticación previa con un método ya vinculado. Google
+  coincide con el correo actual; linkWithCredential conserva UID e historial.
+  Un conflicto no fusiona ni copia cuentas. Releer proveedores después de éxito
+  o incertidumbre; impedir reenvío si no se pudo reconciliar.
+- Cuenta conserva origen y borradores. Perfil guardado/cancelado vuelve a Cuenta.
+  Cerrar sesión confirma e informa cambios sin guardar cuando corresponda.
+- Biometría opcional fuerte, sin PIN. Solo éxito activa preferencia por UID y
+  dispositivo, DataStore excluido de copias/transferencia. Desbloqueo solo en
+  memoria; login interactivo abre esa entrada y reinicio posterior exige prompt.
+- Segundo plano bloquea sin desmontar navegación ni cancelar/repetir escrituras.
+  Rotación, diálogos y selector Google coordinado no duplican solicitudes.
+  Modal bloquea interacción/accesibilidad y FLAG_SECURE impide recientes privados.
+- Fuera de esta entrega: eliminación, cambio de correo, desvinculación y fusión.
+
+## Avisos locales de pendientes: contrato del 19/10/2026
+
+La nueva solicitud sustituye el saludo automático por una opción inicialmente
+apagada en Cuenta, debajo de biometría: «Avisos de pendientes», «Recibe un aviso
+para completar tu historial o registrar tu oferta.». Diseño existente actualizado
+primero en Figma (`12:315`, tarjeta `77:855`); exportación en
+DISENOS/09_CUENTA_AVISOS_20261019.png.
+
+Preferencia y deduplicación por UID/dispositivo en DataStore, excluidas de copia
+y transferencia. Permiso solicitado solo tras activación explícita y explicación;
+denegarlo no impide usar la app ni provoca solicitudes automáticas. Canal
+silencioso separado de FCM, un máximo de un aviso activo y mensajes sin datos
+personales. Historial sin confirmar tiene prioridad; requiere ausencia de operación
+activa. Con historial confirmado y Oferta ausente corresponde registrar Oferta;
+una Oferta guardada vacía resuelve ese pendiente.
+
+Evaluar con lectura estable exitosa al entrar/regresar al contenido académico,
+tras autenticación, verificación, desbloqueo y perfil completo, sin interrumpir
+la tarea que se está completando. Un error no prueba ausencia. Avisar una vez por
+pendiente; rearmar únicamente después de observar resolución y reaparición.
+Apagar cancela el visible conservando deduplicación. Cerrar/cambiar sesión retira
+el aviso anterior. La ruta interna incluye UID esperado y destino Historial/Oferta,
+respeta las puertas de entrada y conserva borradores. Sin colecciones, tareas
+periódicas, backend, despliegues ni migraciones nuevas; FCM conserva su recepción.

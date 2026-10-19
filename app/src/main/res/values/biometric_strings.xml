@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="biometric_not_recognized">No se reconoció la biometría. Inténtalo de nuevo.</string>
+    <string name="biometric_cancelled">Desbloqueo cancelado. Puedes reintentar o cerrar sesión.</string>
+    <string name="biometric_not_enrolled">Registra una biometría fuerte en los ajustes del dispositivo.</string>
+    <string name="biometric_no_hardware">Este dispositivo no dispone de biometría compatible.</string>
+    <string name="biometric_sensor_unavailable">El sensor biométrico no está disponible ahora. Reintenta.</string>
+    <string name="biometric_security_update">Android requiere una actualización de seguridad para usar esta biometría.</string>
+    <string name="biometric_unsupported">Este dispositivo no admite el desbloqueo con biometría fuerte.</string>
+    <string name="biometric_unavailable">La biometría fuerte no está disponible ahora. Reintenta o cierra sesión.</string>
+    <string name="biometric_enable_title">Activar desbloqueo biométrico</string>
+    <string name="biometric_unlock_title">Desbloquea RoadMap</string>
+    <string name="biometric_confirm_subtitle">Confirma que eres tú para continuar</string>
+    <string name="biometric_cancel">Cancelar</string>
+</resources>

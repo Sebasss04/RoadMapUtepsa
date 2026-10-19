@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
         android:name=".RoadMapApplication"
@@ -15,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoadMap_Utepsa">
         <service
-            android:name=".services.RoadMapMessagingService"
+            android:name=".platform.notification.RoadMapMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -29,8 +30,8 @@
             android:resource="@drawable/ic_notification" />
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTop"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.RoadMap_Utepsa"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

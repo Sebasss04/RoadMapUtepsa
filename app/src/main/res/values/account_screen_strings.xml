@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_account_screen_1">Tu cuenta</string>
+    <string name="account_account_screen_2">Editar perfil</string>
+    <string name="account_account_screen_3">Métodos de acceso</string>
+    <string name="account_account_screen_5">Vincular Google</string>
+    <string name="account_account_screen_6">Añadir contraseña</string>
+    <string name="account_account_screen_7">Recuperar contraseña</string>
+    <string name="account_account_screen_8">Actualizar métodos</string>
+    <string name="account_account_screen_9">Actualiza los métodos para confirmar el resultado antes de reintentar.</string>
+    <string name="account_account_screen_10">Desbloqueo biométrico</string>
+    <string name="account_account_screen_11">Desactivado</string>
+    <string name="account_account_screen_12">Opcional. Protege esta sesión en este dispositivo. Puedes seguir usando tu cuenta sin activarlo.</string>
+    <string name="account_account_screen_13">Cerrar sesión</string>
+    <string name="account_account_screen_14">Contraseña actual</string>
+    <string name="account_account_screen_15">Primero confirmarás con tu cuenta Google.</string>
+    <string name="account_account_screen_16">Nueva contraseña</string>
+    <string name="account_account_screen_17">Confirmar contraseña</string>
+    <string name="account_account_screen_18">Usa al menos ocho caracteres. Si la contraseña no se acepta, prueba con una más segura.</string>
+    <string name="account_account_screen_19">Confirmar acceso y vincular</string>
+    <string name="account_account_screen_20">Volver</string>
+    <string name="account_reminder_preference_21">Reintentar ajuste</string>
+    <string name="account_reminder_preference_22">Abrir ajustes de avisos</string>
+    <string name="account_reminder_preference_23">Activar avisos</string>
+    <string name="account_reminder_preference_24">Ahora no</string>
+    <string name="account_password_active">Correo y contraseña · Activo</string>
+    <string name="account_password_inactive">Correo y contraseña · Sin configurar</string>
+    <string name="account_google_active">Google · Vinculado</string>
+    <string name="account_google_inactive">Google · Sin vincular</string>
+    <string name="account_enabled">Activado</string>
+    <string name="account_confirm_current_access">Confirma tu acceso actual antes de añadir otro método para %1$s.</string>
+</resources>

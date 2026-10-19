@@ -21,7 +21,7 @@ if (-not $SkipInstall) {
         if ($LASTEXITCODE -ne 0) { throw "Install failed: $offerApk" }
     }
 }
-$offerClass = if ($SdkDemo) { 'com.example.roadmap_utepsa.OfertaSdkEmulatorTest' } else { 'com.example.roadmap_utepsa.OfertaFlowTest' }
+$offerClass = if ($SdkDemo) { 'com.example.roadmap_utepsa.offer.OfertaSdkEmulatorTest' } else { 'com.example.roadmap_utepsa.offer.OfertaFlowTest' }
 $offerArguments = @('-s',$Serial,'shell','am','instrument','-w','-r','-e','class',$offerClass)
 if ($SdkDemo) { $offerArguments += @('-e','offer_sdk_emulator','demo-roadmap-utepsa:8089:9099') }
 $offerArguments += 'com.example.roadmap_utepsa.test/androidx.test.runner.AndroidJUnitRunner'

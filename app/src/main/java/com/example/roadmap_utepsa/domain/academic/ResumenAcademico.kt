@@ -1,7 +1,7 @@
 package com.example.roadmap_utepsa.domain.academic
 
-import com.example.roadmap_utepsa.domain.model.AcademicData
-import com.example.roadmap_utepsa.domain.model.EstadoAcademico
+import com.example.roadmap_utepsa.domain.academic.AcademicData
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
 
 /** Valores derivados de una lectura completa; nunca persiste otro historial. */
 data class ResumenAcademico(val aprobadas: Int, val enCurso: Int, val pendientes: Int) {

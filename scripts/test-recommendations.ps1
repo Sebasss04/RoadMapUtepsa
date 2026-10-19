@@ -21,8 +21,8 @@ if (-not $SkipInstall) {
         if ($LASTEXITCODE -ne 0) { throw "Install failed: $recApk" }
     }
 }
-$recClass = if ($SdkDemo) { 'com.example.roadmap_utepsa.RecomendacionesSdkEmulatorTest' }
-    else { 'com.example.roadmap_utepsa.RecomendacionesFlowTest,com.example.roadmap_utepsa.OfertaFlowTest' }
+$recClass = if ($SdkDemo) { 'com.example.roadmap_utepsa.recommendation.RecomendacionesSdkEmulatorTest' }
+    else { 'com.example.roadmap_utepsa.recommendation.RecomendacionesFlowTest,com.example.roadmap_utepsa.offer.OfertaFlowTest' }
 $recArgs = @('-s', $Serial, 'shell', 'am', 'instrument', '-w', '-r', '-e', 'class', $recClass)
 if ($SdkDemo) { $recArgs += @('-e', 'recommendations_sdk_emulator', 'demo-roadmap-utepsa:8089:9099') }
 $recArgs += 'com.example.roadmap_utepsa.test/androidx.test.runner.AndroidJUnitRunner'

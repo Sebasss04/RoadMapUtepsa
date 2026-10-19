@@ -24,9 +24,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.roadmap_utepsa.R
-import com.example.roadmap_utepsa.domain.model.ProfileRegistration
-import com.example.roadmap_utepsa.presentation.viewmodel.ProfileLoad
-import com.example.roadmap_utepsa.presentation.viewmodel.ProfileUiState
+import com.example.roadmap_utepsa.domain.profile.ProfileRegistration
+import com.example.roadmap_utepsa.presentation.profile.ProfileLoad
+import com.example.roadmap_utepsa.presentation.profile.ProfileUiState
 
 @Composable
 fun ProfileScreen(
@@ -37,7 +37,8 @@ fun ProfileScreen(
     onRetryLoad: () -> Unit,
     onDiscard: () -> Unit,
     onSignOut: () -> Unit,
-    onReturn: (() -> Unit)? = null
+    onReturn: (() -> Unit)? = null,
+    returnLabel: String? = null
 ) {
     val focus = LocalFocusManager.current
     var confirmDiscard by remember { mutableStateOf(false) }
@@ -64,7 +65,8 @@ fun ProfileScreen(
                 Icon(painterResource(R.drawable.profile_back), contentDescription = null, Modifier.size(24.dp),
                     tint = MaterialTheme.colorScheme.onSurface)
                 Spacer(Modifier.width(10.dp))
-                Text(stringResource(if (onReturn != null) R.string.academic_return else R.string.profile_sign_out), color = MaterialTheme.colorScheme.onSurface)
+                Text(if (onReturn != null && returnLabel != null) returnLabel else
+                    stringResource(if (onReturn != null) R.string.academic_return else R.string.profile_sign_out), color = MaterialTheme.colorScheme.onSurface)
             }
             Text(stringResource(if (completing) R.string.profile_title_create else R.string.profile_title_edit),
                 fontSize = 30.sp, lineHeight = 42.sp, fontWeight = FontWeight.Bold)

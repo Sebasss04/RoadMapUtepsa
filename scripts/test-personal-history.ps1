@@ -32,7 +32,7 @@ $personalPackage = 'com.example.roadmap_utepsa'
 $personalRunner = 'com.example.roadmap_utepsa.test/androidx.test.runner.AndroidJUnitRunner'
 $personalResults = @()
 function Invoke-PersonalStage([string]$Method) {
-    $personalClass = "com.example.roadmap_utepsa.PersonalAcademicPersistenceTest#$Method"
+    $personalClass = "com.example.roadmap_utepsa.academic.PersonalAcademicPersistenceTest#$Method"
     $personalOutput = & $AdbPath -s $Serial shell am instrument -w -r -e class $personalClass -e personal_project $ExpectedProject -e personal_subject $Subject -e personal_permission $Permission -e personal_run $personalRunId $personalRunner 2>&1
     $personalExit = $LASTEXITCODE
     $personalLog = $personalOutput -join "`n"

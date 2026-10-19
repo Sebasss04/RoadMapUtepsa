@@ -1,8 +1,8 @@
 package com.example.roadmap_utepsa.domain.academic
 
-import com.example.roadmap_utepsa.domain.model.EstadoAcademico
-import com.example.roadmap_utepsa.domain.model.Materia
-import com.example.roadmap_utepsa.domain.model.Prerrequisito
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
+import com.example.roadmap_utepsa.domain.academic.Materia
+import com.example.roadmap_utepsa.domain.academic.Prerrequisito
 
 /**
  * Evalúa un catálogo completo de un solo plan, sin Android ni persistencia.

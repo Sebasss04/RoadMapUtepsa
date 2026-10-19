@@ -1,6 +1,6 @@
 package com.example.roadmap_utepsa.domain.history
 
-import com.example.roadmap_utepsa.domain.model.EstadoAcademico
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
 import java.security.MessageDigest
 
 /** Identifica un conjunto para reconciliar una operación; no sustituye los estados. */

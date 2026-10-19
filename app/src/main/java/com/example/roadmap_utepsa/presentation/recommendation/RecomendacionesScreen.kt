@@ -17,10 +17,10 @@ import androidx.compose.ui.res.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
+import com.example.roadmap_utepsa.presentation.shared.components.AcademicBottomBar
 import com.example.roadmap_utepsa.R
-import com.example.roadmap_utepsa.domain.recommendation.*
-import com.example.roadmap_utepsa.presentation.academic.durationLabel
-import com.example.roadmap_utepsa.presentation.viewmodel.*
+import com.example.roadmap_utepsa.domain.recommendation.Recomendacion
+import com.example.roadmap_utepsa.presentation.shared.text.durationLabel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,6 +28,8 @@ fun RecomendacionesScreen(state: RecomendacionesUiState, onRetry: () -> Unit,
     onMalla: () -> Unit, onOffer: () -> Unit, onHistory: () -> Unit,
     onProfile: () -> Unit, onSignOut: () -> Unit,
     signOutWarning: Int = R.string.academic_sign_out_detail, onSummary: (() -> Unit)? = null) {
+    val texts = androidx.compose.ui.platform.LocalResources.current
+
     var detail by remember(state) { mutableStateOf<Recomendacion?>(null) }
     var showPrevious by remember(state) { mutableStateOf(false) }
     var signOut by remember { mutableStateOf(false) }
@@ -35,19 +37,11 @@ fun RecomendacionesScreen(state: RecomendacionesUiState, onRetry: () -> Unit,
     Scaffold(Modifier.fillMaxSize().safeDrawingPadding(), contentWindowInsets = WindowInsets(0),
         topBar = {
             Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).padding(horizontal = 24.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text("RoadMap", Modifier.weight(1f), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(texts.getString(R.string.recommendation_recomendaciones_screen_1), Modifier.weight(1f), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 IconButton(onProfile) { Icon(painterResource(R.drawable.academic_account), stringResource(R.string.academic_profile), Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary) }
             }
         }, bottomBar = {
-            NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
-                val labels = listOf(R.string.academic_summary, R.string.academic_curriculum, R.string.academic_offer, R.string.academic_recommendations)
-                val icons = listOf(R.drawable.academic_summary, R.drawable.academic_curriculum, R.drawable.academic_offer, R.drawable.academic_recommendations)
-                labels.forEachIndexed { index, label -> NavigationBarItem(selected = index == 3,
-                    onClick = { if (index == 0) onSummary?.invoke() else if (index == 1) onMalla() else if (index == 2) onOffer() }, enabled = index != 0 || onSummary != null,
-                    colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                        selectedIconColor = MaterialTheme.colorScheme.primary, selectedTextColor = MaterialTheme.colorScheme.primary),
-                    icon = { Icon(painterResource(icons[index]), null, Modifier.size(21.dp)) }, label = { Text(stringResource(label), fontSize = 11.sp) }) }
-            }
+            AcademicBottomBar(3, onSummary = onSummary, onCurriculum = onMalla, onOffer = onOffer, onRecommendations = {}, compact = true)
         }) { padding ->
         LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("recommendations-list"), contentPadding = PaddingValues(24.dp, 16.dp, 24.dp, 24.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
             item { Text(stringResource(R.string.rec_title), fontSize = 30.sp, lineHeight = 42.sp, fontWeight = FontWeight.Bold) }

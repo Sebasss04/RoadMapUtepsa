@@ -35,7 +35,7 @@ android {
         compose = true
     }
     // Solo la APK de pruebas incluye el catálogo como fixture; producción lee Firestore.
-    sourceSets.getByName("androidTest").assets.srcDir("../firebase/catalogo")
+    sourceSets.getByName("androidTest").assets.directories.add("../firebase/catalogo")
 }
 
 dependencies {
