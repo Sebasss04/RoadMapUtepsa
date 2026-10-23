@@ -57,6 +57,5 @@ La arquitectura usa MVVM en un módulo Android. `AppNavigation` organiza acceso 
 - [Reglas académicas y persistencia](docs/REGLAS_ACADEMICAS.md).
 - [Validación y ejecución de pruebas](docs/VALIDACION.md).
 - [Contrato del catálogo SAE](firebase/catalogo/README.md).
-- [Referencias visuales](CONTEXTO/DISENOS/INDICE_Y_ESPECIFICACIONES.md), conservadas como evidencia del diseño.
 
-Las referencias visuales son históricas y pueden diferir de los últimos ajustes. El comportamiento implementado se consulta en el código. Las guías internas de coordinación se retiraron del contenido versionado al cerrar el MVP.
+El comportamiento implementado se consulta en el código. Las guías internas de coordinación se retiraron del contenido versionado al cerrar el MVP.
