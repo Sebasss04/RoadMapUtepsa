@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.roadmap_utepsa.presentation.auth.AuthViewModel
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import android.view.WindowManager
 import com.example.roadmap_utepsa.presentation.session.SessionLock
 import kotlinx.coroutines.launch
 import androidx.activity.compose.setContent
@@ -70,12 +69,6 @@ class MainActivity : FragmentActivity() {
             authViewModel.state.collect {
                 sessionLock.bind(it.uid, it.sessionVersion, it.interactiveEntry)
                 reminders.bind(it.uid, it.sessionVersion)
-            }
-        }
-        lifecycleScope.launch {
-            sessionLock.state.collect {
-                if (it.enabled || it.loading || it.locked) window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-                else window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
             }
         }
         setContent {

@@ -186,7 +186,7 @@ internal fun AcademicFlowNavigation(
                     onNotificationHandled()
                 })
         }
-        if (showingAccount && state.identity != null) AccountNavigation(lockState?.enabled == true, { showingAccount = false }) {
+        if (showingAccount && state.identity != null) AccountNavigation({ showingAccount = false }) {
             if (recovering) EmailFormScreen(false, state, {
                 recovering = false; authViewModel.clearFeedback()
             }) { email, _ -> scope.launch { authViewModel.recover(email) } }

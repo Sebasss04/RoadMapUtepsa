@@ -12,7 +12,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.SecureFlagPolicy
 import com.example.roadmap_utepsa.R
 import com.example.roadmap_utepsa.presentation.session.LockState
 
@@ -22,7 +21,7 @@ fun LockScreen(state: LockState, onUnlock: () -> Unit, onSignOut: () -> Unit, di
 
     var confirm by remember { mutableStateOf(false) }
     Dialog({}, properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false,
-        usePlatformDefaultWidth = false, decorFitsSystemWindows = false, securePolicy = SecureFlagPolicy.SecureOn)) {
+        usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
         AccountPage(texts.getString(R.string.session_lock_screen_1)) {
             Spacer(Modifier.height(32.dp))
             Icon(painterResource(R.drawable.account_fingerprint), null, Modifier.size(64.dp).align(Alignment.CenterHorizontally),
