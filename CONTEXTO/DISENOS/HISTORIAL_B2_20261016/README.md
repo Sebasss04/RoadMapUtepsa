@@ -1,4 +1,4 @@
-> Referencia visual histórica. Para implementación y pendientes leer [ESTADO_ACTUAL.md](../../ESTADO_ACTUAL.md). Las instrucciones fechadas siguientes se conservan como registro, no como tareas vigentes.
+> Referencia visual histórica. Para implementación y pendientes leer [README del proyecto](../../../README.md). Las instrucciones fechadas siguientes se conservan como registro, no como tareas vigentes.
 
 # Historial · entrega visual B2
 
