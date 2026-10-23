@@ -21,20 +21,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import com.example.roadmap_utepsa.presentation.shared.components.AcademicBottomBar
 import com.example.roadmap_utepsa.R
-import com.example.roadmap_utepsa.presentation.offer.OfertaUiState
+import com.example.roadmap_utepsa.domain.academic.EstadoAcademico
+import com.example.roadmap_utepsa.presentation.shared.theme.RoadMapInProgressContainer
+import com.example.roadmap_utepsa.presentation.shared.theme.RoadMapInProgressInk
 import com.example.roadmap_utepsa.presentation.shared.text.durationLabel
 
 @Composable
 fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
     onQuery: (String) -> Unit, onToggle: (String) -> Unit, onSave: () -> Unit,
     onCancel: () -> Unit, onConflict: (Boolean) -> Unit, onMalla: () -> Unit,
-    onProfile: () -> Unit, onSignOut: () -> Unit, onRecommendations: (() -> Unit)? = null,
+    onProfile: () -> Unit, onRecommendations: (() -> Unit)? = null,
     onSummary: (() -> Unit)? = null) {
     val texts = androidx.compose.ui.platform.LocalResources.current
 
     val focus = androidx.compose.ui.platform.LocalFocusManager.current
     var discard by remember { mutableStateOf(false) }
-    var signOut by remember { mutableStateOf(false) }
     val cancel = { if (state.dirty) discard = true else onCancel() }
     BackHandler(enabled = true) { if (!state.saving) { if (state.editing) cancel() else onMalla() } }
     Scaffold(Modifier.fillMaxSize().safeDrawingPadding(), contentWindowInsets = WindowInsets(0),
@@ -111,7 +112,9 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                     state.visible.groupBy { it.semestre }.forEach { (semester, subjects) ->
                         item(key = "semester-$semester") { Text(stringResource(R.string.academic_semester, semester), fontWeight = FontWeight.Bold) }
                         items(subjects, key = { it.id }) { subject ->
-                            Surface(shape = RoundedCornerShape(18.dp), color = MaterialTheme.colorScheme.surfaceVariant) {
+                            val inProgress = state.data.estados[subject.id] == EstadoAcademico.EN_CURSO
+                            Surface(shape = RoundedCornerShape(18.dp),
+                                color = if (inProgress) RoadMapInProgressContainer else MaterialTheme.colorScheme.surfaceVariant) {
                                 Row(Modifier.fillMaxWidth().toggleable(subject.id in state.draft,
                                     enabled = !state.refreshFailed && !state.saving && !state.conflict && !state.uncertain, role = Role.Checkbox,
                                     onValueChange = { focus.clearFocus(); onToggle(subject.id) }).padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -120,6 +123,7 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                                         Text(subject.nombre, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                                         Text("${subject.codigo} · ${stringResource(durationLabel(subject))}", fontSize = 11.sp,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                        if (inProgress) InProgressLabel()
                                     }
                                 }
                             }
@@ -145,10 +149,13 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                         item { Text(pluralStringResource(R.plurals.offer_count, offer.materias.size, offer.materias.size), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant) }
                         item { OfferNotice(stringResource(R.string.offer_saved), stringResource(R.string.offer_saved_detail)) }
                         items(state.data.catalogo.filter { it.id in offer.materias }, key = { it.id }) { subject ->
-                            Surface(shape = RoundedCornerShape(18.dp), color = MaterialTheme.colorScheme.surfaceVariant) {
+                            val inProgress = state.data.estados[subject.id] == EstadoAcademico.EN_CURSO
+                            Surface(shape = RoundedCornerShape(18.dp),
+                                color = if (inProgress) RoadMapInProgressContainer else MaterialTheme.colorScheme.surfaceVariant) {
                                 Column(Modifier.fillMaxWidth().padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                     Text(subject.nombre, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                                     Text("${subject.codigo} · ${stringResource(durationLabel(subject))}", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    if (inProgress) InProgressLabel()
                                 }
                             }
                         }
@@ -158,15 +165,14 @@ fun OfertaScreen(state: OfertaUiState, onRetry: () -> Unit, onEdit: () -> Unit,
                     item { TextButton(onRetry) { Text(stringResource(R.string.academic_refresh)) } }
                 }
             }
-            item { TextButton({ signOut = true }, enabled = !state.saving) { Text(stringResource(R.string.offer_sign_out)) } }
         }
     }
-    if (discard || signOut) AlertDialog(onDismissRequest = { discard = false; signOut = false },
-        title = { Text(stringResource(if (signOut) R.string.offer_sign_out else R.string.offer_discard)) },
-        text = { Text(stringResource(if (state.dirty) R.string.offer_discard_detail else R.string.offer_sign_out_detail)) },
-        confirmButton = { TextButton({ if (signOut) onSignOut() else onCancel(); discard = false; signOut = false }) {
+    if (discard) AlertDialog(onDismissRequest = { discard = false },
+        title = { Text(stringResource(R.string.offer_discard)) },
+        text = { Text(stringResource(R.string.offer_discard_detail)) },
+        confirmButton = { TextButton({ onCancel(); discard = false }) {
             Text(stringResource(R.string.offer_confirm)) } },
-        dismissButton = { TextButton({ discard = false; signOut = false }) { Text(stringResource(R.string.offer_stay)) } })
+        dismissButton = { TextButton({ discard = false }) { Text(stringResource(R.string.offer_stay)) } })
 }
 @Composable
 private fun OfferNotice(title: String, detail: String, error: Boolean = false) {
@@ -176,4 +182,9 @@ private fun OfferNotice(title: String, detail: String, error: Boolean = false) {
             Text(detail, fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
+}
+
+@Composable
+private fun InProgressLabel() {
+    Text("◷ ${stringResource(R.string.academic_in_progress)}", color = RoadMapInProgressInk, fontSize = 12.sp)
 }

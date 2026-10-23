@@ -45,7 +45,7 @@ class ResumenVisualTest {
             statusBarStyle = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT)) }
         compose.setContent { RoadMap_UtepsaTheme {
-            ResumenScreen(state, history, onRetry, {}, onCurriculum, onHistory, {})
+            ResumenScreen(state, history, onRetry, {}, onCurriculum, onHistory)
         } }
     }
     private fun screenshot(name: String) {

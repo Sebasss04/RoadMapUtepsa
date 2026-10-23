@@ -76,7 +76,7 @@ class RecomendacionesFlowTest {
     @Test fun allBlockingStatesAndActionsAreDistinct() {
         val current = mutableStateOf(RecomendacionesUiState())
         var retry = 0; var history = 0; var offer = 0; var malla = 0
-        compose.setContent { RoadMap_UtepsaTheme { RecomendacionesScreen(current.value, { retry++ }, { malla++ }, { offer++ }, { history++ }, {}, {}) } }
+        compose.setContent { RoadMap_UtepsaTheme { RecomendacionesScreen(current.value, { retry++ }, { malla++ }, { offer++ }, { history++ }, {}) } }
         compose.onNodeWithText("Preparando recomendaciones…").assertIsDisplayed(); capture("01-carga")
         val cases = listOf(
             Triple(EstadoRecomendaciones.ERROR, "No pudimos generar la lista", "Reintentar"),
@@ -98,7 +98,7 @@ class RecomendacionesFlowTest {
         val current = mutableStateOf(RecomendacionesUiState(EstadoRecomendaciones.LISTO, result()))
         compose.setContent { RoadMap_UtepsaTheme {
             CompositionLocalProvider(LocalDensity provides Density(LocalDensity.current.density, 1.5f)) {
-                RecomendacionesScreen(current.value, {}, {}, {}, {}, {}, {})
+                RecomendacionesScreen(current.value, {}, {}, {}, {}, {})
             }
         } }
         compose.onNodeWithText("Recomendación principal", substring = true).performScrollTo().assertIsDisplayed()
@@ -117,7 +117,7 @@ class RecomendacionesFlowTest {
     @Test fun priorityAndAlternativeExplainEarlierPending() {
         val current = mutableStateOf(RecomendacionesUiState(EstadoRecomendaciones.LISTO,
             result(mapOf("b" to EstadoAcademico.EN_CURSO))))
-        compose.setContent { RoadMap_UtepsaTheme { RecomendacionesScreen(current.value, {}, {}, {}, {}, {}, {}) } }
+        compose.setContent { RoadMap_UtepsaTheme { RecomendacionesScreen(current.value, {}, {}, {}, {}, {}) } }
         compose.onNodeWithText("Recomendación principal", substring = true).assertIsDisplayed(); capture("priority")
         compose.onNodeWithText("Ver pendientes anteriores").performClick()
         compose.onNodeWithText("${ms[0].nombre} · ${ms[0].codigo}").assertIsDisplayed()
@@ -142,7 +142,7 @@ class RecomendacionesFlowTest {
             MotorRecomendaciones().calcular(academic, Oferta("plan", setOf("I", "Q", "C", "L", "E"), 1))))
         compose.setContent { RoadMap_UtepsaTheme {
             CompositionLocalProvider(LocalDensity provides Density(LocalDensity.current.density, 1.5f)) {
-                RecomendacionesScreen(current.value, {}, {}, {}, {}, {}, {})
+                RecomendacionesScreen(current.value, {}, {}, {}, {}, {})
             }
         } }
         compose.onNodeWithText("Al aprobarla, habilitas Inglés Técnico II").performScrollTo().assertIsDisplayed()
@@ -173,7 +173,7 @@ class RecomendacionesFlowTest {
             Prerrequisito("D", "A"), Prerrequisito("D", "B")), emptyMap())
         val calculated = MotorRecomendaciones().calcular(academic, Oferta("plan", setOf("A"), 1))
         compose.setContent { RoadMap_UtepsaTheme {
-            RecomendacionesScreen(RecomendacionesUiState(EstadoRecomendaciones.LISTO, calculated), {}, {}, {}, {}, {}, {})
+            RecomendacionesScreen(RecomendacionesUiState(EstadoRecomendaciones.LISTO, calculated), {}, {}, {}, {}, {})
         } }
         compose.onNodeWithText("Al aprobarla, habilitas 1 materia\nAvanzas requisitos de 1 materia")
             .performScrollTo().assertIsDisplayed()

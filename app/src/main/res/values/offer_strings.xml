@@ -44,7 +44,6 @@
     <string name="offer_sign_out">Cerrar sesión</string>
     <string name="offer_discard">¿Descartar los cambios?</string>
     <string name="offer_discard_detail">La selección modificada se perderá. Todavía no se ha guardado.</string>
-    <string name="offer_sign_out_detail">Se cerrará la sesión y se retirarán tus datos de la pantalla.</string>
     <string name="offer_confirm">Confirmar</string>
     <string name="offer_stay">Seguir aquí</string>
 </resources>

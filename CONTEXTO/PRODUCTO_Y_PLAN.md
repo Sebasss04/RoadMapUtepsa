@@ -1,5 +1,28 @@
 # RoadMap UTEPSA: producto y reglas
 
+## Ajustes de interfaz del 23 de octubre de 2026
+
+El estudiante confirmó que los ajustes quedaron bien y autorizó subirlos al
+repositorio. Es conformidad reportada; no añade una matriz física ni capturas
+Android nuevas. Publicación preparada en `fix/cursando-amarillo-salida-perfil`.
+
+Oferta comparte el amarillo EN_CURSO y la etiqueta «Cursando» en consulta y
+selección. El color expresa el estado académico, no la selección del borrador;
+una materia EN_CURSO sigue disponible para elegir en Oferta.
+
+Regla visual vigente: EN_CURSO se identifica con amarillo pastel `#FFF4CC` y acento
+oscuro `#735C00`, manteniendo texto/símbolo. Aplicado a Malla, Historial y contador
+Cursando de Resumen. No cambia requisitos, cálculos ni estados persistidos.
+Cerrar sesión se ofrece en Cuenta, abierta desde el icono de perfil. Las cuatro
+pantallas académicas y la edición de Perfil no muestran ese botón. Se conserva
+la salida durante el alta inicial de Perfil y, por confirmación explícita del
+estudiante, en verificación de correo y bloqueo biométrico. Cuenta conserva
+confirmación y aviso de datos sin guardar. Esta regla sustituye las referencias
+anteriores a cerrar sesión directamente desde las pestañas académicas.
+Validación y conformidad del estudiante registrada en [VALIDACION.md](VALIDACION.md).
+
+
+
 Vigente al 19/10/2026, hora de Bolivia. Este documento define el alcance y los
 contratos que deben conservarse. Estado de implementación en
 [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md); tareas en

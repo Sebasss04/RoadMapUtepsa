@@ -1,5 +1,50 @@
 # Validación de RoadMap UTEPSA
 
+## Ajustes de interfaz del 23 de octubre de 2026
+
+El estudiante confirmó que los ajustes quedaron bien y autorizó subirlos al
+repositorio. Es conformidad reportada; no añade una matriz física ni capturas
+Android nuevas. Publicación preparada en `fix/cursando-amarillo-salida-perfil`.
+
+Ampliación posterior de Oferta: consulta guardada y selector muestran fondo
+`#FFF4CC` y etiqueta «Cursando» en materias EN_CURSO, leyendo `DatosOferta.estados`.
+El resaltado no depende de la casilla del borrador. `assembleDebug lintDebug`
+finalizó correctamente, con cero incidencias lint y arquitectura sin fallos
+(94 fuentes/548 recursos). Log: `app/build/quality-offer-yellow-20261023.txt`.
+APK debug actual: SHA-256 `9CF1512A833D1149B0068F0ACB170388FAAE7B8339AB58E689724043E8F4679C`; sustituye la APK de la primera pasada que se
+registra debajo. No se repitieron JVM por este ajuste visual; las 300 pruebas
+referidas abajo corresponden a la pasada anterior. El estudiante confirmó que los ajustes quedaron bien; no se registraron
+escenarios ni dispositivo. No hubo instalación automatizada ni cambios de datos.
+
+Alcance: amarillo pastel EN_CURSO en Malla, Historial y contador Cursando de
+Resumen; cerrar sesión desde Cuenta, manteniendo alta inicial de Perfil y las
+salidas de verificación y bloqueo biométrico confirmadas por el estudiante.
+Se adaptaron los casos UI existentes para usar Cuenta y conservar la advertencia
+del borrador de Oferta; no se ejecutaron en Android durante esta revisión.
+
+- Arquitectura: 94 fuentes, 548 recursos, sin fallos.
+- JVM: 300 pruebas, cero fallos, errores u omisiones.
+- Contraste sobre `#FFF4CC`: acento `#735C00` 5,85:1; nombre `#20232B` 14,26:1;
+  texto secundario `#636875` 5,06:1. Se conservan etiquetas y símbolo en Malla.
+- Compilación APK debug/androidTest correcta; lint debug sin errores ni advertencias.
+  Se eliminaron los tres recursos que quedaron sin uso al retirar las salidas.
+- Sin dispositivo/emulador conectado (`adb devices` vacío). La aceptación del estudiante se registra arriba;
+  no hubo ejecución automatizada en Android ni capturas definitivas nuevas.
+
+Comando: `gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug --offline --max-workers=1`
+con JDK de Android Studio, caché Gradle existente y heap de 768 MB. Log local
+ignorado por Git: `app/build/quality-final-ui-20261023-clean.txt` (BUILD SUCCESSFUL).
+Las dos pasadas anteriores quedan en `quality-final-ui-20261023.txt` y
+`quality-final-ui-20261023-final.txt`; el resultado limpio corresponde a la última.
+APK debug: `app/build/outputs/apk/debug/app-debug.apk`, SHA-256
+`06207440843B5C36A1DE26015B4D576D837421A576AAB880A0FAD48760055BA6`.
+Los cambios documentales anteriores se conservaron. No hubo instalación, pruebas
+sobre cuenta personal, despliegue ni migración. La publicación posterior fue autorizada por el estudiante. La evidencia del
+21/10 que figura debajo sigue correspondiendo únicamente a aquella revisión.
+
+
+
+
 Consolidada el 19/10/2026, hora de Bolivia, sobre la base funcional publicada
 `0192056`. Este documento distingue pruebas locales, evidencia del compañero,
 servicios demo y comprobaciones productivas. Limpiar la documentación no ejecuta

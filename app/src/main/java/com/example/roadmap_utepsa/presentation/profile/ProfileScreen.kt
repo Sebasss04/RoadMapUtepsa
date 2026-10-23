@@ -149,10 +149,6 @@ fun ProfileScreen(
                         modifier = Modifier.align(Alignment.CenterHorizontally)) {
                         Text(stringResource(R.string.profile_sign_out))
                     }
-                    if (existing && onReturn != null) TextButton(onClick = requestSignOut,
-                        enabled = !state.saving, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                        Text(stringResource(R.string.profile_sign_out))
-                    }
                 }
             }
         }

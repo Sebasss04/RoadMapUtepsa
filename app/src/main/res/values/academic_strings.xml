@@ -48,8 +48,6 @@
     <string name="academic_cancel">Cancelar</string>
     <string name="academic_discard_title">¿Descartar el cambio de estado?</string>
     <string name="academic_discard_detail">La selección que todavía no guardaste se perderá.</string>
-    <string name="academic_sign_out_title">¿Cerrar sesión?</string>
-    <string name="academic_sign_out_detail">Tendrás que iniciar sesión de nuevo para continuar.</string>
     <string name="academic_summary">Resumen</string>
     <string name="academic_curriculum">Malla</string>
     <string name="academic_offer">Oferta</string>

@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import com.example.roadmap_utepsa.presentation.shared.theme.RoadMapInProgressContainer
+import com.example.roadmap_utepsa.presentation.shared.theme.RoadMapInProgressInk
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
@@ -30,7 +32,7 @@ import com.example.roadmap_utepsa.presentation.history.EstadoPreparacionUi
 @Composable
 fun ResumenScreen(state: AcademicUiState, historyStatus: EstadoPreparacionUi,
                   onRetry: () -> Unit, onProfile: () -> Unit, onCurriculum: () -> Unit,
-                  onHistory: (() -> Unit)?, onSignOut: () -> Unit,
+                  onHistory: (() -> Unit)?,
                   onOffer: (() -> Unit)? = null, onRecommendations: (() -> Unit)? = null) {
     val texts = androidx.compose.ui.platform.LocalResources.current
 
@@ -90,7 +92,6 @@ fun ResumenScreen(state: AcademicUiState, historyStatus: EstadoPreparacionUi,
                     }
                     ResumenUiState.SessionExpired -> {
                         Text(stringResource(R.string.academic_expired))
-                        Button(onSignOut) { Text(stringResource(R.string.profile_sign_out)) }
                     }
                     is ResumenUiState.Ready -> {
                         val value = summary.resumen
@@ -119,9 +120,9 @@ fun ResumenScreen(state: AcademicUiState, historyStatus: EstadoPreparacionUi,
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                             listOf(Triple(value.aprobadas, R.string.academic_approved_plural, Color(0xFF21664A)),
-                                Triple(value.enCurso, R.string.academic_in_progress, Color(0xFF275A92)),
+                                Triple(value.enCurso, R.string.academic_in_progress, RoadMapInProgressInk),
                                 Triple(value.pendientes, R.string.academic_pending_plural, MaterialTheme.colorScheme.onSurfaceVariant)).forEach { (count, label, color) ->
-                                Surface(Modifier.weight(1f).heightIn(min = 80.dp), shape = RoundedCornerShape(18.dp), color = MaterialTheme.colorScheme.surfaceVariant) {
+                                Surface(Modifier.weight(1f).heightIn(min = 80.dp), shape = RoundedCornerShape(18.dp), color = if (label == R.string.academic_in_progress) RoadMapInProgressContainer else MaterialTheme.colorScheme.surfaceVariant) {
                                     Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                                         Text(count.toString(), fontSize = 26.sp, lineHeight = 36.sp, fontWeight = FontWeight.Bold, color = color)
                                         Text(stringResource(label), fontSize = 12.sp, lineHeight = 17.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)

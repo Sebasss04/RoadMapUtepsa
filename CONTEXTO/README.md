@@ -1,5 +1,28 @@
 # Contexto compartido de RoadMap UTEPSA
 
+## Ajustes de interfaz del 23 de octubre de 2026
+
+El estudiante confirmó que los ajustes quedaron bien y autorizó subirlos al
+repositorio. Es conformidad reportada; no añade una matriz física ni capturas
+Android nuevas. Publicación preparada en `fix/cursando-amarillo-salida-perfil`.
+
+Ampliación del 23/10: Oferta también resalta EN_CURSO con el mismo amarillo, tanto
+en la consulta guardada como en el selector, con etiqueta «Cursando».
+
+Implementados localmente en `fix/cursando-amarillo-salida-perfil`: materias EN_CURSO
+con amarillo pastel en Malla e Historial y contador Cursando en Resumen. La salida
+habitual queda únicamente en Cuenta (icono de perfil), con confirmación y aviso de
+borradores; se retiraron los botones de Malla, Oferta, Para ti, Resumen y edición
+de perfil. El alta inicial de Perfil conserva su salida previa. El estudiante
+confirmó conservar las salidas de verificación de correo y bloqueo por huella.
+Resultados y límites nuevos en [VALIDACION.md](VALIDACION.md). Este apartado
+sustituye el pendiente de implementar amarillo de la revisión del 21/10; siguen
+pendientes las capturas definitivas del informe; la conformidad del estudiante está registrada arriba.
+No se actualizó el Word ni se publicaron cambios remotos.
+
+
+
+
 Actualizado el 19/10/2026, hora de Bolivia. Estas guías son la continuidad vigente
 para ambos integrantes; no hace falta el historial de chats ni la carpeta local
 del autor para continuar en otro equipo.

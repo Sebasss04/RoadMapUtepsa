@@ -26,13 +26,11 @@ import com.example.roadmap_utepsa.presentation.shared.text.durationLabel
 @Composable
 fun RecomendacionesScreen(state: RecomendacionesUiState, onRetry: () -> Unit,
     onMalla: () -> Unit, onOffer: () -> Unit, onHistory: () -> Unit,
-    onProfile: () -> Unit, onSignOut: () -> Unit,
-    signOutWarning: Int = R.string.academic_sign_out_detail, onSummary: (() -> Unit)? = null) {
+    onProfile: () -> Unit, onSummary: (() -> Unit)? = null) {
     val texts = androidx.compose.ui.platform.LocalResources.current
 
     var detail by remember(state) { mutableStateOf<Recomendacion?>(null) }
     var showPrevious by remember(state) { mutableStateOf(false) }
-    var signOut by remember { mutableStateOf(false) }
     BackHandler { onMalla() }
     Scaffold(Modifier.fillMaxSize().safeDrawingPadding(), contentWindowInsets = WindowInsets(0),
         topBar = {
@@ -108,7 +106,6 @@ fun RecomendacionesScreen(state: RecomendacionesUiState, onRetry: () -> Unit,
                     }
                 }
             }
-            item { TextButton({ signOut = true }) { Text(stringResource(R.string.offer_sign_out)) } }
         }
     }
     detail?.let { r -> ModalBottomSheet(onDismissRequest = { detail = null }, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true), containerColor = MaterialTheme.colorScheme.surface) {
@@ -155,9 +152,6 @@ fun RecomendacionesScreen(state: RecomendacionesUiState, onRetry: () -> Unit,
             Button({ detail = null }, Modifier.fillMaxWidth().heightIn(min = 56.dp)) { Text(stringResource(R.string.rec_understood)) }
         }
     } }
-    if (signOut) AlertDialog(onDismissRequest = { signOut = false }, title = { Text(stringResource(R.string.offer_sign_out)) },
-        text = { Text(stringResource(signOutWarning)) }, confirmButton = { TextButton(onSignOut) { Text(stringResource(R.string.offer_confirm)) } },
-        dismissButton = { TextButton({ signOut = false }) { Text(stringResource(R.string.offer_stay)) } })
 }
 
 @Composable

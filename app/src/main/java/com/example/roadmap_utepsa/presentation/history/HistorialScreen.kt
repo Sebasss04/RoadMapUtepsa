@@ -15,6 +15,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import com.example.roadmap_utepsa.presentation.shared.theme.RoadMapInProgressContainer
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -240,7 +242,8 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
                     if (savedRows.isEmpty()) item { Body(R.string.history_summary_empty) }
                     savedRows.groupBy { it.semestre }.forEach { (number, rows) ->
                         item(key = "summary-semester-$number") { Strong(stringResource(R.string.academic_semester, number), 18) }
-                        items(rows, key = { "saved-${it.id}" }) { materia -> HistoryCard {
+                        items(rows, key = { "saved-${it.id}" }) { materia -> HistoryCard(
+                            color = if (selection[materia.id] == EN_CURSO) RoadMapInProgressContainer else MaterialTheme.colorScheme.surfaceVariant) {
                             Strong(materia.nombre)
                             Caption("${materia.codigo} · ${stringResource(durationLabel(materia))}")
                             Body(stringResource(stateLabel(selection[materia.id] ?: PENDIENTE)))
@@ -360,7 +363,7 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
                                     (if (comparing) ready.comparisonEligibility else ready.eligibility)[materia.id] else null
                                 val allowed = !previewDraft && (!isCourse || checked || eligibility?.habilitada == true)
                                 val requirements = eligibility?.requisitosSinAprobar.orEmpty().mapNotNull { byId[it]?.nombre }.sorted()
-                                SubjectChoice(materia, checked, allowed,
+                                SubjectChoice(materia, checked, allowed, isCourse,
                                     if (requirements.isNotEmpty()) stringResource(R.string.history_flow_missing_requirements, requirements.joinToString(" · "))
                                     else if ((eligibility?.aprobadasFaltantes ?: 0) > 0) quantityText(R.plurals.history_flow_missing_approved, eligibility!!.aprobadasFaltantes)
                                     else if (isCourse) stringResource(R.string.history_flow_can_select) else null) { value ->
@@ -395,7 +398,8 @@ fun HistorialScreen(state: HistorialUiState, actions: HistorialActions) {
                         } else {
                             listOf(APROBADA, EN_CURSO).forEach { estado ->
                                 materias.filter { selection[it.id] == estado }.groupBy { it.semestre }.forEach { (semestre, rows) ->
-                                    item(key = "review-${estado.name}-$semestre") { HistoryCard {
+                                    item(key = "review-${estado.name}-$semestre") { HistoryCard(
+                                        color = if (estado == EN_CURSO) RoadMapInProgressContainer else MaterialTheme.colorScheme.surfaceVariant) {
                                         Strong(stringResource(R.string.history_flow_state_semester, stringResource(stateLabel(estado)), semestre))
                                         rows.forEach { Strong(it.nombre, 15); Caption(it.codigo) }
                                     } }
@@ -424,8 +428,8 @@ private fun Heading(step: Int, title: Int, detail: Int) {
 
 @Composable
 private fun HistoryCard(modifier: Modifier = Modifier, accent: Boolean = false, onClick: (() -> Unit)? = null,
+                        color: Color = if (accent) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
                         content: @Composable ColumnScope.() -> Unit) {
-    val color = if (accent) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
     if (onClick != null) Surface(onClick, modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = color) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = content)
     } else Surface(modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = color) {
@@ -452,8 +456,8 @@ private fun HistoryCard(modifier: Modifier = Modifier, accent: Boolean = false, 
 }
 
 @Composable
-private fun SubjectChoice(materia: Materia, checked: Boolean, enabled: Boolean, detail: String?, onChecked: (Boolean) -> Unit) {
-    Surface(shape = RoundedCornerShape(18.dp), color = if (checked) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant) {
+private fun SubjectChoice(materia: Materia, checked: Boolean, enabled: Boolean, isCourse: Boolean, detail: String?, onChecked: (Boolean) -> Unit) {
+    Surface(shape = RoundedCornerShape(18.dp), color = if (checked && isCourse) RoadMapInProgressContainer else if (checked) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant) {
         Row(Modifier.fillMaxWidth().toggleable(checked, enabled = enabled, role = Role.Checkbox, onValueChange = onChecked)
             .testTag("history-subject-${materia.id}").padding(start = 8.dp, end = 12.dp, top = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {

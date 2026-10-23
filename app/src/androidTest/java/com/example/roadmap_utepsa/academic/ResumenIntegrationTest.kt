@@ -138,7 +138,6 @@ class ResumenIntegrationTest {
         compose.onNodeWithTag("account-back").performClick()
         compose.onNodeWithTag("summary-screen").assertIsDisplayed()
         compose.onNodeWithContentDescription("Tu cuenta").performClick()
-        compose.onNodeWithText("Editar perfil").performScrollTo().performClick()
         compose.onNodeWithText("Cerrar sesión").performScrollTo().performClick()
         compose.onNodeWithText("Hay cambios sin guardar. Se descartarán al cerrar sesión.").assertIsDisplayed()
         compose.onNodeWithText("Seguir aquí").performClick()
