@@ -23,4 +23,4 @@ se adapta el orden a nombre principal + sigla/duración por el contrato vigente.
 Las acciones de cancelar, refrescar y cerrar sesión completan el flujo solicitado;
 Resumen y Para ti siguen deshabilitados porque no están integrados en este checkout.
 Barras del sistema y hora corresponden al AVD. No se altera la UI de otras pantallas.
-Resultados y límites vigentes: [VALIDACION.md](../../VALIDACION.md).
+Resultados y límites vigentes: [VALIDACION.md](../../../docs/VALIDACION.md).

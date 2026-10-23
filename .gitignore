@@ -23,3 +23,12 @@ node_modules/
 *.keystore
 *service-account*.json
 *serviceAccount*.json
+
+# Guias internas conservadas solo localmente al cerrar el MVP
+/AGENTS.md
+/CONTEXTO/README.md
+/CONTEXTO/ESTADO_ACTUAL.md
+/CONTEXTO/PRODUCTO_Y_PLAN.md
+/CONTEXTO/TRABAJO_EN_EQUIPO.md
+/CONTEXTO/VALIDACION.md
+/CONTEXTO/README_RAIZ_ANTES_LIMPIEZA_MVP.md

@@ -1,8 +1,8 @@
 # Referencias visuales RoadMap UTEPSA
 
-El estado vigente está en [ESTADO_ACTUAL.md](../ESTADO_ACTUAL.md) y los requisitos en [PRODUCTO_Y_PLAN.md](../PRODUCTO_Y_PLAN.md). Esta carpeta conserva los diseños; un mockup no acredita implementación.
+El estado vigente está en [README del proyecto](../../README.md) y los requisitos en [reglas académicas](../../docs/REGLAS_ACADEMICAS.md). Esta carpeta conserva los diseños; un mockup no acredita implementación.
 
-Historial B1 y B2 son referencias visuales en sus subcarpetas; sus README históricos no son planes de ejecución. Cuenta, Registro, Recuperación y Desbloqueo tienen implementación local en la rama de autenticación; la validación vigente está en las guías compartidas.
+Historial B1 y B2 son referencias visuales en sus subcarpetas; sus README históricos no son planes de ejecución. Cuenta, Registro, Recuperación y Desbloqueo tienen implementación local en la rama de autenticación; la validación del MVP está en [docs/VALIDACION.md](../../docs/VALIDACION.md).
 
 ## Pantallas y exportaciones
 

@@ -1,99 +1,62 @@
 # RoadMap UTEPSA
 
-Aplicación Android con Kotlin, Jetpack Compose y Firebase para registrar el
-historial académico y orientar la elección de materias de Ingeniería de Sistemas
-(RM 615/2016). La app orienta; no inscribe ni sincroniza con SAE.
+Aplicación Android para que estudiantes de Ingeniería de Sistemas de UTEPSA registren su avance académico, introduzcan su oferta SAE y consulten recomendaciones de materias. MVP cerrado en octubre de 2026 para el plan RM 615/2016: 50 materias y 9 semestres curriculares. La aplicación orienta; la inscripción se realiza fuera de ella.
 
-## Estado
+## Funciones del MVP
 
-Entrega del 19/10/2026 integrada en `main`, desde la base `0192056`:
-acceso Google y correo/contraseña, verificación, recuperación, vinculación,
-biometría, Cuenta, Perfil, Historial, Resumen, Malla, Oferta SAE, Para ti y avisos
-locales de pendientes. El estudiante dio su conformidad final y autorizó la
-publicación del código y las guías. Las pruebas físicas anteriores fueron
-satisfactorias; no se registró nueva matriz ni hash de APK en esa confirmación.
+- Acceso con Google o correo y contraseña; verificación y recuperación de cuenta.
+- Perfil, vinculación de métodos de acceso y bloqueo biométrico opcional.
+- Historial de materias pendientes, cursando y aprobadas.
+- Malla con búsqueda, filtros, requisitos y edición del estado académico.
+- Resumen del avance y porcentaje calculado solo sobre materias aprobadas.
+- Oferta SAE ingresada manualmente y recomendaciones explicadas en «Para ti».
+- Avisos locales opcionales para completar historial u oferta.
 
-La reorganización mantiene un único módulo `app`, MVVM, datos y diseño. Los
-paquetes separan dominio, datos, presentación y plataforma por función; los
-textos visibles usan recursos. Validación: 300 JVM, 71 pruebas de regresión
-Android, 18 de avisos, permiso denegado y dos fases de persistencia correctas.
-Lint debug/release: cero errores y un aviso por variante sobre Gradle disponible.
+Las materias cursando se distinguen con amarillo pastel en Malla, Historial, Resumen y Oferta. El cierre habitual de sesión está en Cuenta, accesible desde el icono de perfil.
 
-SDK demo: 6/7 por EMAIL_EXISTS en Google→contraseña; ese recorrido funciona en
-el dispositivo físico según las pruebas reportadas por el estudiante. No se
-considera una regresión nueva ni se exige repetir esa aceptación. Push remoto
-no acreditado y fallo del AVD personal conservados como límites de validación.
-Evidencia y alcance en [VALIDACION.md](CONTEXTO/VALIDACION.md).
-Las reglas y el proveedor de correo se publicaron previamente con autorización;
-esta integración de código no ejecuta despliegues ni instalaciones.
+## Compilar y ejecutar
 
-## Mapa del código
-
-Bajo `app/src/main/java/com/example/roadmap_utepsa/`:
-
-| Paquete | Responsabilidad |
-|---|---|
-| Raíz | `MainActivity` enlaza ciclo de vida/ventana; `RoadMapApplication` inicia el proceso. |
-| `di` | `AppContainer` construye repositorios y factories de Google, bloqueo y avisos. |
-| `domain/{academic,auth,history,notification,offer,profile,recommendation,session}` | Modelos, reglas puras, contratos y errores propios. Sin Android, Firebase, recursos ni datos/presentación. |
-| `data/{academic,auth,history,notification,offer,profile,recommendation,session}` | Adaptadores Firebase, mapeo, transacciones, lectura estable y DataStore. Sin presentación. |
-| `presentation/{academic,account,auth,history,navigation,notification,offer,profile,recommendation,session}` | Pantallas, ViewModels y estados junto a cada función. Usa contratos del dominio. |
-| `presentation/shared/{components,text,theme}` | Barra común de cuatro pestañas, controles compartidos, textos y tema. |
-| `platform/{auth,biometric,notification}` | Credential Manager, prompt biométrico, notificaciones Android, FCM e intents. |
-
-Malla y Resumen comparten `AcademicViewModel`. `AppNavigation` compone las puertas
-de acceso, `EntryNavigation` y `AcademicFlowNavigation`; este último conserva los
-propietarios y claves de sesión y compone `AcademicNavigation` y `AccountNavigation`.
-El bloqueo cubre el contenido sin desmontar escrituras ni borradores.
-Las preferencias de bloqueo/avisos tienen contratos en dominio, DataStore en datos,
-controladores ViewModel en presentación y entrega Android en plataforma.
-
-Los adaptadores traducen fallos de acceso a `AccessFailureKind`, conservando causas
-internas y propagando cancelaciones. Los estados exponen recursos identificables;
-presentación resuelve el texto. Las validaciones puras exponen categorías.
-No mostrar mensajes crudos de excepciones ni registrar secretos. El filtro común
-de Malla/Oferta/Historial vive en `domain/academic/CurriculumFilter.kt`.
-
-Pruebas JVM y Android agrupadas por función. Los runners usan las clases exactas
-de `scripts/test-class-names.ps1` y conservan sus guardas demo/AVD.
-
-```powershell
-python scripts/check-architecture.py
-.\gradlew.bat testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest lintDebug lintRelease --max-workers=1
-```
-
-El comprobador genera el inventario de textos y el informe de dependencias en
-`app/build/reports/reorganization/`. Resultados y límites reales en
-[VALIDACION.md](CONTEXTO/VALIDACION.md); no usar el recuento histórico como ejecución nueva.
-
-## Documentación
-
-- [Inicio y fuentes](CONTEXTO/README.md).
-- [Implementado, arquitectura y pendientes](CONTEXTO/ESTADO_ACTUAL.md).
-- [Reglas y contratos del producto](CONTEXTO/PRODUCTO_Y_PLAN.md).
-- [Coordinación y siguientes tareas](CONTEXTO/TRABAJO_EN_EQUIPO.md).
-- [Pruebas, evidencia y límites](CONTEXTO/VALIDACION.md).
-
-## Preparar el entorno
+1. Clonar el repositorio y abrir su raíz en Android Studio.
+2. Configurar un JDK 25 y el SDK Android 37. La aplicación requiere Android 15/API 35 o superior.
+3. Configurar la ubicación del SDK en `local.properties`, archivo local excluido de Git.
+4. Ejecutar los siguientes comandos desde la raíz:
 
 ```powershell
 git clone https://github.com/Sebasss04/RoadMapUtepsa.git
 cd RoadMapUtepsa
-.\gradlew.bat :app:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat testDebugUnitTest assembleDebug lintDebug
 ```
 
-Abrir la raíz en Android Studio y configurar el SDK mediante `local.properties`
-(ignorado). Entorno verificado: JDK 25, Gradle 9.6.0, AGP 9.4.1 y Kotlin/Compose compiler 2.4.21,
-compile/target SDK 37 y minSdk 35. Java/Kotlin compilan al nivel JVM 11.
-Usar `--offline` solo con dependencias descargadas. Comandos Android/demo y
-precauciones con pruebas personales en [VALIDACION.md](CONTEXTO/VALIDACION.md).
+La APK debug se genera en `app/build/outputs/apk/debug/app-debug.apk`. Usar `--offline` únicamente si las dependencias ya están descargadas.
 
-APK debug: `app/build/outputs/apk/debug/app-debug.apk`.
+El proyecto utiliza Gradle 9.6.0, AGP 9.4.1 y Kotlin/Compose compiler 2.4.21; el código compila al nivel JVM 11. Las versiones se declaran en [libs.versions.toml](gradle/libs.versions.toml).
 
-Firebase: proyecto `roadmap-utepsa-c9409`, Firestore `(default)`.
-`google-services.json` es configuración cliente versionada, no acceso administrativo.
-Cada colaborador necesita sus propios permisos y las huellas SHA-1/SHA-256 de su
-clave debug registradas para Google Sign-In. No compartir claves privadas ni tokens.
-No repetir la migración del catálogo. El nuevo control de identidad en reglas y
-el proveedor de correo ya se publicaron con autorización y relectura el 19/10;
-no repetir el paso. El alcance de la aceptación manual está en VALIDACION.
+Firebase Auth y Firestore están configurados para `roadmap-utepsa-c9409`. `app/google-services.json` contiene configuración cliente. Para ejecutar Google Sign-In con otra clave debug deben registrarse sus huellas SHA-1/SHA-256 con permisos del proyecto Firebase. Compilar el repositorio no despliega reglas ni migra datos.
+
+## Recorrido del código
+
+Fuentes principales: [app/src/main/java/com/example/roadmap_utepsa](app/src/main/java/com/example/roadmap_utepsa).
+
+| Carpeta o archivo | Responsabilidad |
+|---|---|
+| `MainActivity.kt`, `RoadMapApplication.kt` | Entrada Android, ciclo de vida e inicio de la aplicación. |
+| `di/AppContainer.kt` | Construcción de repositorios y dependencias. |
+| `domain/` | Modelos, contratos, validaciones, reglas académicas y motor de recomendaciones. |
+| `data/` | Repositorios Firebase, transacciones, lectura estable y preferencias DataStore. |
+| `presentation/` | Pantallas Compose, estados y ViewModels agrupados por función. |
+| `platform/` | Google Sign-In, biometría y notificaciones Android. |
+| `app/src/test/` | Pruebas JVM. |
+| `app/src/androidTest/` | Pruebas instrumentadas y fixtures de integración. |
+| `firebase/` | Reglas Firestore, catálogo de referencia, pruebas y herramientas administrativas. |
+| `scripts/` | Comprobación de arquitectura y ejecutores de pruebas. |
+
+La arquitectura usa MVVM en un módulo Android. `AppNavigation` organiza acceso y navegación; Malla y Resumen comparten `AcademicViewModel`. El motor `domain/recommendation/MotorRecomendaciones.kt` calcula recomendaciones sin depender de Android o Firebase. Los adaptadores de datos implementan los contratos del dominio.
+
+## Documentación técnica
+
+- [Reglas académicas y persistencia](docs/REGLAS_ACADEMICAS.md).
+- [Validación y ejecución de pruebas](docs/VALIDACION.md).
+- [Contrato del catálogo SAE](firebase/catalogo/README.md).
+- [Referencias visuales](CONTEXTO/DISENOS/INDICE_Y_ESPECIFICACIONES.md), conservadas como evidencia del diseño.
+
+Las referencias visuales son históricas y pueden diferir de los últimos ajustes. El comportamiento implementado se consulta en el código. Las guías internas de coordinación se retiraron del contenido versionado al cerrar el MVP.
