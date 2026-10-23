@@ -429,7 +429,7 @@ class HistorialFlowTest {
         compose.setContent {
             val state by vm.state.collectAsState()
             RoadMap_UtepsaTheme {
-                CurriculumScreen(state, vm::reload, {}, {}, vm::openSubject, vm::selectState,
+                CurriculumScreen(state, vm::reload, {}, vm::openSubject, vm::selectState,
                     vm::saveState, vm::closeSubject, vm::dismissSaved, onReviewHistory = {},
                     onReviewConflict = vm::reviewConflict)
             }

@@ -1,5 +1,28 @@
 # Estado actual de RoadMap UTEPSA
 
+## Ajustes de interfaz del 23 de octubre de 2026
+
+El estudiante confirmó que los ajustes quedaron bien y autorizó subirlos al
+repositorio. Es conformidad reportada; no añade una matriz física ni capturas
+Android nuevas. Publicación preparada en `fix/cursando-amarillo-salida-perfil`.
+
+Oferta también muestra fondo amarillo y etiqueta «Cursando» para EN_CURSO,
+tanto en la oferta guardada como en el selector; usa los estados académicos
+ya leídos, con independencia de si la casilla está seleccionada.
+
+EN_CURSO usa fondo amarillo pastel `#FFF4CC` en tarjetas de Malla, consulta,
+selección y revisión de Historial, y contador Cursando en Resumen; el acento oscuro
+es `#735C00`. Conserva etiquetas y símbolo de estado. La salida habitual se
+concentra en Cuenta; se eliminó de las cuatro pantallas académicas y de edición
+de Perfil. El alta inicial mantiene su salida. Por confirmación del estudiante,
+verificación de correo y bloqueo por huella conservan las salidas de acceso.
+La confirmación de Cuenta conserva la advertencia de borradores de Oferta.
+Cambios locales en `fix/cursando-amarillo-salida-perfil`; ver pruebas y límites en
+[VALIDACION.md](VALIDACION.md). El amarillo ya está implementado y cuenta con conformidad del estudiante; faltan capturas definitivas. Los cambios documentales previos se conservaron.
+
+
+
+
 Actualizado el 19/10/2026, hora de Bolivia. Entrega de Cuenta, avisos,
 reorganización y lenguaje integrada en `main` desde `0192056`, con conformidad
 final del estudiante y autorización de publicación. Los contratos están

@@ -140,8 +140,7 @@ internal fun AcademicFlowNavigation(
                         onMalla = openCurriculum,
                         onOffer = { openOffer?.invoke() },
                         onHistory = { openCurriculum(); review?.invoke() },
-                        onProfile = { showingAccount = true }, onSignOut = authViewModel::signOut,
-                        signOutWarning = if (offerDraftPresent) R.string.offer_discard_detail else R.string.academic_sign_out_detail,
+                        onProfile = { showingAccount = true },
                         onSummary = openSummary)
                     } },
                     offer = { if (offerVm != null) {
@@ -151,26 +150,24 @@ internal fun AcademicFlowNavigation(
                         offerVm::reload, offerVm::edit, offerVm::query, offerVm::toggle,
                         offerVm::save, offerVm::cancel, offerVm::resolveConflict,
                         onMalla = openCurriculum, onProfile = { showingAccount = true },
-                        onSignOut = authViewModel::signOut,
                         onRecommendations = openRecommendations, onSummary = openSummary)
                     } },
                     summary = {
                     ResumenScreen(academicState, pending, academicViewModel::reload,
                         onProfile = { showingAccount = true }, onCurriculum = openCurriculum,
-                        onHistory = review, onSignOut = { if (offerDraftPresent) discardOfferOnSignOut = true else authViewModel.signOut() },
+                        onHistory = review,
                         onOffer = openOffer, onRecommendations = openRecommendations)
                     },
                     curriculum = {
                         academicHolder.SaveableStateProvider(AcademicViewModel.key(uid, state.sessionVersion)) {
                     CurriculumScreen(academicState, academicViewModel::reload,
-                    onProfile = { showingAccount = true }, onSignOut = authViewModel::signOut,
+                    onProfile = { showingAccount = true },
                     onOpen = academicViewModel::openSubject, onSelect = academicViewModel::selectState,
                     onSave = academicViewModel::saveState, onClose = academicViewModel::closeSubject,
                     onDismissSaved = academicViewModel::dismissSaved,
                     onReviewConflict = academicViewModel::reviewConflict,
                     onReviewHistory = review?.let { callback -> { academicViewModel.closeSubject(); callback() } },
                     historyStatus = pending, onOffer = openOffer,
-                    signOutWarning = if (offerDraftPresent) R.string.offer_discard_detail else R.string.academic_sign_out_detail,
                     onRecommendations = openRecommendations, onSummary = openSummary)
             }
                     })

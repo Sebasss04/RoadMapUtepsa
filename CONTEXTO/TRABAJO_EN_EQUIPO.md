@@ -1,5 +1,27 @@
 # Trabajo pendiente y coordinación
 
+## Ajustes de interfaz del 23 de octubre de 2026
+
+El estudiante confirmó que los ajustes quedaron bien y autorizó subirlos al
+repositorio. Es conformidad reportada; no añade una matriz física ni capturas
+Android nuevas. Publicación preparada en `fix/cursando-amarillo-salida-perfil`.
+
+Ampliación solicitada: el amarillo EN_CURSO también está aplicado a Oferta
+guardada y su selector, con etiqueta «Cursando». No modificar los estados
+académicos al seleccionar o guardar Oferta.
+
+Los dos ajustes solicitados están implementados localmente en la rama
+`fix/cursando-amarillo-salida-perfil`: amarillo pastel EN_CURSO y salida habitual
+solo en Cuenta. Se conservan las salidas de acceso acordadas y el alta inicial.
+Se adaptaron las pruebas UI existentes a la salida desde Cuenta. No reponer los
+botones retirados al integrar. Conservar los cambios documentales previos del
+informe. Continuar con capturas definitivas; la conformidad del estudiante está registrada arriba;
+resultados nuevos y límites en [VALIDACION.md](VALIDACION.md). La revisión del
+21/10 que figura debajo conserva su fecha; el amarillo ya no está por implementar.
+
+
+
+
 Actualizado el 19/10/2026, hora de Bolivia. Base compartida: `main`, `0192056`.
 El [estado](ESTADO_ACTUAL.md), los [contratos](PRODUCTO_Y_PLAN.md) y la
 [validación](VALIDACION.md) se mantienen en sus archivos; este documento contiene

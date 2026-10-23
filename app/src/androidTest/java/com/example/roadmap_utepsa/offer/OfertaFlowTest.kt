@@ -81,7 +81,7 @@ class OfertaFlowTest {
                 CompositionLocalProvider(LocalDensity provides Density(LocalDensity.current.density, font)) {
                     val s by vm.state.collectAsState()
                     OfertaScreen(s, vm::reload, vm::edit, vm::query, vm::toggle, vm::save, vm::cancel,
-                        vm::resolveConflict, {}, {}, auth::signOut)
+                        vm::resolveConflict, {}, {})
                 }
             }
         }
@@ -159,7 +159,7 @@ class OfertaFlowTest {
     }
     @Test fun loadingHasExplicitProgressAndNoAbsentOffer() {
         compose.setContent { RoadMap_UtepsaTheme {
-            OfertaScreen(OfertaUiState(), {}, {}, {}, {}, {}, {}, {}, {}, {}, {})
+            OfertaScreen(OfertaUiState(), {}, {}, {}, {}, {}, {}, {}, {}, {})
         } }
         compose.onNodeWithText("Cargando oferta…").assertIsDisplayed()
         compose.onNodeWithText("Añade tu primera oferta").assertDoesNotExist()
@@ -238,17 +238,20 @@ class OfertaFlowTest {
         compose.onNodeWithContentDescription("Tu cuenta").performClick()
         compose.onNodeWithText("Editar perfil").performScrollTo().performClick()
         compose.onNodeWithText("Tu perfil").assertIsDisplayed()
+        compose.onNodeWithText("Cerrar sesión").assertDoesNotExist()
+        compose.onNodeWithText("Volver a Cuenta").performScrollTo().performClick()
         compose.onNodeWithText("Cerrar sesión").performScrollTo().performClick()
         compose.onNodeWithText("Hay cambios sin guardar. Se descartarán al cerrar sesión.").assertIsDisplayed()
         compose.onNodeWithText("Seguir aquí").performClick()
-        compose.onNodeWithText("Volver a Cuenta").performScrollTo().performClick()
         compose.onNodeWithTag("account-back").performClick()
         compose.onNodeWithText("1 materia seleccionada").assertIsDisplayed()
         compose.onNodeWithText("Malla").performClick(); compose.onNodeWithText("Tu malla curricular").assertIsDisplayed()
-        compose.onNodeWithTag("curriculum-list").performScrollToNode(hasText("Cerrar sesión"))
-        compose.onNodeWithText("Cerrar sesión").performClick()
-        compose.onNodeWithText("La selección modificada se perderá. Todavía no se ha guardado.").assertIsDisplayed()
-        compose.onNodeWithText("Cancelar").performClick()
+        compose.onNodeWithText("Cerrar sesión").assertDoesNotExist()
+        compose.onNodeWithContentDescription("Tu cuenta").performClick()
+        compose.onNodeWithText("Cerrar sesión").performScrollTo().performClick()
+        compose.onNodeWithText("Hay cambios sin guardar. Se descartarán al cerrar sesión.").assertIsDisplayed()
+        compose.onNodeWithText("Seguir aquí").performClick()
+        compose.onNodeWithTag("account-back").performClick()
         compose.onNodeWithTag("curriculum-list").performScrollToNode(hasText("Ver historial"))
         compose.onNodeWithText("Ver historial").performClick()
         compose.onNodeWithText("Tu historial").assertIsDisplayed()

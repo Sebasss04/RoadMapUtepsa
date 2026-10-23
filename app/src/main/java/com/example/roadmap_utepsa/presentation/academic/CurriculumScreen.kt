@@ -17,6 +17,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.example.roadmap_utepsa.presentation.shared.theme.RoadMapInProgressContainer
+import com.example.roadmap_utepsa.presentation.shared.theme.RoadMapInProgressInk
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -36,18 +38,17 @@ import com.example.roadmap_utepsa.presentation.history.EstadoPreparacionUi
 
 @Composable
 fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () -> Unit,
-                     onSignOut: () -> Unit, onOpen: (String) -> Unit,
+                     onOpen: (String) -> Unit,
                      onSelect: (EstadoAcademico) -> Unit, onSave: () -> Unit,
                      onClose: () -> Unit, onDismissSaved: () -> Unit,
                      onReviewHistory: (() -> Unit)? = null, historyStatus: EstadoPreparacionUi = EstadoPreparacionUi.CONFIRMADO,
-                     onReviewConflict: () -> Unit = {}, onOffer: (() -> Unit)? = null, signOutWarning: Int = R.string.academic_sign_out_detail,
+                     onReviewConflict: () -> Unit = {}, onOffer: (() -> Unit)? = null,
                      onRecommendations: (() -> Unit)? = null, onSummary: (() -> Unit)? = null) {
     val texts = androidx.compose.ui.platform.LocalResources.current
 
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf<String?>(null) }
     var semester by rememberSaveable { mutableStateOf<Int?>(null) }
-    var confirmSignOut by remember { mutableStateOf(false) }
     val focus = LocalFocusManager.current
     val ready = state as? AcademicUiState.Ready
     val saving = ready?.editor?.saving == true
@@ -171,7 +172,9 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                         item(key = "semester-$number") { Text(stringResource(R.string.academic_semester, number), fontSize = 18.sp, fontWeight = FontWeight.Bold) }
                         items(materias, key = { it.id }) { materia ->
                             Surface(onClick = { onOpen(materia.id) }, enabled = !saving,
-                                shape = RoundedCornerShape(18.dp), color = MaterialTheme.colorScheme.surfaceVariant,
+                                shape = RoundedCornerShape(18.dp),
+                                color = if (state.data.estados[materia.id] == EstadoAcademico.EN_CURSO)
+                                    RoadMapInProgressContainer else MaterialTheme.colorScheme.surfaceVariant,
                                 modifier = Modifier.fillMaxWidth().testTag("subject-${materia.id}")) {
                                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                     Text(materia.nombre, fontSize = 16.sp, lineHeight = 22.sp, fontWeight = FontWeight.Bold,
@@ -185,15 +188,9 @@ fun CurriculumScreen(state: AcademicUiState, onRetry: () -> Unit, onProfile: () 
                     }
                 }
             }
-            item { TextButton({ confirmSignOut = true }, enabled = !saving) { Text(stringResource(R.string.profile_sign_out)) } }
         }
     }
     if (ready?.editor != null) SubjectSheet(ready, onSelect, onSave, onClose, onReviewHistory, onReviewConflict)
-    if (confirmSignOut) AlertDialog(onDismissRequest = { confirmSignOut = false },
-        title = { Text(stringResource(R.string.academic_sign_out_title)) },
-        text = { Text(stringResource(signOutWarning)) },
-        confirmButton = { TextButton({ confirmSignOut = false; onSignOut() }) { Text(stringResource(R.string.profile_sign_out)) } },
-        dismissButton = { TextButton({ confirmSignOut = false }) { Text(stringResource(R.string.academic_cancel)) } })
 }
 
 internal fun stateLabel(state: EstadoAcademico) = when (state) {
@@ -208,7 +205,7 @@ private fun areaLabel(area: AreaMateria) = when (area) {
     AreaMateria.ELECTIVA -> R.string.academic_area_elective
 }
 @Composable private fun StateLabel(state: EstadoAcademico) {
-    val color = when (state) { EstadoAcademico.APROBADA -> Color(0xFF21664A); EstadoAcademico.EN_CURSO -> Color(0xFF275A92); else -> MaterialTheme.colorScheme.onSurfaceVariant }
+    val color = when (state) { EstadoAcademico.APROBADA -> Color(0xFF21664A); EstadoAcademico.EN_CURSO -> RoadMapInProgressInk; else -> MaterialTheme.colorScheme.onSurfaceVariant }
     val mark = when (state) { EstadoAcademico.APROBADA -> "✓"; EstadoAcademico.EN_CURSO -> "◷"; else -> "○" }
     Text("$mark ${stringResource(stateLabel(state))}", color = color, fontSize = 12.sp)
 }
